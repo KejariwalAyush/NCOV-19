@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import './frontPage.dart';
+import './details.dart';
 import './api.dart';
 import './sideData/about.dart';
 import './sideData/symptoms.dart';
@@ -8,7 +11,8 @@ class MyHomePage extends StatelessWidget {
   // Color cardColor = Colors.lightBlueAccent[100];
   @override
   Widget build(BuildContext context) {
-    // CVapi();
+    
+    // DateTime dt = new DateTime(now.day, now.month,now.year, now.hour,now.minute);
     return Scaffold(
       drawer: Drawer(child: SingleChildScrollView(
         child: Column(
@@ -80,99 +84,15 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          // mainAxisSize: MainAxisSize.max,
-          // textBaseline: TextBaseline.ideographic,
-          // GridView.count(
-          //         primary: false,
-          //         // padding: const EdgeInsets.all(20),
-          //         crossAxisSpacing: 10,
-          //         // mainAxisSpacing: 10,
-          //         crossAxisCount: 1,
-          children: <Widget>[
-            Divider(),
-            Card(
-              // borderOnForeground: true,margin: EdgeInsets.all(10),
-              color: Colors.white,
-              child: Text(
-                'Tollfree No. - 1075',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Card(
-              // borderOnForeground: true,margin: EdgeInsets.all(10),
-              color: Colors.white,
-              child: Text(
-                'The Helpline Number for corona-virus : +91-11-23978046',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Divider(
-              color: Colors.black,
-              thickness: 5,
-            ),
-            Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(10),
-              color: Colors.amberAccent,
-              child: Text(
-                'Total no. of Corona Cases in India : \n137',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(10),
-              color: Colors.redAccent[200],
-              child: Text(
-                'Total no. of Deaths in India : \n3',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(10),
-              color: Colors.redAccent[100],
-              child: Text(
-                'Total number of Active COVID 2019 cases across India * : \n120',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(10),
-              color: Colors.greenAccent[200],
-              child: Text(
-                'Total number of Discharged/Cured COVID 2019 cases across India * : \n14',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Divider(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Text(
-          'Updated on : 17.03.2020 at 05:15 PM ',
-          softWrap: true,
-          style: TextStyle(fontSize: 16),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      body: FrontPage(),
+      // bottomNavigationBar: BottomAppBar(
+      //   child: Text(
+      //     'Updated on : $now ',
+      //     softWrap: true,
+      //     style: TextStyle(fontSize: 16),
+      //     textAlign: TextAlign.center,
+      //   ),
+      // ),
     );
   }
 }
