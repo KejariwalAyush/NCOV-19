@@ -14,8 +14,6 @@ class _FrontPageState extends State<FrontPage> {
   List list = List();
   List states = List();
   List state = List();
-  List stt_cnt = List();
-  // List<int> noState = List();
   
   var isLoading = false;
   @override
@@ -34,7 +32,7 @@ class _FrontPageState extends State<FrontPage> {
       ),
 
       // ),
-      body: isLoading ? Center(child: CircularProgressIndicator()):
+      body: isLoading ? Center(child: CircularProgressIndicator(strokeWidth: 10,)):
       Container(child:
       SingleChildScrollView(
         child: Column(
@@ -153,13 +151,13 @@ class _FrontPageState extends State<FrontPage> {
     );
   }
 _fetchData() async {
-  // list = null;state = null;states = null;stt_cnt = null;
     setState(() {
       isLoading = true;
     });
     states = List();state = List();
     final Response response =
         await get("https://covidout.in/");
+    // final Response helpno = await get("https://covidout.in/helpline");
     if (response.statusCode == 200) {
       var data = response.body;
       int x = data.indexOf('window.__INITIAL_STATE__');
@@ -200,13 +198,8 @@ _fetchData() async {
             n++;
           }
         }
-          print(n);
-        // if(states.contains()){
         stcnt = states[i];
         states[i] = "$stcnt : \t\t\t\t\t\t$n";
-        // states.remove(i);
-        // states.add(stcnt);
-        // print(states[i]);
       }
       setState(() {
         isLoading = false;

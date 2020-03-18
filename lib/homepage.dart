@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './helpPage.dart';
 import './frontPage.dart';
 import './details.dart';
 import './api.dart';
@@ -29,6 +30,13 @@ class MyHomePage extends StatelessWidget {
               leading: IconButton(
                   icon: Icon(Icons.arrow_back_ios),
                   onPressed: () => Navigator.pop(context, false)),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.add_call),
+              title: Text('HelpLine'),
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => helpPage())),
             ),
             Divider(),
             ListTile(
@@ -85,14 +93,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       body: FrontPage(),
-      // bottomNavigationBar: BottomAppBar(
-      //   child: Text(
-      //     'Updated on : $now ',
-      //     softWrap: true,
-      //     style: TextStyle(fontSize: 16),
-      //     textAlign: TextAlign.center,
-      //   ),
-      // ),
+
     );
   }
 }
