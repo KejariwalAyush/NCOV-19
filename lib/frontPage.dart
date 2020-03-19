@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/helpPage.dart';
 import 'package:http/http.dart';
+import './helpPage.dart';
 
 class FrontPage extends StatefulWidget {
   @override
@@ -32,7 +34,11 @@ class _FrontPageState extends State<FrontPage> {
       ),
 
       // ),
-      body: isLoading ? Center(child: CircularProgressIndicator(strokeWidth: 10,)):
+      body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
+        CircularProgressIndicator(strokeWidth: 10,),Divider(),
+        Text("Loading...\nUntill then go and sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+      ],),):
       Container(child:
       SingleChildScrollView(
         child: Column(
@@ -74,7 +80,7 @@ class _FrontPageState extends State<FrontPage> {
                 textAlign: TextAlign.center,
                 ),
               ),
-              Divider(thickness: 1,color: Colors.black),
+            Divider(thickness: 1,color: Colors.black),
             Card(
               borderOnForeground: true,
               margin: EdgeInsets.all(10),
@@ -135,7 +141,7 @@ class _FrontPageState extends State<FrontPage> {
             for (var st in states)
               Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(0),
+              margin: EdgeInsets.fromLTRB(0,0,20,0),
               color: Colors.white,
               child: Text(
                 '$st',
@@ -144,6 +150,20 @@ class _FrontPageState extends State<FrontPage> {
                 textAlign: TextAlign.end,
                 ),
               ),
+              Divider(thickness: 5,color: Colors.black,),
+              Card(
+              borderOnForeground: true,
+              margin: EdgeInsets.all(1),
+              color: Colors.black12,
+              child: RaisedButton(onPressed:() => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) =>helpPage())),
+              child:Text(
+                'HelpLine Nos',
+                softWrap: true,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+                ),
+              ),)
           ],
         ),
       ),

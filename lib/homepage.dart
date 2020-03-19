@@ -6,6 +6,7 @@ import './details.dart';
 import './api.dart';
 import './sideData/about.dart';
 import './sideData/symptoms.dart';
+import './sideData/preventions.dart';
 import './world.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -50,7 +51,7 @@ class MyHomePage extends StatelessWidget {
               leading: Icon(Icons.thumbs_up_down),
               title: Text('Preventions'),
               onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Symptoms())),
+                  context, MaterialPageRoute(builder: (context) => Preventions())),
             ),
             Divider(),
             ListTile(

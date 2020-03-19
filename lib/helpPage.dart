@@ -17,7 +17,7 @@ class _helpPageState extends State<helpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('NCOV-19',softWrap: true,),elevation: 15,
+      appBar: AppBar(title: Text('NCOV-19 (HelpLine)',softWrap: true,),elevation: 15,
               centerTitle: true,backgroundColor: Colors.lightBlueAccent,
               automaticallyImplyLeading: true,
               leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed:() => Navigator.pop(context,false)),
@@ -26,17 +26,35 @@ class _helpPageState extends State<helpPage> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],
-          child: new Text("REFRESH\nUpdated on :  ",softWrap: true,textAlign: TextAlign.center,),
+          child: new Text("REFRESH",softWrap: true,textAlign: TextAlign.center,),
           onPressed: _fetchhelpline,
         ),
-
       ),
+      body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
+        CircularProgressIndicator(strokeWidth: 10,),Divider(),
+        Text("Loading...\nUntill then go and sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+      ],),):
+      SingleChildScrollView(child:Column(children: <Widget>[
+        Card(child:Text('Helpline Numbers',textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 27),)),
+        Divider(),
+        Container(child: Row(mainAxisSize:MainAxisSize.max ,crossAxisAlignment: CrossAxisAlignment.end, 
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,mainAxisSize: MainAxisSize.min,
+           children: <Widget>[
+            for (var st in state) 
+              Card(child:Text('$st',softWrap: true,),),
+          ],),
+          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,children: <Widget>[
+            for (var st in phone) 
+              Card(child:Text('$st')),
+          ],),
+        ],),),
 
-      // ),
-      body: isLoading ? Center(
-        // child: CircularProgressIndicator(strokeWidth: 10,)
-        ):
-      Container(),
+        ],),
+      ),
 
       
     );
@@ -66,22 +84,28 @@ _fetchhelpline() async {
       List helpdata = jsonDecode(enc);
       // String x = helpdata[0]['title'];
       // print(x.split(new RegExp(r"[a-z]")));//[x.split(new RegExp(r"[a-z]")).length-1]);
-      for (var i = 0; i < helpdata.length; i++) {  
+      for (var i = 1; i < helpdata.length; i++) {  
         String x =helpdata[i]['title'];
-        var name =  x.split(new RegExp(r"[0-9]"));
-        if(name.length != 1 && name[1] != null )//&& name[2] == null)
-          state.add(name[1]);
-        else if(name.length != 1 && name[2] != null)// && name[1]==null)
-          state.add(name[2]);
+        var name =  x.split(new RegExp(r"[0-9]"));        
         var ph = x.split(new RegExp(r"[a-z]"));
-        if(ph[ph.length-1] != null)
+        if(i!=29){
+          if(name[1] != null)
+            if(name[1].length <=2){
+              if(name[2].length>21){
+                state.add(name[2].substring(0,20));//+'\n'+name[2].substring(20));
+              }
+              else
+              state.add(name[2]);
+            }
+            else
+              if(name[1].length>21){
+                state.add(name[1].substring(0,20));//+'\n'+name[1].substring(20));
+              }
+              else
+              state.add(name[1]);
           phone.add(ph[ph.length-1]);
-      } 
-      for (var item in phone) {
-      print(item);
+        }
       }
-      print(state.length);
-      print(phone.length);
       setState(() {
         isLoading = false;
       });
