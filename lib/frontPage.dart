@@ -2,20 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/helpPage.dart';
+import 'package:flutter_app/world.dart';
 import 'package:http/http.dart';
 import './helpPage.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class FrontPage extends StatefulWidget {
   @override
   _FrontPageState createState() => _FrontPageState();
 }
+int tcase = 0,recov = 0,death = 0,actcase = 0;
+List list = List();
+List states = List();
+List state = List();
 
 class _FrontPageState extends State<FrontPage> {
   int tcase = 0,recov = 0,death = 0,actcase = 0;
-  DateTime now = new DateTime.now();
   List list = List();
   List states = List();
   List state = List();
+  DateTime now = new DateTime.now();
   
   var isLoading = false;
   @override
@@ -37,19 +43,44 @@ class _FrontPageState extends State<FrontPage> {
       body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
-        Text("Loading...\nUntill then go and sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+        Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
       Container(child:
       SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // Divider(),
+            Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[ Card(
+                elevation: 10,              
+                child: RaisedButton(color:Colors.blueAccent,onPressed:() => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) =>World())),
+                child:Text(
+                  'World Data',
+                  softWrap: true,
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                  ),
+                ),),
+            Card(
+              elevation: 10,
+              child: RaisedButton(padding: EdgeInsets.all(1),color: Colors.green,onPressed:() => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) =>helpPage())),
+              child:Text(
+                'HelpLine Nos.',
+                softWrap: true,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+                ),
+              ),),
+            ],),
+            Divider(thickness: 5,color: Colors.black,),
             Card(
               // borderOnForeground: true,margin: EdgeInsets.all(10),
               color: Colors.white,
               child: Text(
-                'Tollfree No. - 1075',
+                'All INDIA Tollfree No. - 1075',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
@@ -68,25 +99,27 @@ class _FrontPageState extends State<FrontPage> {
             Divider(
               color: Colors.black,
               thickness: 5,
-            ),
+            ),            
             Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(1),
-              color: Colors.black12,
-              child: Text(
-                'OverAll Data',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
+                borderOnForeground: true,
+                margin: EdgeInsets.all(0),
+                // color: Colors.orangeAccent[200],
+                child: Text(
+                  'India Specific Data',
+                  softWrap: true,
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,textWidthBasis: TextWidthBasis.parent,
+                  ),
                 ),
-              ),
             Divider(thickness: 1,color: Colors.black),
+            Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:<Widget>[
             Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(10),
+              // margin: EdgeInsets.all(10),
               color: Colors.amberAccent,
               child: Text(
-                'Total no. of Corona Cases in India : \n$tcase',
+                ' Total no. of \n   Corona Cases  :  \n$tcase',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
@@ -94,21 +127,24 @@ class _FrontPageState extends State<FrontPage> {
             ),
             Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(10),
+              // margin: EdgeInsets.all(10),
               color: Colors.redAccent[200],
               child: Text(
-                'Total no. of Deaths in India : \n$death',
+                'Total no.\n    of Deaths :    \n$death',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
+            ],),
+            Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children:<Widget>[
             Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(10),
+              // margin: EdgeInsets.all(10),
               color: Colors.redAccent[100],
               child: Text(
-                'Total number of Active COVID 2019 cases across India * : \n$actcase',
+                'Active COVID \n2019 cases : \n$actcase',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
@@ -116,54 +152,49 @@ class _FrontPageState extends State<FrontPage> {
             ),
             Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(10),
+              // margin: EdgeInsets.all(10),
               color: Colors.greenAccent[200],
               child: Text(
-                'Total number of Discharged/Cured COVID 2019 cases across India * : \n$recov',
+                'No. of Recovered\nCOVID 2019 cases : \n$recov',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
+              ],),
             Divider(thickness: 5,color: Colors.black,),
             Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(1),
-              color: Colors.black12,
+              margin: EdgeInsets.all(0),
+              // color: Colors.orangeAccent[200],
               child: Text(
-                'Statewise Data',
+                'India\'s Statewise Data',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
                 ),
               ),
               Divider(thickness: 1,color: Colors.black),
-            for (var st in states)
-              Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.fromLTRB(0,0,20,0),
+              Container(width: double.maxFinite,height: 220,
               color: Colors.white,
-              child: Text(
-                '$st',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.end,
-                ),
-              ),
+              padding: EdgeInsets.all(2.0),
+              child: SingleChildScrollView(child: Table(
+                // border: TableBorder.all(color: Colors.),
+                children: [
+                  // TableRow(children: [
+                  //   Text('States : Infected',textAlign: TextAlign.center,style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                  // ]),
+                  for (var i = 0; i < states.length; i++)
+                  TableRow(children: [
+                    Text(states[i].toString().trim(),textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontSize: 20),),
+                  ]),
+                ],
+              ),),
+            ),
               Divider(thickness: 5,color: Colors.black,),
-              Card(
-              borderOnForeground: true,
-              margin: EdgeInsets.all(1),
-              color: Colors.black12,
-              child: RaisedButton(onPressed:() => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) =>helpPage())),
-              child:Text(
-                'HelpLine Nos',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-                ),
-              ),)
+              
+              
+
           ],
         ),
       ),
@@ -219,7 +250,7 @@ _fetchData() async {
           }
         }
         stcnt = states[i];
-        states[i] = "$stcnt : \t\t\t\t\t\t$n";
+        states[i] = "$stcnt : $n";
       }
       setState(() {
         isLoading = false;

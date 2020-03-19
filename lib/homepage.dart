@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import './helpPage.dart';
 import './frontPage.dart';
-import './details.dart';
-import './api.dart';
 import './sideData/about.dart';
 import './sideData/symptoms.dart';
 import './sideData/preventions.dart';
@@ -32,6 +30,7 @@ class MyHomePage extends StatelessWidget {
                   icon: Icon(Icons.arrow_back_ios),
                   onPressed: () => Navigator.pop(context, false)),
             ),
+            // BottomAppBar(child: Text('Developed by: Ayush Kejariwal'),),
             Divider(),
             ListTile(
               leading: Icon(Icons.add_call),
@@ -60,14 +59,14 @@ class MyHomePage extends StatelessWidget {
               onTap: () =>Navigator.push(
                   context, MaterialPageRoute(builder: (context) => World())),
             ),
-            Divider(),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-              ),
-              title: Text('Settings'),
-              onTap: null,
-            ),
+            // Divider(),
+            // ListTile(
+            //   leading: Icon(
+            //     Icons.settings,
+            //   ),
+            //   title: Text('Settings'),
+            //   onTap: null,
+            // ),
             Divider(),
             ListTile(
               leading: Icon(Icons.info_outline),

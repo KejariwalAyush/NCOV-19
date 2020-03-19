@@ -1,10 +1,7 @@
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 // import 'package:flutter_swiper/flutter_swiper.dart';
 import './homepage.dart';
-import './api.dart';
 
 void main() => runApp(MyApp());
 

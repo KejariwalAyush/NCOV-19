@@ -10,10 +10,10 @@ class World extends StatefulWidget {
   @override
   _WorldState createState() => _WorldState();
 }
+String totcase =null,detcase=null,seriouscase=null,curecase=null,countries=null;
+List cList = List(),casesList= List(),deathList = List(),recoverList = List();
 
 class _WorldState extends State<World> {
-  String totcase =null,detcase=null,seriouscase=null,curecase=null,countries=null;
-  List cList = List(),casesList= List(),deathList = List(),recoverList = List();
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _WorldState extends State<World> {
       body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
-        Text("Loading...\nUntill then go and sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+        Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
        SingleChildScrollView(
         child: Column(
@@ -108,12 +108,24 @@ class _WorldState extends State<World> {
             Divider(thickness: 5,color: Colors.black,),
             Card(
               borderOnForeground: true,
-              margin: EdgeInsets.all(10),
+              // margin: EdgeInsets.all(10),
               // color: Colors.amberAccent,
               child: Text(
                 'Countries List',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            // Divider(),
+            Card(
+              borderOnForeground: true,
+              margin: EdgeInsets.all(1),
+              // color: Colors.amberAccent,
+              child: Text(
+                '*all countries are not updated together\n(it may take time to show actual data)',
+                softWrap: true,
+                style: TextStyle(fontSize: 12),
                 textAlign: TextAlign.center,
               ),
             ),
