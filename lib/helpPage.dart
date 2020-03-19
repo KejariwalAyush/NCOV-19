@@ -15,8 +15,10 @@ class _helpPageState extends State<helpPage> {
   // List state = List();
   // List phone = List();
   var isLoading = false;
+  // _helpPageState(){_fetchhelpline;}
   @override
   Widget build(BuildContext context) {
+    // var initial = _fetchhelpline;
     return Scaffold(
       appBar: AppBar(title: Text('NCOV-19 (HelpLine)',softWrap: true,),elevation: 15,
               centerTitle: true,backgroundColor: Colors.lightBlueAccent,

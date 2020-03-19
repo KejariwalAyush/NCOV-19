@@ -9,8 +9,8 @@ class newsPage extends StatefulWidget {
   @override
   _newsPageState createState() => _newsPageState();
 }
-  List state = List();
-  List phone = List();
+  // List state = List();
+  List newslist = List();
 class _newsPageState extends State<newsPage> {
   // List state = List();
   // List phone = List();
@@ -18,12 +18,12 @@ class _newsPageState extends State<newsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('NCOV-19 (NEWS)',softWrap: true,),elevation: 15,
-              centerTitle: true,backgroundColor: Colors.lightBlueAccent,
-              automaticallyImplyLeading: true,
-              leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed:() => Navigator.pop(context,false)),
+      // appBar: AppBar(title: Text('NCOV-19 (NEWS)',softWrap: true,),elevation: 15,
+      //         centerTitle: true,backgroundColor: Colors.lightBlueAccent,
+      //         automaticallyImplyLeading: true,
+      //         leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed:() => Navigator.pop(context,false)),
 
-        ),
+      //   ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],
@@ -36,17 +36,19 @@ class _newsPageState extends State<newsPage> {
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
         Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
-      SingleChildScrollView(child:Column(children: <Widget>[
-        Card(child:Text('Helpline Numbers',textAlign: TextAlign.center,
+      SingleChildScrollView(child:Column(children: <Widget>[//Divider(),
+        Card(child:Text('NEWS HEADLINES',textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold,fontSize: 27),)),
-        Divider(),
-        // Container(child: Row(mainAxisSize:MainAxisSize.max ,crossAxisAlignment: CrossAxisAlignment.end, 
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-        //   Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,mainAxisSize: MainAxisSize.min,
-        //    children: <Widget>[
-        //     for (var st in state) 
-        //       Card(child:Text('$st',softWrap: true,),),
-        //   ],),
+        // Divider(),
+        Divider(thickness: 5,color: Colors.black,),
+        Container(child: //Row(mainAxisSize:MainAxisSize.max ,crossAxisAlignment: CrossAxisAlignment.end, 
+        //      // mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,mainAxisSize: MainAxisSize.min,
+           children: <Widget>[
+            for (var st in newslist)
+              Card(child:Text('#  $st',softWrap: true,style: TextStyle(fontSize: 20),),),
+            Divider(thickness: 5,color: Colors.black,),
+          ],),
         //   Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         //     mainAxisSize: MainAxisSize.max,children: <Widget>[
         //     for (var st in phone) 
@@ -54,7 +56,7 @@ class _newsPageState extends State<newsPage> {
         //   ],),
         // ],),),
 
-        ],),
+      ),],),
       ),
 
       
@@ -66,11 +68,11 @@ _fetchnews() async {
       isLoading = true;
     });
     
-    final Response response = await get("https://covidout.in/helpline");
+    final Response response = await get("https://indianexpress.com/about/coronavirus/");
     if (response.statusCode == 200) {
       var data = response.body;
       var document = parse(response.body);
-      List links = document.querySelectorAll('tr');
+      List links = document.querySelectorAll('ul > li > a');
       List<Map<String, dynamic>> linkMap = [];
       // print(linkMap);
       for (var link in links) {
@@ -79,13 +81,18 @@ _fetchnews() async {
           // 'contact': link.attributes['href'],
         });
       }      
-      state = List();
-      phone = List();
+      // state = List();
+      newslist = List();
       var enc = json.encode(linkMap);
-      List helpdata = jsonDecode(enc);
-      // String x = helpdata[0]['title'];
+      List newsdata = jsonDecode(enc);
       // print(x.split(new RegExp(r"[a-z]")));//[x.split(new RegExp(r"[a-z]")).length-1]);
-     
+      String x = newsdata[21]['title'];
+      print(x);int i=22;
+      while(i<30) {
+        newslist.add(x);
+        x=newsdata[i]['title'];
+        i++;//print(x);
+      }
       setState(() {
         isLoading = false;
       });

@@ -17,7 +17,7 @@ class About extends StatelessWidget {
             // IconButton(icon: Icon(Icons.picture_as_pdf),
             // onPressed:null),
             Center(
-              child: Text('Hello, this app is made by \nAYUSH KEJARIWAL\n\nemail : ayush1kej@gmail.com\nI am currently studying in ITER,SOA University\nFind Source code of this app in Github\n\ngithub.com/KejariwalAyush/NCOV-19\n\n\nThe data has been taken from multiple sites:\nmohfw.gov.in\nhttps://covidout.in/\nhttps://ncov2019.live/\n\n\n\nThanks for using this app',textAlign: TextAlign.center,
+              child: Text('Hello, this app is made by \nAYUSH KEJARIWAL\n\nemail : ayush1kej@gmail.com\nI am currently studying in ITER,SOA University\nFind Source code of this app in Github\n\ngithub.com/KejariwalAyush/NCOV-19\n\n\nThe data has been taken from multiple sites:\nmohfw.gov.in\nhttps://covidout.in/\nhttps://ncov2019.live/\nhttps://indianexpress.com/about/coronavirus/\n\n\n\nThanks for using this app',textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 20),softWrap: true,),
               
             ),
@@ -27,4 +27,12 @@ class About extends StatelessWidget {
         
     );
   }
+//   _launchURL() async {
+//   const url = 'https://flutter.dev';
+//   if (await canLaunch(url)) {
+//     await launch(url);
+//   } else {
+//     throw 'Could not launch $url';
+//   }
+// }
 }

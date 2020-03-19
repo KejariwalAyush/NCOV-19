@@ -19,20 +19,20 @@ class _WorldState extends State<World> {
   Widget build(BuildContext context) {
     // CVapi();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'NCOV-19 (World Stats)',
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.lightBlueAccent,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: new Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pop(context,false),
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'NCOV-19 (World Stats)',
+      //     style: TextStyle(color: Colors.white, fontSize: 20),
+      //   ),
+      //   centerTitle: true,
+      //   backgroundColor: Colors.lightBlueAccent,
+      //   leading: Builder(
+      //     builder: (context) => IconButton(
+      //       icon: new Icon(Icons.arrow_back_ios),
+      //       onPressed: () => Navigator.pop(context,false),
+      //     ),
+      //   ),
+      // ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],

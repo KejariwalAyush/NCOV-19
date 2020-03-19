@@ -17,10 +17,10 @@ List states = List();
 List state = List();
 
 class _FrontPageState extends State<FrontPage> {
-  int tcase = 0,recov = 0,death = 0,actcase = 0;
-  List list = List();
-  List states = List();
-  List state = List();
+  // int tcase = 0,recov = 0,death = 0,actcase = 0;
+  // List list = List();
+  // List states = List();
+  // List state = List();
   DateTime now = new DateTime.now();
   
   var isLoading = false;
@@ -51,31 +51,31 @@ class _FrontPageState extends State<FrontPage> {
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             // Divider(),
-            Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[ Card(
-                elevation: 10,              
-                child: RaisedButton(color:Colors.blueAccent,onPressed:() => Navigator.push(
-                    context, MaterialPageRoute(builder: (context) =>World())),
-                child:Text(
-                  'World Data',
-                  softWrap: true,
-                  style: TextStyle(fontSize: 20),
-                  textAlign: TextAlign.center,
-                  ),
-                ),),
-            Card(
-              elevation: 10,
-              child: RaisedButton(padding: EdgeInsets.all(1),color: Colors.green,onPressed:() => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) =>helpPage())),
-              child:Text(
-                'HelpLine Nos.',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-                ),
-              ),),
-            ],),
-            Divider(thickness: 5,color: Colors.black,),
+            // Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //     children: <Widget>[ Card(
+            //     elevation: 10,              
+            //     child: RaisedButton(color:Colors.blueAccent,onPressed:() => Navigator.push(
+            //         context, MaterialPageRoute(builder: (context) =>World())),
+            //     child:Text(
+            //       'World Data',
+            //       softWrap: true,
+            //       style: TextStyle(fontSize: 20),
+            //       textAlign: TextAlign.center,
+            //       ),
+            //     ),),
+            // Card(
+            //   elevation: 10,
+            //   child: RaisedButton(padding: EdgeInsets.all(1),color: Colors.green,onPressed:() => Navigator.push(
+            //       context, MaterialPageRoute(builder: (context) =>helpPage())),
+            //   child:Text(
+            //     'HelpLine Nos.',
+            //     softWrap: true,
+            //     style: TextStyle(fontSize: 20),
+            //     textAlign: TextAlign.center,
+            //     ),
+            //   ),),
+            // ],),
+            // Divider(thickness: 5,color: Colors.black,),
             Card(
               // borderOnForeground: true,margin: EdgeInsets.all(10),
               color: Colors.white,
@@ -115,22 +115,20 @@ class _FrontPageState extends State<FrontPage> {
             Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children:<Widget>[
             Card(
-              borderOnForeground: true,
-              // margin: EdgeInsets.all(10),
+              borderOnForeground: true,elevation: 5,
               color: Colors.amberAccent,
               child: Text(
-                ' Total no. of \n   Corona Cases  :  \n$tcase',
+                ' Total no. of  \n  Corona    Cases  :  \n$tcase',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
             Card(
-              borderOnForeground: true,
-              // margin: EdgeInsets.all(10),
+              borderOnForeground: true,elevation: 5,
               color: Colors.redAccent[200],
               child: Text(
-                'Total no.\n    of Deaths :    \n$death',
+                'Total no.\n   of Deaths :   \n$death',
                 softWrap: true,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
@@ -139,9 +137,19 @@ class _FrontPageState extends State<FrontPage> {
             ],),
             Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children:<Widget>[
+                Card(
+              borderOnForeground: true,elevation: 5,
+              color: Colors.greenAccent[200],
+              child: Text(
+                'No. of Recovered\nCOVID 2019 cases :\n$recov',
+                softWrap: true,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
             Card(
               borderOnForeground: true,
-              // margin: EdgeInsets.all(10),
+              elevation: 5,
               color: Colors.redAccent[100],
               child: Text(
                 'Active COVID \n2019 cases : \n$actcase',
@@ -150,17 +158,7 @@ class _FrontPageState extends State<FrontPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            Card(
-              borderOnForeground: true,
-              // margin: EdgeInsets.all(10),
-              color: Colors.greenAccent[200],
-              child: Text(
-                'No. of Recovered\nCOVID 2019 cases : \n$recov',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            
               ],),
             Divider(thickness: 5,color: Colors.black,),
             Card(
@@ -175,7 +173,7 @@ class _FrontPageState extends State<FrontPage> {
                 ),
               ),
               Divider(thickness: 1,color: Colors.black),
-              Container(width: double.maxFinite,height: 220,
+              Container(width: double.maxFinite,height: 240,
               color: Colors.white,
               padding: EdgeInsets.all(2.0),
               child: SingleChildScrollView(child: Table(
@@ -252,6 +250,7 @@ _fetchData() async {
         stcnt = states[i];
         states[i] = "$stcnt : $n";
       }
+      
       setState(() {
         isLoading = false;
       });
