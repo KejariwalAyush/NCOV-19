@@ -12,6 +12,7 @@ class helpPage extends StatefulWidget {
   List state = List();
   List phone = List();
 class _helpPageState extends State<helpPage> {
+  
   // List state = List();
   // List phone = List();
   var isLoading = false;
@@ -19,7 +20,7 @@ class _helpPageState extends State<helpPage> {
   @override
   Widget build(BuildContext context) {
     // var initial = _fetchhelpline;
-    return Scaffold(
+    return Scaffold(//SelectableText("Lorem ipsum..."),
       appBar: AppBar(title: Text('NCOV-19 (HelpLine)',softWrap: true,),elevation: 15,
               centerTitle: true,backgroundColor: Colors.lightBlueAccent,
               automaticallyImplyLeading: true,
@@ -41,20 +42,26 @@ class _helpPageState extends State<helpPage> {
       SingleChildScrollView(child:Column(children: <Widget>[
         Card(child:Text('Helpline Numbers',textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold,fontSize: 27),)),
+        Card(child:Text('press & hold to copy phone no.',textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)),
         Divider(),
-        Container(child: Row(mainAxisSize:MainAxisSize.max ,crossAxisAlignment: CrossAxisAlignment.end, 
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,mainAxisSize: MainAxisSize.min,
+        // Container(child: Row(mainAxisSize:MainAxisSize.max ,crossAxisAlignment: CrossAxisAlignment.end, 
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+          Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.spaceBetween,//mainAxisSize: MainAxisSize.min,
            children: <Widget>[
-            for (var st in state) 
-              Card(child:Text('$st',softWrap: true,),),
+            for (var st =0;st<state.length;st++) 
+              Card(child:SelectableText(state[st]+'     :     '+phone[st],textAlign: TextAlign.justify,
+                toolbarOptions: ToolbarOptions(copy: true,selectAll: true,cut: false,paste: false),
+                style: Theme.of(context).textTheme.title,
+              ),),
           ],),
-          Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,children: <Widget>[
-            for (var st in phone) 
-              Card(child:Text('$st')),
-          ],),
-        ],),),
+          // Column(crossAxisAlignment: CrossAxisAlignment.start,mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   mainAxisSize: MainAxisSize.max,children: <Widget>[
+          //   for (var st in phone) 
+          //     Card(child:Text('$st')),
+          // ],),
+        // ],),
+        // ),
 
         ],),
       ),
@@ -116,4 +123,5 @@ _fetchhelpline() async {
       throw Exception('Failed to load');
     }
   }
+  
 }

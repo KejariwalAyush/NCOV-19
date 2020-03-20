@@ -140,7 +140,7 @@ class _WorldState extends State<World> {
                     Text('Infected',textAlign: TextAlign.center,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                     Text('Deaths',textAlign: TextAlign.center,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
                   ]),
-                  for (var i = 0; i < cList.length; i++)
+                  for (var i = 0; i < cList.length-10; i++)
                   TableRow(children: [
                     Text(cList[i].toString().trim(),textAlign: TextAlign.center,style: TextStyle(color: Colors.black,fontSize: 16),),
                     Text(casesList[i].toString().trim(),textAlign: TextAlign.center,style: TextStyle(color: Colors.blueAccent,fontSize: 16),),

@@ -79,20 +79,34 @@ class _FrontPageState extends State<FrontPage> {
             Card(
               // borderOnForeground: true,margin: EdgeInsets.all(10),
               color: Colors.white,
-              child: Text(
+              child: SelectableText(
                 'All INDIA Tollfree No. - 1075',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
+                // softWrap: true,
+                toolbarOptions: ToolbarOptions(copy: true,selectAll: true,cut: false,paste: false),
+                style: Theme.of(context).textTheme.title,
+                // style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),
             ),
             Card(
               // borderOnForeground: true,margin: EdgeInsets.all(10),
               color: Colors.white,
-              child: Text(
+              child: SelectableText(
                 'The Helpline Number for corona-virus : +91-11-23978046',
-                softWrap: true,
-                style: TextStyle(fontSize: 20),
+                // softWrap: true,
+                toolbarOptions: ToolbarOptions(copy: true,selectAll: true,cut: false,paste: false),
+                style: Theme.of(context).textTheme.title,
+                // style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Card(
+              // borderOnForeground: true,margin: EdgeInsets.all(10),
+              color: Colors.white,
+              child: SelectableText(
+                'More Statewise helpline nos. are here',onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => helpPage())),
+                toolbarOptions: ToolbarOptions(copy: true,selectAll: true,cut: false,paste: false),
+                style: TextStyle(fontSize: 20,color: Colors.blue),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -173,7 +187,7 @@ class _FrontPageState extends State<FrontPage> {
                 ),
               ),
               Divider(thickness: 1,color: Colors.black),
-              Container(width: double.maxFinite,height: 240,
+              Container(width: double.maxFinite,height: 215,
               color: Colors.white,
               padding: EdgeInsets.all(2.0),
               child: SingleChildScrollView(child: Table(
