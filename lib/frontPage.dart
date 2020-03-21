@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/helpPage.dart';
-import 'package:flutter_app/world.dart';
+// import 'package:flutter_app/world.dart';
 import 'package:http/http.dart';
 import './helpPage.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
 
 class FrontPage extends StatefulWidget {
   @override
@@ -15,18 +15,33 @@ int tcase = 0,recov = 0,death = 0,actcase = 0;
 List list = List();
 List states = List();
 List state = List();
-
+bool firstcall = true;
 class _FrontPageState extends State<FrontPage> {
-  // int tcase = 0,recov = 0,death = 0,actcase = 0;
-  // List list = List();
-  // List states = List();
-  // List state = List();
-  DateTime now = new DateTime.now();
+
+  @override
+  void initState() {
+    if(firstcall)
+    _getThingsOnStartup().then((value){fetchData();//helpPage().createState().fetchhelpline();
+      print('Async done');
+      firstcall = false;
+    });
+    super.initState();
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container();
+  // }
+
+  Future _getThingsOnStartup() async {
+    await Future.delayed(Duration(seconds: 0));
+  }
   
+  
+  DateTime now = new DateTime.now();
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
-    // _fetchData();
     // tcase = list.length;
     return Scaffold(
       // appBar: AppBar(
@@ -34,7 +49,7 @@ class _FrontPageState extends State<FrontPage> {
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],
           child: new Text("REFRESH\nUpdated on : $now ",softWrap: true,textAlign: TextAlign.center,),
-          onPressed: _fetchData,
+          onPressed: fetchData,
         ),
 
       ),
@@ -43,7 +58,7 @@ class _FrontPageState extends State<FrontPage> {
       body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
-        Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+        Text("Loading...\nUntil then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
       Container(child:
       SingleChildScrollView(
@@ -213,7 +228,8 @@ class _FrontPageState extends State<FrontPage> {
     )
     );
   }
-_fetchData() async {
+// void fetch(){fetchData();}
+fetchData() async {
     setState(() {
       isLoading = true;
     });

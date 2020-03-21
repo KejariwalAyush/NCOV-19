@@ -9,12 +9,28 @@ class helpPage extends StatefulWidget {
   @override
   _helpPageState createState() => _helpPageState();
 }
-  List state = List();
-  List phone = List();
+List state = List();
+List phone = List();
+bool firstcall = true;
 class _helpPageState extends State<helpPage> {
   
-  // List state = List();
-  // List phone = List();
+    @override
+  void initState() {
+    _getThingsOnStartup().then((value){fetchhelpline();
+      print('Async done');firstcall = false;
+    });
+    super.initState();
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container();
+  // }
+
+  Future _getThingsOnStartup() async {
+    await Future.delayed(Duration(seconds: 0));
+  }
+  
   var isLoading = false;
   // _helpPageState(){_fetchhelpline;}
   @override
@@ -31,13 +47,13 @@ class _helpPageState extends State<helpPage> {
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],
           child: new Text("REFRESH",softWrap: true,textAlign: TextAlign.center,),
-          onPressed: _fetchhelpline,
+          onPressed: fetchhelpline,
         ),
       ),
       body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
-        Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+        Text("Loading...\nUntil then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
       SingleChildScrollView(child:Column(children: <Widget>[
         Card(child:Text('Helpline Numbers',textAlign: TextAlign.center,
@@ -70,7 +86,7 @@ class _helpPageState extends State<helpPage> {
     );
   }
 
-_fetchhelpline() async {
+fetchhelpline() async {
     setState(() {
       isLoading = true;
     });

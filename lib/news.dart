@@ -12,9 +12,25 @@ class newsPage extends StatefulWidget {
 }
   List newslink = List();
   List newslist = List();
+bool firstcall = true;
 class _newsPageState extends State<newsPage> {
-  // List state = List();
-  // List phone = List();
+    @override
+  void initState() {
+    _getThingsOnStartup().then((value){fetchnews();
+      print('Async done');firstcall = false;
+    });
+    super.initState();
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container();
+  // }
+
+  Future _getThingsOnStartup() async {
+    await Future.delayed(Duration(seconds: 0));
+  }
+  
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -29,13 +45,13 @@ class _newsPageState extends State<newsPage> {
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],
           child: new Text("REFRESH",softWrap: true,textAlign: TextAlign.center,),
-          onPressed: _fetchnews,
+          onPressed: fetchnews,
         ),
       ),
       body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
-        Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+        Text("Loading...\nUntil then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
       SingleChildScrollView(child:Column(crossAxisAlignment: CrossAxisAlignment.stretch,children: <Widget>[
         Card(child:Text('NEWS HEADLINES',textAlign: TextAlign.center,
@@ -69,7 +85,7 @@ class _newsPageState extends State<newsPage> {
     );
   }
 
-_fetchnews() async {
+fetchnews() async {
     setState(() {
       isLoading = true;
     });

@@ -13,7 +13,32 @@ class World extends StatefulWidget {
 String totcase =null,detcase=null,seriouscase=null,curecase=null,countries=null;
 List cList = List(),casesList= List(),deathList = List(),recoverList = List();
 
+var loadfailed = false;
+bool firstcall = true;
+
 class _WorldState extends State<World> {
+    @override
+  void initState() {
+    _getThingsOnStartup().then((value){
+      try {
+            fetchworld();
+          } on Exception catch (e) {
+            print(e);
+      }
+
+      print('Async done');firstcall=false;
+    });
+    super.initState();
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Container();
+  // }
+
+  Future _getThingsOnStartup() async {
+    await Future.delayed(Duration(seconds: 0));
+  }
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -37,13 +62,14 @@ class _WorldState extends State<World> {
         padding: const EdgeInsets.all(0.0),
         child: RaisedButton(color: Colors.blueGrey[200],
           child: new Text("REFRESH",softWrap: true,textAlign: TextAlign.center,),
-          onPressed: _fetchworld,
+          onPressed: fetchworld,
         ),
       ),
-      body: isLoading ? Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
+      body: isLoading ? loadfailed ? Center(child:Text('Faild to load try after some time')):
+      Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,children: <Widget>[
         CircularProgressIndicator(strokeWidth: 10,),Divider(),
-        Text("Loading...\nUntill then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
+        Text("Loading...\nUntil then sanitize your hands",softWrap: true,textAlign: TextAlign.center,)
       ],),):
        SingleChildScrollView(
         child: Column(
@@ -182,7 +208,7 @@ class _WorldState extends State<World> {
     );
   }
 
-  _fetchworld() async {
+  fetchworld() async {
     setState(() {
       isLoading = true;
     });
@@ -226,8 +252,8 @@ class _WorldState extends State<World> {
       setState(() {
         isLoading = false;
       });
-    } else {
-      throw Exception('Failed to load');
+    } else {loadfailed = true;
+      Exception('Failed to load');
     }
   }
 }
