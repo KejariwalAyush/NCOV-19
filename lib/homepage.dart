@@ -7,19 +7,71 @@ import './frontPage.dart';
 import './sideData/about.dart';
 import './sideData/symptoms.dart';
 import './sideData/preventions.dart';
+import './update.dart';
 import './world.dart';
 
 class MyHomePage extends StatelessWidget {
   // Color cardColor = Colors.lightBlueAccent[100];
   @override
   Widget build(BuildContext context) {
-    
     // DateTime dt = new DateTime(now.day, now.month,now.year, now.hour,now.minute);
     return DefaultTabController(
-        length: 3,//no of slides
-        
-        child: Scaffold(
-          drawer: Drawer(child: SingleChildScrollView(
+      length: 3, //no of slides
+
+      child: Scaffold(
+        drawer: widgetDrawer(context),
+        appBar: AppBar(
+          elevation: 5,
+          title: Text(
+            'NCOV-19',
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.lightBlueAccent,
+          leading: Builder(
+            builder: (context) => IconButton(
+              icon: new Icon(Icons.menu),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
+          ),
+          bottom: TabBar(
+            labelColor: Colors.white,
+            indicatorColor: Colors.blue[800],
+            dragStartBehavior: DragStartBehavior.start,
+            indicatorWeight: 3,
+            unselectedLabelColor: Colors.indigoAccent,
+            tabs: [
+              Tab(
+                text: 'INDIA',
+              ),
+              Tab(
+                text: 'WORLD',
+              ),
+              Tab(
+                text: 'NEWS',
+              ),
+            ],
+          ),
+          // title: Text('Tabs Demo'),
+        ),
+        body: TabBarView(
+          children: [
+            FrontPage(),
+            World(),
+            newsPage(),
+            // Icon(Icons.directions_car),
+            // Icon(Icons.directions_transit),
+            // Icon(Icons.directions_bike),
+          ],
+        ),
+      ),
+    );
+    // );
+  }
+
+  Widget widgetDrawer(context) {
+    return Drawer(
+      child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             AppBar(
@@ -54,8 +106,8 @@ class MyHomePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.thumbs_up_down),
               title: Text('Preventions'),
-              onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => Preventions())),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Preventions())),
             ),
             // Divider(),
             // ListTile(
@@ -64,62 +116,25 @@ class MyHomePage extends StatelessWidget {
             //   onTap: () =>Navigator.push(
             //       context, MaterialPageRoute(builder: (context) => newsPage())),
             // ),
-            // Divider(),
-            // ListTile(
-            //   leading: Icon(
-            //     Icons.settings,
-            //   ),
-            //   title: Text('Settings'),
-            //   onTap: null,
-            // ),
+            Divider(),
+            ListTile(
+              leading: Icon(
+                Icons.system_update,
+              ),
+              title: Text('Update'),
+              onTap: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => update())),
+            ),
             Divider(),
             ListTile(
               leading: Icon(Icons.info_outline),
               title: Text('About'),
               onTap: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => About() )),
+                  context, MaterialPageRoute(builder: (context) => About())),
             ),
           ],
         ),
       ),
-      ),
-
-          appBar: AppBar(elevation: 5,
-            title: Text(
-              'NCOV-19',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            centerTitle: true,
-            backgroundColor: Colors.lightBlueAccent,
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: new Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-            ),
-            bottom: TabBar(labelColor: Colors.white,indicatorColor: Colors.blue[800],dragStartBehavior: DragStartBehavior.start,
-                            indicatorWeight: 3,unselectedLabelColor: Colors.indigoAccent,
-              tabs: [
-                Tab(text: 'INDIA',),
-                Tab(text: 'WORLD',),
-                Tab(text: 'NEWS',),
-              ],
-            ),
-            // title: Text('Tabs Demo'),
-          ),
-          body: TabBarView(
-            children: [
-              FrontPage(),
-              World(),
-              newsPage(),
-              // Icon(Icons.directions_car),
-              // Icon(Icons.directions_transit),
-              // Icon(Icons.directions_bike),
-            ],
-          ),
-          
-        ),
-      );
-    // );
+    );
   }
 }
