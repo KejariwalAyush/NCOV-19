@@ -79,7 +79,7 @@ class Frontpg extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                   margin: EdgeInsets.all(10),
                   width: double.maxFinite,
-                  height: 178,
+                  height: 183,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                       color: Colors.blueGrey[100]),
                   child: Column(
@@ -103,7 +103,7 @@ class Frontpg extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
-                            height: 100.0,width: 105,
+                            height: 105.0,width: 105,
                             decoration: new BoxDecoration(
                               color: new Color(0xFF333366),
                               shape: BoxShape.rectangle,
@@ -122,11 +122,12 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$tcaseind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                                Text('${newtcaseind==0?'':'+$newtcaseind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                               ],
                             ),
                           ),
                           Container(
-                            height: 100.0,width: 105,
+                            height: 105.0,width: 105,
                             decoration: new BoxDecoration(
                               color: new Color(0xFF333366),
                               shape: BoxShape.rectangle,
@@ -145,11 +146,13 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$recovind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                                Text('${newrecovind==0?'':'+$newrecovind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+
                               ],
                             ),
                           ),
                           Container(
-                            height: 100.0,width: 105,
+                            height: 105.0,width: 105,
                             decoration: new BoxDecoration(
                               color: new Color(0xFF333366),
                               shape: BoxShape.rectangle,
@@ -168,6 +171,8 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$deathind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                                Text('${newdeathind==0?'':'+$newdeathind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+
                               ],
                             ),
                           ),
@@ -187,7 +192,7 @@ class Frontpg extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                   margin: EdgeInsets.all(10),
                   width: double.maxFinite,
-                  height: 178,
+                  height: 183,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                       color: Colors.blueGrey[100]),
                   child: Column(
@@ -211,7 +216,7 @@ class Frontpg extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
-                            height: 100.0,width: 105,
+                            height: 105.0,width: 105,
                             decoration: new BoxDecoration(
                               color: new Color(0xFF333366),
                               shape: BoxShape.rectangle,
@@ -230,11 +235,13 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$tcasewld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                                Text('${newcasecont[1]==0?'':'${newcasecont[1]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+
                               ],
                             ),
                           ),
                           Container(
-                            height: 100.0,width: 105,
+                            height: 105.0,width: 105,
                             decoration: new BoxDecoration(
                               color: new Color(0xFF333366),
                               shape: BoxShape.rectangle,
@@ -253,11 +260,13 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$recovwld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                                Text('',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+
                               ],
                             ),
                           ),
                           Container(
-                            height: 100.0,width: 105,
+                            height: 105.0,width: 105,
                             decoration: new BoxDecoration(
                               color: new Color(0xFF333366),
                               shape: BoxShape.rectangle,
@@ -276,6 +285,8 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$deathwld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                                Text('${newdeathcont[1]==0?'':'${newdeathcont[1]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+
                               ],
                             ),
                           ),

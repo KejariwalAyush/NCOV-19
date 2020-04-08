@@ -73,6 +73,7 @@ class India extends StatelessWidget {
                         children: <Widget>[
                           Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                           Text('$tcaseind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                          Text('${newtcaseind==0?'':'+$newtcaseind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                         ],
                       ),
                     ),
@@ -123,6 +124,7 @@ class India extends StatelessWidget {
                         children: <Widget>[
                           Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                           Text('$recovind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                          Text('${newrecovind==0?'':'+$newrecovind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                         ],
                       ),
                     ),
@@ -148,6 +150,7 @@ class India extends StatelessWidget {
                         children: <Widget>[
                           Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                           Text('$deathind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                          Text('${newdeathind==0?'':'+$newdeathind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                         ],
                       ),
                     ),
@@ -179,13 +182,58 @@ class India extends StatelessWidget {
                           DataColumn(label: Text('Recovered'),numeric: true),
                           DataColumn(label: Text('Deaths'),numeric: true,),
                         ],
-                        rows: [for(int i=1;i<states.length;i++)
-                          DataRow(cells:[
-                            DataCell(Text('${states[i]}',softWrap: true,)),
-                            DataCell(Text('${stateData[i]}',)),
-                            DataCell(Text('${stateRecov[i]}')),
-                            DataCell(Text('${stateDeath[i]}',)),
-                          ])
+                        rows: [
+                          for(int i=1;i<states.length;i++)
+                            DataRow(cells:[
+                              DataCell(
+                                RichText(
+                                  text: TextSpan(
+                                    text: '${states[i]}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.white70),
+                                  ),
+                                ),
+                              ),
+                              DataCell(RichText(
+                                text: TextSpan(
+                                    text: '${stateData[i]}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(text: '${newstateData[i]=='0'?'':'\n+${newstateData[i]}'}',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      )
+                                    ]
+                                ),
+                              ),),
+                              DataCell(RichText(
+                                text: TextSpan(
+                                    text: '${stateDeath[i]}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(text: '${newstateDeath[i]=='0'?'':'\n+${newstateDeath[i]}'}',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      )
+                                    ]
+                                ),
+                              ),),
+                              DataCell(RichText(
+                                text: TextSpan(
+                                  text: '${stateRecov[i]}',
+                                  style: TextStyle(fontFamily: fontName,
+                                      color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(text: '${newstateRecov[i]=='0'?' ':'\n+${newstateRecov[i]}'}',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      )
+                                    ]
+                                ),
+                              ),),
+                            ])
                         ],
                       ),
                   ),

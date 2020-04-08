@@ -24,6 +24,7 @@ dependencies:
   splashscreen:
   url_launcher:
   flutter_launcher_icons: ^0.7.0
+#  path_provider: ^1.6.5
   flutter:
     sdk: flutter
 

@@ -6,22 +6,21 @@ import 'dart:convert';
 
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Splash extends StatefulWidget {
   @override
   _SplashState createState() => new _SplashState();
 }
 
-var version = 1.0;
+//var version = 1.0;
 List newslink = List();
 List newslist = List();
 
-int tcaseind = 0, recovind = 0, deathind = 0, actcaseind = 0;
+int tcaseind = 0, recovind = 0, deathind = 0, actcaseind = 0,newtcaseind=0,newrecovind=0,newdeathind=0;
 List states = List();
-List stateData = List();
-List stateDeath = List();
-List stateRecov = List();
+List stateData = List(),newstateData = List();
+List stateDeath = List(),newstateDeath = List();
+List stateRecov = List(),newstateRecov = List();
 List dates = List();
 List datecases = List();
 List datetotcase = List();
@@ -29,30 +28,39 @@ List datetotcase = List();
 int tcasewld =0,
     deathwld =0,
     recovwld =0,
-    actcasewld =0;
-//List contries = List(),
-//    casescont = List(),
-//    deathcont = List(),
-//    recovercont = List();
+    actcasewld =0,
+    newtcasewld=0,
+    newdeathwld=0;
+List contries = List(),
+    casescont = List(),
+    newcasecont = List(),
+    deathcont = List(),
+    newdeathcont = List(),
+    recovercont = List();
 
 List state = List();
 List phone = List();
 
 bool firstcall = true;
 
+var indiaData,newsData,worldData;
+
 class _SplashState extends State<Splash> {
   @override
   void initState() {
     _getThingsOnStartup().then((value){
+
 //      fetchupdate();
       fetchData();
       fetchnews();
       fetchworld();
       fetchhelpline();
       print('Async done');firstcall = false;
+//      setData();
     });
     super.initState();
   }
+
 
   // @override
   // Widget build(BuildContext context) {
@@ -106,18 +114,25 @@ class _SplashState extends State<Splash> {
       datetotcase = List();
       var data = response.body;
       var inddata = jsonDecode(data);
+      indiaData = inddata;
 
 //      print(inddata['statewise'][0]['active']);
       tcaseind = int.parse(inddata['statewise'][0]['confirmed']);
+      newtcaseind =  int.parse(inddata['statewise'][0]['deltaconfirmed']);
       actcaseind = int.parse(inddata['statewise'][0]['active']);
       deathind = int.parse(inddata['statewise'][0]['deaths']);
       recovind = int.parse(inddata['statewise'][0]['recovered']);
+      newdeathind = int.parse(inddata['statewise'][0]['deltadeaths']);
+      newrecovind = int.parse(inddata['statewise'][0]['deltarecovered']);
       for(var i in inddata['statewise'])
         {
           states.add(i['state']);
           stateData.add(i['confirmed']);
           stateDeath.add(i['deaths']);
           stateRecov.add(i['recovered']);
+          newstateData.add(i['deltaconfirmed']);
+          newstateDeath.add(i['deltadeaths']);
+          newstateRecov.add(i['deltarecovered']);
         }
       for(var i in inddata['cases_time_series'])
         {
@@ -155,6 +170,7 @@ class _SplashState extends State<Splash> {
       newslist = List();
       var enc = json.encode(linkMap);
       List newsdata = jsonDecode(enc);
+      newsData = newsdata;
       // print(x.split(new RegExp(r"[a-z]")));//[x.split(new RegExp(r"[a-z]")).length-1]);
       // String x = newsdata[1]['link'];
       // print(x);
@@ -195,24 +211,48 @@ class _SplashState extends State<Splash> {
       }
       var enc = json.encode(linkMap);
       List worlddata = jsonDecode(enc);
+      worldData = worlddata;
+
       tcasewld = int.parse(worlddata[0]['title'].toString().replaceAll(',', ''));
       deathwld = int.parse(worlddata[1]['title'].toString().replaceAll(',', ''));
       recovwld = int.parse(worlddata[2]['title'].toString().replaceAll(',', ''));
       actcasewld = tcasewld-deathwld-recovwld;
-//      for(int i=2;i<22;i++) {
-//        List links2 = document.querySelectorAll(
-//            '#main_table_countries_today > tbody:nth-child(2) > tr:nth-child($i) > td');
-//        List<Map<String, dynamic>> linkMap2 = [];
-//        for (var link in links) {
-//          linkMap.add({
-//            'title': link.text,
-//          });
-//        }
-//        var enc2 = json.encode(linkMap);
-//        List contdata = jsonDecode(enc);
-//
-////        print(contdata);
-//      }
+
+      List linkcont = document.querySelectorAll(
+            'tr');
+      List<Map<String, dynamic>> linkMap2 = [];
+      for (var link in linkcont) {
+//        if(link%12!=0)
+//          link++;
+         linkMap2.add({
+           'title': link.text.toString().split('\n')[1],
+           'cases': link.text.toString().split('\n')[2],
+           'newcase': link.text.toString().split('\n')[3],
+           'deaths': link.text.toString().split('\n')[4],
+           'newdeath':link.text.toString().split('\n')[5],
+           'recovered': link.text.toString().split('\n')[6],
+//           'activecase':link.text,
+//           'serious':link.text,
+//           'cases/1M':link.text,
+//           'death/1M': link.text,
+//           'tests':link.text,
+//           'tests/1M':link.text,
+         });
+      }
+       var enc2 = json.encode(linkMap2);
+       List contname = jsonDecode(enc2);
+//       newtcasewld = contname[1]['newcase'];
+//       newdeathwld = contname[1]['newdeath'];
+       for(var i in contname) {
+         contries.add(i['title']);
+         casescont.add(i['cases']);
+         newcasecont.add(i['newcase']);
+         deathcont.add(i['deaths']);
+         newdeathcont.add(i['newdeath']);
+         recovercont.add(i['recovered']);
+       }
+//       print(contries[3]);
+//       print(contname);
       setState(() {
         isLoading = false;
       });
@@ -301,5 +341,37 @@ class _SplashState extends State<Splash> {
 //      },
 //    );
 //  }
-
+//  void setData(){
+//    var inddata = indiaData;
+//    tcaseind = int.parse(inddata['statewise'][0]['confirmed']);
+//    actcaseind = int.parse(inddata['statewise'][0]['active']);
+//    deathind = int.parse(inddata['statewise'][0]['deaths']);
+//    recovind = int.parse(inddata['statewise'][0]['recovered']);
+//    for(var i in inddata['statewise'])
+//    {
+//      states.add(i['state']);
+//      stateData.add(i['confirmed']);
+//      stateDeath.add(i['deaths']);
+//      stateRecov.add(i['recovered']);
+//    }
+//    for(var i in inddata['cases_time_series'])
+//    {
+//      dates.add(i['date']);
+//      datecases.add(i['dailyconfirmed']);
+//      datetotcase.add(i['totalconfirmed']);
+//    }
+//
+//    var worlddata = worldData;
+//    tcasewld = int.parse(worlddata[0]['title'].toString().replaceAll(',', ''));
+//    deathwld = int.parse(worlddata[1]['title'].toString().replaceAll(',', ''));
+//    recovwld = int.parse(worlddata[2]['title'].toString().replaceAll(',', ''));
+//    actcasewld = tcasewld-deathwld-recovwld;
+//
+//    var newsdata = newsData;
+//    for (var i = 0; i < newsdata.length; i++) {
+//      newslist.add(newsdata[i]['title']);
+//      newslink.add(newsdata[i]['link']);
+//    }
+//
+//  }
 }

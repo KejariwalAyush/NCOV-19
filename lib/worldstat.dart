@@ -156,39 +156,88 @@ class WorldData extends StatelessWidget {
                     Divider(height: 10,),
                     PieChart(),
                     Divider(height: 10,),
-//                    Container(
-//                      alignment: Alignment.topCenter,
-//                      padding: EdgeInsets.all(10),
-////                  margin: EdgeInsets.all(5),
-//                      width: double.maxFinite,
-////                height: ,
-//                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
-//                          color: Colors.blueGrey[300]),
-//                      child: SingleChildScrollView(scrollDirection: Axis.horizontal,
-//                        child:DataTable(
-//                          columnSpacing: 10,
-//                          dataRowHeight: 35,
-//                          headingRowHeight: 50,
-//                          horizontalMargin: 10,
-////                        sortColumnIndex: 1,
-////                        sortAscending: true,
-//                          columns: [
-//                            DataColumn(label: Text('Countries'),),
-//                            DataColumn(label: Text('Cases'),numeric: true,),
-//                            DataColumn(label: Text('Recovered'),numeric: true),
-//                            DataColumn(label: Text('Deaths'),numeric: true,),
-//                          ],
-//                          rows: [for(int i=0;i<10;i++)
-//                            DataRow(cells:[
-//                              DataCell(Text('China',softWrap: true,)),
-//                              DataCell(Text('80000',)),
-//                              DataCell(Text('7000')),
-//                              DataCell(Text('3000')),
-//                            ])
-//                          ],
-//                        ),
-//                      ),
-//                    ),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.all(10),
+//                  margin: EdgeInsets.all(5),
+                      width: double.maxFinite,
+                      height: 400,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                          color: Colors.blueGrey[300]),
+                      child: SingleChildScrollView(scrollDirection: Axis.vertical,
+                        child:Column(children: <Widget>[
+                          Center(child:Text('Stats of Top 30 Countries',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                        DataTable(
+                          columnSpacing: 10,
+                          dataRowHeight: 35,
+                          headingRowHeight: 50,
+                          horizontalMargin: 10,
+//                        sortColumnIndex: 1,
+//                        sortAscending: true,
+                          columns: [
+                            DataColumn(label: Text('Countries'),),
+                            DataColumn(label: Text('Cases'),),
+                            DataColumn(label: Text('Deaths'),),
+                            DataColumn(label: Text('Recovered'),),
+                          ],
+                          rows: [
+                            for(int i=1;i<=30;i++)
+                            DataRow(
+                                cells:[
+                              DataCell(
+                                RichText(
+                                text: TextSpan(
+                                    text: '${contries[i]}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.white70),
+                                ),
+                              ),
+                              ),
+                              DataCell(RichText(
+                                text: TextSpan(
+                                  text: '${casescont[i]}\n',
+                                  style: TextStyle(fontFamily: fontName,
+                                      color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(text: '${newcasecont[i]}',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      )
+                                    ]
+                                ),
+                              ),),
+                              DataCell(RichText(
+                                text: TextSpan(
+                                    text: '${deathcont[i]}\n',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(text: '${newdeathcont[i]}',
+                                        style: TextStyle(
+                                            color: Colors.red, fontSize: 12),
+                                      )
+                                    ]
+                                ),
+                              ),),
+                              DataCell(RichText(
+                                text: TextSpan(
+                                    text: '${recovercont[i]}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.black),
+//                                    children: <TextSpan>[
+//                                      TextSpan(text: '${newcasecont[i]}',
+//                                        style: TextStyle(
+//                                            color: Colors.black38, fontSize: 8),
+//                                      )
+//                                    ]
+                                ),
+                              ),),
+                            ])
+                          ],
+                        ),
+                        ],),
+                      ),
+                    ),
                   ],
                 ),
               )
