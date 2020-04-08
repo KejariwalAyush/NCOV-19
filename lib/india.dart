@@ -184,13 +184,14 @@ class India extends StatelessWidget {
                         ],
                         rows: [
                           for(int i=1;i<states.length;i++)
-                            DataRow(cells:[
+                            DataRow(
+                                cells:[
                               DataCell(
                                 RichText(
                                   text: TextSpan(
                                     text: '${states[i]}',
                                     style: TextStyle(fontFamily: fontName,
-                                        color: Colors.white70),
+                                        color: Colors.deepPurple),
                                   ),
                                 ),
                               ),
@@ -232,8 +233,11 @@ class India extends StatelessWidget {
                                       )
                                     ]
                                 ),
-                              ),),
-                            ])
+                              ),
+                              ),
+                            ],
+//                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
+                            ),
                         ],
                       ),
                   ),
@@ -301,7 +305,7 @@ class PieChart extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "Total data in represented in PIE Chart",
+                    "Total data represented in PIE Chart",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontWeight: FontWeight.bold

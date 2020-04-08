@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 
+import 'data.dart';
+
 class Splash extends StatefulWidget {
   @override
   _SplashState createState() => new _SplashState();
@@ -15,6 +17,8 @@ class Splash extends StatefulWidget {
 //var version = 1.0;
 List newslink = List();
 List newslist = List();
+List newsdate = List();
+List newssubhead = List();
 
 int tcaseind = 0, recovind = 0, deathind = 0, actcaseind = 0,newtcaseind=0,newrecovind=0,newdeathind=0;
 List states = List();
@@ -61,12 +65,6 @@ class _SplashState extends State<Splash> {
     super.initState();
   }
 
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Container();
-  // }
-
   Future _getThingsOnStartup() async {
     await Future.delayed(Duration(seconds: 0));
   }
@@ -74,26 +72,27 @@ class _SplashState extends State<Splash> {
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return new SplashScreen(
-        seconds: 7,
-        navigateAfterSeconds: new Frontpg(),
-        title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
-          style: new TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-              color: Colors.white70,
-          ),
+    // TODO: implement build
+    return SplashScreen(
+      seconds: 8,
+      navigateAfterSeconds: new Frontpg(),
+      title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
+        style: new TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 18.0,
+          color: Colors.white70,
         ),
-        image: new Image.asset('assets/backround1.png',
-          width: double.maxFinite,fit: BoxFit.fitWidth,
-        ),
-        backgroundColor: Colors.redAccent,
-        styleTextUnderTheLoader: new TextStyle(),
-        photoSize: 180.0,
+      ),
+      image: new Image.asset('assets/backround1.png',
+        width: double.maxFinite,fit: BoxFit.fitWidth,
+      ),
+      backgroundColor: Colors.redAccent,
+      styleTextUnderTheLoader: new TextStyle(),
+      photoSize: 180.0,
 //        onClick: ()=>print("Flutter Egypt"),
-        loaderColor: Colors.white,
-        loadingText: Text('LOADING...\nUntil then Sanitize Your Hands!',textAlign: TextAlign.center,
-          style: TextStyle(fontFamily: 'Comic Sans MS',color: Colors.white70,fontSize: 16),),
+      loaderColor: Colors.white,
+      loadingText: Text('LOADING...\nUntil then Sanitize Your Hands!',textAlign: TextAlign.center,
+        style: TextStyle(fontFamily: 'Comic Sans MS',color: Colors.white70,fontSize: 16),),
     );
   }
 
@@ -125,21 +124,21 @@ class _SplashState extends State<Splash> {
       newdeathind = int.parse(inddata['statewise'][0]['deltadeaths']);
       newrecovind = int.parse(inddata['statewise'][0]['deltarecovered']);
       for(var i in inddata['statewise'])
-        {
-          states.add(i['state']);
-          stateData.add(i['confirmed']);
-          stateDeath.add(i['deaths']);
-          stateRecov.add(i['recovered']);
-          newstateData.add(i['deltaconfirmed']);
-          newstateDeath.add(i['deltadeaths']);
-          newstateRecov.add(i['deltarecovered']);
-        }
+      {
+        states.add(i['state']);
+        stateData.add(i['confirmed']);
+        stateDeath.add(i['deaths']);
+        stateRecov.add(i['recovered']);
+        newstateData.add(i['deltaconfirmed']);
+        newstateDeath.add(i['deltadeaths']);
+        newstateRecov.add(i['deltarecovered']);
+      }
       for(var i in inddata['cases_time_series'])
-        {
-          dates.add(i['date']);
-          datecases.add(i['dailyconfirmed']);
-          datetotcase.add(i['totalconfirmed']);
-        }
+      {
+        dates.add(i['date']);
+        datecases.add(i['dailyconfirmed']);
+        datetotcase.add(i['totalconfirmed']);
+      }
       setState(() {
         isLoading = false;
       });
@@ -171,22 +170,32 @@ class _SplashState extends State<Splash> {
       var enc = json.encode(linkMap);
       List newsdata = jsonDecode(enc);
       newsData = newsdata;
-      // print(x.split(new RegExp(r"[a-z]")));//[x.split(new RegExp(r"[a-z]")).length-1]);
-      // String x = newsdata[1]['link'];
-      // print(x);
-      // int i=22;
       for (var i = 0; i < newsdata.length; i++) {
         newslist.add(newsdata[i]['title']);
         newslink.add(newsdata[i]['link']);
       }
-      // while(i<30) {
-      //   newslist.add(x);
-      //   x=newsdata[i]['title'];
-      //   i++;//print(x);
-      // }
-    setState(() {
-      isLoading = false;
-    });
+
+      List links2 = document.querySelectorAll('div > p');
+      List<Map<String, String>> linkMap2 = [];
+      // print(linkMap);
+      for (var link in links2) {
+        linkMap2.add({
+          'title': link.text,
+//          'subhead': links2[link+1].text,
+        });
+      }
+      var enc2 = json.encode(linkMap2);
+      List newsdata2 = jsonDecode(enc2);
+      for (var i = 0; i < newsdata.length; i+=2) {
+        newsdate.add(newsdata2[i]['title']);
+        newssubhead.add(newsdata2[i+1]['title']);
+      }
+
+//      print(newssubhead);
+
+      setState(() {
+        isLoading = false;
+      });
     } else {
       throw Exception('Failed to load');
     }
@@ -219,38 +228,38 @@ class _SplashState extends State<Splash> {
       actcasewld = tcasewld-deathwld-recovwld;
 
       List linkcont = document.querySelectorAll(
-            'tr');
+          'tr');
       List<Map<String, dynamic>> linkMap2 = [];
       for (var link in linkcont) {
 //        if(link%12!=0)
 //          link++;
-         linkMap2.add({
-           'title': link.text.toString().split('\n')[1],
-           'cases': link.text.toString().split('\n')[2],
-           'newcase': link.text.toString().split('\n')[3],
-           'deaths': link.text.toString().split('\n')[4],
-           'newdeath':link.text.toString().split('\n')[5],
-           'recovered': link.text.toString().split('\n')[6],
+        linkMap2.add({
+          'title': link.text.toString().split('\n')[1],
+          'cases': link.text.toString().split('\n')[2],
+          'newcase': link.text.toString().split('\n')[3],
+          'deaths': link.text.toString().split('\n')[4],
+          'newdeath':link.text.toString().split('\n')[5],
+          'recovered': link.text.toString().split('\n')[6],
 //           'activecase':link.text,
 //           'serious':link.text,
 //           'cases/1M':link.text,
 //           'death/1M': link.text,
 //           'tests':link.text,
 //           'tests/1M':link.text,
-         });
+        });
       }
-       var enc2 = json.encode(linkMap2);
-       List contname = jsonDecode(enc2);
+      var enc2 = json.encode(linkMap2);
+      List contname = jsonDecode(enc2);
 //       newtcasewld = contname[1]['newcase'];
 //       newdeathwld = contname[1]['newdeath'];
-       for(var i in contname) {
-         contries.add(i['title']);
-         casescont.add(i['cases']);
-         newcasecont.add(i['newcase']);
-         deathcont.add(i['deaths']);
-         newdeathcont.add(i['newdeath']);
-         recovercont.add(i['recovered']);
-       }
+      for(var i in contname) {
+        contries.add(i['title']);
+        casescont.add(i['cases']);
+        newcasecont.add(i['newcase']);
+        deathcont.add(i['deaths']);
+        newdeathcont.add(i['newdeath']);
+        recovercont.add(i['recovered']);
+      }
 //       print(contries[3]);
 //       print(contname);
       setState(() {
@@ -286,6 +295,7 @@ class _SplashState extends State<Splash> {
       throw Exception('Failed to load');
     }
   }
+
 
 //  fetchupdate() async {
 ////    setState(() {

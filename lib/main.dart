@@ -5,6 +5,9 @@ import 'package:flutter_app/splash.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  void initState() {
+    Splash();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

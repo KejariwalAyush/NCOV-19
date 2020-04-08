@@ -54,7 +54,7 @@ class NewsData extends StatelessWidget {
                     style: TextStyle(fontFamily: fontName,
                         color: Colors.black54, fontSize: 18),
                     children: <TextSpan>[
-                      TextSpan(text: 'on tabs to read more about news',
+                      TextSpan(text: 'on tabs to read the article.',
                         style: TextStyle(
                             color: Colors.black38, fontSize: 16),
                       )
@@ -84,8 +84,23 @@ class NewsData extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Text('#  \n'+newslist[st],softWrap: true,
-                        style: TextStyle(fontSize: 20,color: Colors.white70),),
+                      child: RichText(
+                        text: TextSpan(
+                            text: '${newsdate[st]}',
+                            style: TextStyle(fontFamily: fontName,
+                                color: Colors.grey[400], fontSize: 15),
+                            children: <TextSpan>[
+                              TextSpan(text: '\n${newslist[st]}',
+                                style: TextStyle(
+                                    color: Colors.teal[200], fontSize: 20,fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(text: '\n${newssubhead[st]}',
+                                style: TextStyle(
+                                    color: Colors.white70, fontSize: 16),
+                              ),
+                            ]
+                        ),
+                      ),
                     ),
                     Divider(height: 2,),
                 ],

@@ -189,7 +189,7 @@ class WorldData extends StatelessWidget {
                                 text: TextSpan(
                                     text: '${contries[i]}',
                                     style: TextStyle(fontFamily: fontName,
-                                        color: Colors.white70),
+                                        color: Colors.deepPurple),
                                 ),
                               ),
                               ),
@@ -291,7 +291,7 @@ class PieChart extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  "Total data in represented in PIE Chart",
+                  "Total data represented in PIE Chart",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold
