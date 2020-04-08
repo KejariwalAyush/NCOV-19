@@ -164,7 +164,7 @@ class India extends StatelessWidget {
                   padding: EdgeInsets.all(10),
 //                  margin: EdgeInsets.all(5),
                   width: double.maxFinite,
-                  height: 400,
+                  height: 350,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                       color: Colors.blueGrey[300]),
                   child: SingleChildScrollView(
