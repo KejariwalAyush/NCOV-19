@@ -57,7 +57,7 @@ class Frontpg extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10),
                 child:RichText(
                   text: TextSpan(
-                      text: 'Tap/Press ',
+                      text: 'TAP ',
                       style: TextStyle(fontFamily: fontName,
                           color: Colors.black54, fontSize: 18),
                       children: <TextSpan>[

@@ -179,8 +179,8 @@ class India extends StatelessWidget {
                         columns: [
                           DataColumn(label: Text('States'),),
                           DataColumn(label: Text('Cases'),numeric: true,),
-                          DataColumn(label: Text('Recovered'),numeric: true),
-                          DataColumn(label: Text('Deaths'),numeric: true,),
+                          DataColumn(label: Text('Deaths'),numeric: true),
+                          DataColumn(label: Text('Recovered'),numeric: true,),
                         ],
                         rows: [
                           for(int i=1;i<states.length;i++)
