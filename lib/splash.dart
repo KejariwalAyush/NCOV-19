@@ -69,18 +69,19 @@ class _SplashState extends State<Splash> {
     return new SplashScreen(
         seconds: 7,
         navigateAfterSeconds: new Frontpg(),
-        title: new Text('NCOV-19\nA covid-19 tracker',textAlign: TextAlign.center,
+        title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
           style: new TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20.0,
-              color: Colors.white,
-          ),),
-        image: new Image.asset('assets/background.png',
-          width: double.maxFinite,fit: BoxFit.fill,
+              fontSize: 18.0,
+              color: Colors.white70,
+          ),
+        ),
+        image: new Image.asset('assets/backround1.png',
+          width: double.maxFinite,fit: BoxFit.fitWidth,
         ),
         backgroundColor: Colors.redAccent,
         styleTextUnderTheLoader: new TextStyle(),
-        photoSize: 200.0,
+        photoSize: 180.0,
 //        onClick: ()=>print("Flutter Egypt"),
         loaderColor: Colors.white,
         loadingText: Text('LOADING...\nUntil then Sanitize Your Hands!',textAlign: TextAlign.center,
@@ -230,7 +231,7 @@ class _SplashState extends State<Splash> {
     if (response.statusCode == 200) {
       state = List();phone = List();
       var list = json.decode(response.body) ;
-      print(list['data']);
+//      print(list['data']);
 
       for (var stats in list['data']['contacts']['regional']) {
         state.add(stats['loc']);//+' : '+stats['']);

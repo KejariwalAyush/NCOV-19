@@ -40,7 +40,7 @@ class Frontpg extends StatelessWidget {
                           color: Colors.white,
                           fontSize: 20.0,
                         )),
-                    background: Image(image: AssetImage('assets/background.png',),
+                    background: Image(image: AssetImage('assets/backround1.png',),
                       fit: BoxFit.cover,
                     ),
 //                      "https://github.com/KejariwalAyush/NCOV-19/blob/master/assets/icon.png",
@@ -53,6 +53,22 @@ class Frontpg extends StatelessWidget {
           body: SingleChildScrollView(
            child: Column(
             children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+                child:RichText(
+                  text: TextSpan(
+                      text: 'Tap/Press ',
+                      style: TextStyle(fontFamily: fontName,
+                          color: Colors.black54, fontSize: 18),
+                      children: <TextSpan>[
+                        TextSpan(text: 'on tabs to know more!',
+                          style: TextStyle(
+                              color: Colors.black38, fontSize: 16),
+                        )
+                      ]
+                  ),
+                ),
+              ),
               InkWell(
                onTap: (){
                  Navigator.push(context, MaterialPageRoute(builder: (context) => India()));

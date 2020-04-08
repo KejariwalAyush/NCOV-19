@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:869726090682:android:c042fbd4ed9ed7ca939983",
+        "mobilesdk_app_id": "1:869726090682:android:c37ca905d1dd8e10939983",
         "android_client_info": {
-          "package_name": "com.example.ncov19"
+          "package_name": "com.example.flutter_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "869726090682-indmjnqr27kiide892ldmjli86r2mjki.apps.googleusercontent.com",
+          "client_id": "869726090682-iqaubbpq066u8q2otn3sif1jivcmiufe.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.ncov19",
+            "package_name": "com.example.flutter_app",
             "certificate_hash": "eea69ea58db6cc7025fac59af20b8c42425c22a8"
           }
         },
