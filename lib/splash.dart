@@ -67,7 +67,7 @@ class _SplashState extends State<Splash> {
   }
 
   Future _getThingsOnStartup() async {
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 10));
   }
   int sec = 15;
   var isLoading = false;
@@ -75,7 +75,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SplashScreen(
-      seconds: 8,//isLoading?sec:1,
+      seconds: 20,//isLoading?sec:1,
       navigateAfterSeconds: Frontpg(),
       title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
         style: new TextStyle(
@@ -103,8 +103,9 @@ class _SplashState extends State<Splash> {
     });
 
     final Response response = await get("https://api.covid19india.org/data.json");
+    final Response response2 = await get("https://api.covid19india.org/state_district_wise.json");
     // final Response helpno = await get("https://covidout.in/helpline");
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && response2.statusCode == 200) {
       states = List();
       stateDeath = List();
       stateData = List();
@@ -114,6 +115,9 @@ class _SplashState extends State<Splash> {
       datetotcase = List();
       var data = response.body;
       var inddata = jsonDecode(data);
+
+      var data2 = response2.body;
+      var stdata = jsonDecode(data2);
       indiaData = inddata;
 
 //      print(inddata['statewise'][0]['active']);
@@ -140,6 +144,27 @@ class _SplashState extends State<Splash> {
         datecases.add(i['dailyconfirmed']);
         datetotcase.add(i['totalconfirmed']);
       }
+
+      List<Map<String,dynamic>> indDataMap = [
+        {'overall':{inddata['statewise'][0]},
+          'timewisedata':{inddata['cases_time_series']},
+          'statewise':{
+            for(int i=1;i< states.length;i++){
+              'state': states[i],
+              'confirmed': stateData[i],
+              'death': stateDeath[i],
+              'recovered': stateRecov[i],
+              'newconfirmed': newstateData[i],
+              'newdeath': newstateDeath[i],
+              'newrecovered': newstateRecov[i],
+              'districtdata': stateData[i]=='0'?null:stdata['${states[i].toString()}']['districtData'],
+            }
+          },
+        }];
+//      print(indDataMap[0]['statewise']);
+//      print(states[1]);
+//      print(stdata['${states[1].toString()}']['districtData']);
+
       setState(() {
         print('india data fetched');
         isLoading = false;
@@ -156,6 +181,7 @@ class _SplashState extends State<Splash> {
 
     final Response response = await get("https://indianexpress.com/about/coronavirus/");
     if (response.statusCode == 200) {
+      newsAllData = List();
       var data = response.body;
       var document = parse(response.body);
       List links = document.querySelectorAll('h3 > a');
@@ -211,7 +237,7 @@ class _SplashState extends State<Splash> {
         });
       var encodeNews = json.encode(newsMap);
       newsAllData = jsonDecode(encodeNews);
-//      print(newsAllData[1]);
+//      print(newsAllData);
 //      if(newsAllData.length!=0)
 
       setState(() {
@@ -285,6 +311,7 @@ class _SplashState extends State<Splash> {
 //       print(contries[3]);
 //       print(contname);
       setState(() {
+        print('helpline fetched');
         isLoading = false;
       });
     } else {
@@ -311,6 +338,7 @@ class _SplashState extends State<Splash> {
       }
 
       setState(() {
+        print('world data fetched');
         isLoading = false;
       });
     } else {
