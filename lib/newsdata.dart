@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_app/splash.dart';
+import 'package:flutter_placeholder_textlines/placeholder_lines.dart';
 
 
 class NewsData extends StatelessWidget {
@@ -62,9 +63,10 @@ class NewsData extends StatelessWidget {
                 ),
               ),
               Divider(height: 20,),
-              for (var st=0;st< newslist.length;st++)
+//              newslist.length!=0?{
+              for (var news in newsAllData)
               InkWell(
-                onLongPress: ()=>_launchURL(newslink[st]),
+                onLongPress: ()=>_launchURL(news['link']),
                 child:Column(
                   children: <Widget>[
                     Container(
@@ -84,28 +86,58 @@ class NewsData extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: RichText(
-                        text: TextSpan(
-                            text: '${newsdate[st]}',
-                            style: TextStyle(fontFamily: fontName,
-                                color: Colors.grey[400], fontSize: 15),
-                            children: <TextSpan>[
-                              TextSpan(text: '\n${newslist[st]}',
-                                style: TextStyle(
-                                    color: Colors.teal[200], fontSize: 20,fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(text: '\n${newssubhead[st]}',
-                                style: TextStyle(
-                                    color: Colors.white70, fontSize: 16),
-                              ),
-                            ]
-                        ),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Center(child: Image.network(news['image'],height: 170,),),
+                          RichText(
+                            text: TextSpan(
+                                text: '${news['date']}',
+                                style: TextStyle(fontFamily: fontName,
+                                    color: Colors.grey[400], fontSize: 15),
+                                children: <TextSpan>[
+                                  TextSpan(text: '\n${news['title']}',
+                                    style: TextStyle(
+                                        color: Colors.teal[200], fontSize: 20,fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(text: '\n${news['info']}',
+                                    style: TextStyle(
+                                        color: Colors.white70, fontSize: 16),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Divider(height: 2,),
                 ],
                 ),
-              ),
+              ),//}:
+//              Material(
+//                borderRadius: BorderRadius.circular(10),
+//                elevation: 9,
+//                child: Container(
+//                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+//                  width: 300,
+//                  child: Row(
+//                    children: <Widget>[
+//                      Container(
+//                        margin: EdgeInsets.only(right: 16),
+//                        width: 70,
+//                        height: 70,
+//                        decoration: BoxDecoration(color: Colors.grey.withOpacity(.6), ),
+//                        child: Center(child: Icon(Icons.photo_size_select_actual, color: Colors.white, size: 38,),),
+//                      ),
+//                      Expanded(
+//                        child: PlaceholderLines(
+//                          count: 3,animate: true,
+//                        ),
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//              ),
               Center(
                 child: Text('NEWS Source : https://indianexpress.com/',textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),),

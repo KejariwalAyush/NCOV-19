@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 
-import 'data.dart';
+//import 'data.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -19,6 +19,7 @@ List newslink = List();
 List newslist = List();
 List newsdate = List();
 List newssubhead = List();
+List newsAllData = List();
 
 int tcaseind = 0, recovind = 0, deathind = 0, actcaseind = 0,newtcaseind=0,newrecovind=0,newdeathind=0;
 List states = List();
@@ -66,16 +67,16 @@ class _SplashState extends State<Splash> {
   }
 
   Future _getThingsOnStartup() async {
-    await Future.delayed(Duration(seconds: 0));
+    await Future.delayed(Duration(seconds: 5));
   }
-
+  int sec = 15;
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return SplashScreen(
-      seconds: 8,
-      navigateAfterSeconds: new Frontpg(),
+      seconds: 8,//isLoading?sec:1,
+      navigateAfterSeconds: Frontpg(),
       title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
         style: new TextStyle(
           fontWeight: FontWeight.bold,
@@ -140,6 +141,7 @@ class _SplashState extends State<Splash> {
         datetotcase.add(i['totalconfirmed']);
       }
       setState(() {
+        print('india data fetched');
         isLoading = false;
       });
     } else {
@@ -181,7 +183,6 @@ class _SplashState extends State<Splash> {
       for (var link in links2) {
         linkMap2.add({
           'title': link.text,
-//          'subhead': links2[link+1].text,
         });
       }
       var enc2 = json.encode(linkMap2);
@@ -191,9 +192,30 @@ class _SplashState extends State<Splash> {
         newssubhead.add(newsdata2[i+1]['title']);
       }
 
-//      print(newssubhead);
+      List links3 = document.querySelectorAll('div.details > div.about-thumb > a > noscript ');
+      List img = [];
+      for(var link in links3) {
+        String x = link.text;
+        img.add(x.substring(x.indexOf('src')+5,x.indexOf('class')-2));
+      }
+//      print(img);
+
+      List<Map<String,String>> newsMap = [];
+      for(int i=0;i<newsdata.length;i++)
+        newsMap.add({
+          'title': newslist[i],
+          'link': newslink[i],
+          'date': newsdate[i],
+          'info': newssubhead[i],
+          'image': img[i],
+        });
+      var encodeNews = json.encode(newsMap);
+      newsAllData = jsonDecode(encodeNews);
+//      print(newsAllData[1]);
+//      if(newsAllData.length!=0)
 
       setState(() {
+        print('news fetched');
         isLoading = false;
       });
     } else {
