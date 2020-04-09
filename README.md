@@ -16,8 +16,4 @@ This app is made with a poupose to aware you, not to scare you/ So, take precaut
 ![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/screenshot.jpg)
 
 ## Source
-The data used in app has been taken from different sources like wikipedia,
-covidout.in,
-cov2019.live. 
-indianexpress,
-mohfw.gov.in
+The data used in app has been taken from multiple sources official as well as unofficial. 
