@@ -89,7 +89,7 @@ class NewsData extends StatelessWidget {
                       child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Center(child: Image.network(news['image'],height: 170,),),
+                          Center(child: news['image']!=null?Image.network(news['image'],height: 170,):Icon(Icons.image,size: 100,),),
                           RichText(
                             text: TextSpan(
                                 text: '${news['date']}',

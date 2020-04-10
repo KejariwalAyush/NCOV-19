@@ -166,7 +166,7 @@ class WorldData extends StatelessWidget {
                           color: Colors.blueGrey[300]),
                       child: SingleChildScrollView(scrollDirection: Axis.vertical,
                         child:Column(children: <Widget>[
-                          Center(child:Text('Stats of Top 30 Countries',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                          Center(child:Text('Stats of Top 50 Countries',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
                         DataTable(
                           columnSpacing: 10,
                           dataRowHeight: 35,
@@ -181,7 +181,7 @@ class WorldData extends StatelessWidget {
                             DataColumn(label: Text('Recovered'),),
                           ],
                           rows: [
-                            for(int i=1;i<=30;i++)
+                            for(int i=8;i<=58;i++)
                             DataRow(
                                 cells:[
                               DataCell(

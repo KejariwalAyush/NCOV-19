@@ -53,6 +53,7 @@ class Frontpg extends StatelessWidget {
           body: SingleChildScrollView(
            child: Column(
             children: <Widget>[
+              //Alert(),
               Padding(
                 padding: EdgeInsets.only(top: 10),
                 child:RichText(
@@ -235,7 +236,7 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$tcasewld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                                Text('${newcasecont[1]==0?'':'${newcasecont[1]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                Text('${newcasecont[1]==0?'':'^${newcasecont[1]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 
                               ],
                             ),
@@ -260,7 +261,7 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$recovwld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                                Text('',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                Text('',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 
                               ],
                             ),
@@ -285,7 +286,7 @@ class Frontpg extends StatelessWidget {
                               children: <Widget>[
                                 Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                                 Text('$deathwld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                                Text('${newdeathcont[1]==0?'':'${newdeathcont[1]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                Text('${newdeathcont[1]==0?'':'^${newdeathcont[1]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 
                               ],
                             ),
@@ -425,6 +426,23 @@ class Frontpg extends StatelessWidget {
                       style: TextStyle(fontSize: 20,color: Colors.black,),
                       children: <TextSpan>[
                         TextSpan(text: 'GitHub',
+                            style: TextStyle(
+                                color: Colors.blueAccent, fontSize: 20),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () { _launchURL("https://github.com/KejariwalAyush/NCOV-19");}
+//                      ) // Not Working on click of url
+                        )
+                      ]
+                  ),
+                ),
+              ),
+              Divider(),
+              Center(
+                child: RichText(
+                  text: TextSpan(text: 'Version ',
+                      style: TextStyle(fontSize: 20,color: Colors.black,),
+                      children: <TextSpan>[
+                        TextSpan(text: '$version',
                             style: TextStyle(
                                 color: Colors.blueAccent, fontSize: 20),
                             recognizer: TapGestureRecognizer()

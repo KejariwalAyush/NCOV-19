@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 
 class India extends StatelessWidget {
   static const String fontName = 'Comfortaa';
+//  onSort(int columnIndex) {
+//    if (columnIndex == 1) {
+//      stateData.sort();
+//    }
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +50,11 @@ class India extends StatelessWidget {
                         TextSpan(text: ' Stats',
                           style: TextStyle(
                               color: Colors.black38, fontSize: 20),
-                        )
+                        ),
+//                        TextSpan(text: '\nLast Updated on: ${indAllData[0]['overall']['lastupdatedtime']}',
+//                          style: TextStyle(
+//                              color: Colors.black38, fontSize: 20),
+//                        )
                       ]
                   ),
                 ),
@@ -69,11 +80,13 @@ class India extends StatelessWidget {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          Text('$tcaseind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                          Text('${newtcaseind==0?'':'+$newtcaseind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                          RichText(text:TextSpan(text:'$tcaseind',style: TextStyle(fontSize: 20,color: Colors.white),
+                            children: <TextSpan>[TextSpan(text:'${newtcaseind==0?'':' +$newtcaseind'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -95,7 +108,7 @@ class India extends StatelessWidget {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Text('Active Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
                           Text('$actcaseind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
@@ -120,11 +133,13 @@ class India extends StatelessWidget {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          Text('$recovind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                          Text('${newrecovind==0?'':'+$newrecovind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                          RichText(text:TextSpan(text:'$recovind',style: TextStyle(fontSize: 20,color: Colors.white),
+                            children: <TextSpan>[TextSpan(text:'${newrecovind==0?'':' +$newrecovind'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -146,11 +161,13 @@ class India extends StatelessWidget {
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          Text('$deathind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                          Text('${newdeathind==0?'':'+$newdeathind'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                          RichText(text:TextSpan(text:'$deathind',style: TextStyle(fontSize: 20,color: Colors.white),
+                            children: <TextSpan>[TextSpan(text:'${newdeathind==0?'':' +$newdeathind'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -174,11 +191,16 @@ class India extends StatelessWidget {
                         dataRowHeight: 30,
                         headingRowHeight: 50,
                         horizontalMargin: 10,
-//                        sortColumnIndex: 1,
-//                        sortAscending: true,
+                        sortColumnIndex: 1,
+                        sortAscending: true,
                         columns: [
                           DataColumn(label: Text('States'),),
                           DataColumn(label: Text('Cases'),numeric: true,),
+//                            onSort: (columnIndex, ascending) {
+////                            setState(() {
+////                            sort = !sort;
+////                            });
+//                            onSort(columnIndex);}),
                           DataColumn(label: Text('Deaths'),numeric: true),
                           DataColumn(label: Text('Recovered'),numeric: true,),
                         ],
@@ -187,12 +209,12 @@ class India extends StatelessWidget {
                             DataRow(
                                 cells:[
                               DataCell(
-                                RichText(
-                                  text: TextSpan(
-                                    text: '${states[i]}',
-                                    style: TextStyle(fontFamily: fontName,
-                                        color: Colors.deepPurple),
-                                  ),
+                                 RichText(
+                                    text: TextSpan(
+                                      text: '${states[i]}',
+                                      style: TextStyle(fontFamily: fontName,
+                                          color: Colors.deepPurple),
+                                    ),
                                 ),
                               ),
                               DataCell(RichText(

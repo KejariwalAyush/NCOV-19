@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widget.dart';
+import 'package:package_info/package_info.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'dart:convert';
 
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //import 'data.dart';
 
@@ -30,6 +33,9 @@ List dates = List();
 List datecases = List();
 List datetotcase = List();
 
+var indAllData = List();
+var distdata=List();
+
 int tcasewld =0,
     deathwld =0,
     recovwld =0,
@@ -46,20 +52,31 @@ List contries = List(),
 List state = List();
 List phone = List();
 
+String appName = 'NCOV-19';
+String packageName ;
+String version = '1.0';
+String buildNumber ;
+String updatelink;
+String latestversion = version;
+bool isUpdateAvailable = false;
+
+
 bool firstcall = true;
 
 var indiaData,newsData,worldData;
 
 class _SplashState extends State<Splash> {
+
   @override
   void initState() {
     _getThingsOnStartup().then((value){
 
-//      fetchupdate();
-      fetchData();
+      fetchupdate();
       fetchnews();
+      fetchData();
       fetchworld();
       fetchhelpline();
+      fetchnews();
       print('Async done');firstcall = false;
 //      setData();
     });
@@ -67,16 +84,17 @@ class _SplashState extends State<Splash> {
   }
 
   Future _getThingsOnStartup() async {
-    await Future.delayed(Duration(seconds: 10));
+    await Future.delayed(Duration(seconds: 0));
   }
   int sec = 15;
   var isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return SplashScreen(
-      seconds: 20,//isLoading?sec:1,
-      navigateAfterSeconds: Frontpg(),
+      seconds: 10,//isLoading?sec:1,
+      navigateAfterSeconds:Frontpg(),
       title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
         style: new TextStyle(
           fontWeight: FontWeight.bold,
@@ -92,7 +110,7 @@ class _SplashState extends State<Splash> {
       photoSize: 180.0,
 //        onClick: ()=>print("Flutter Egypt"),
       loaderColor: Colors.white,
-      loadingText: Text('LOADING...\nUntil then Sanitize Your Hands!',textAlign: TextAlign.center,
+      loadingText: Text('LOADING...\nUntil then Sanitize Your Hands!\n\nVersion: $version',textAlign: TextAlign.center,
         style: TextStyle(fontFamily: 'Comic Sans MS',color: Colors.white70,fontSize: 16),),
     );
   }
@@ -113,11 +131,16 @@ class _SplashState extends State<Splash> {
       dates = List();
       datecases = List();
       datetotcase = List();
+
+//      indAllData = List();
+
       var data = response.body;
       var inddata = jsonDecode(data);
 
       var data2 = response2.body;
       var stdata = jsonDecode(data2);
+//      distdata = stdata;
+//      print(distdata[0]['Kerala']);
       indiaData = inddata;
 
 //      print(inddata['statewise'][0]['active']);
@@ -145,23 +168,28 @@ class _SplashState extends State<Splash> {
         datetotcase.add(i['totalconfirmed']);
       }
 
-      List<Map<String,dynamic>> indDataMap = [
-        {'overall':{inddata['statewise'][0]},
-          'timewisedata':{inddata['cases_time_series']},
-          'statewise':{
-            for(int i=1;i< states.length;i++){
-              'state': states[i],
-              'confirmed': stateData[i],
-              'death': stateDeath[i],
-              'recovered': stateRecov[i],
-              'newconfirmed': newstateData[i],
-              'newdeath': newstateDeath[i],
-              'newrecovered': newstateRecov[i],
-              'districtdata': stateData[i]=='0'?null:stdata['${states[i].toString()}']['districtData'],
-            }
-          },
-        }];
-//      print(indDataMap[0]['statewise']);
+//      List<Map<String,dynamic>> indDataMap =[
+//        {'overall':inddata['statewise'][0],
+//          'statewise':[
+//            for(int i=1;i< states.length;i++){
+//              'state': states[i],
+//              'confirmed': stateData[i],
+//              'death': stateDeath[i],
+//              'recovered': stateRecov[i],
+//              'newconfirmed': newstateData[i],
+//              'newdeath': newstateDeath[i],
+//              'newrecovered': newstateRecov[i],
+////              'districtdata': stateData[i]=='0'?null:stdata['${states[i].toString()}']['districtData'],
+//            },
+//          ],
+//          'districtwisedata': stdata,
+//          'timewisedata':inddata['cases_time_series'],
+//        },
+//      ];
+//      var encode = json.encode(indDataMap.toString());
+//      indAllData = jsonDecode(encode);
+//      print(indAllData);
+//      print(indAllData[0]['overall']);
 //      print(states[1]);
 //      print(stdata['${states[1].toString()}']['districtData']);
 
@@ -222,7 +250,11 @@ class _SplashState extends State<Splash> {
       List img = [];
       for(var link in links3) {
         String x = link.text;
-        img.add(x.substring(x.indexOf('src')+5,x.indexOf('class')-2));
+//        print(x);
+        if(x.contains('class'))
+          img.add(x.substring(x.indexOf('src')+5,x.indexOf('class')-2));
+        else
+          img.add(null);
       }
 //      print(img);
 
@@ -347,60 +379,148 @@ class _SplashState extends State<Splash> {
   }
 
 
-//  fetchupdate() async {
-////    setState(() {
-////      isLoading = true;
-////    });
-//
-//    final Response response = await get('https://github.com/KejariwalAyush/NCOV-19/releases/latest');
-//    if (response.statusCode == 200)
-////    {
-//      var data = response.body;
+  fetchupdate() async {
+    setState(() {
+      isLoading = true;
+    });
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    appName = packageInfo.appName;
+    packageName = packageInfo.packageName;
+    version = packageInfo.version;
+    buildNumber = packageInfo.buildNumber;
+
+    final Response response = await get('https://github.com/KejariwalAyush/NCOV-19/releases/latest');
+    if (response.statusCode == 200) {
+      var data = response.body;
+      var document = parse(response.body);
+      List links = document.querySelectorAll('div > ul > li > a > span ');
+      List<Map<String, String>> linkMap = [];
+      for (var link in links) {
+        linkMap.add({
+          'title': link.text,
+        });
+      }
+      var dec = jsonDecode(json.encode(linkMap));
+      latestversion = dec[6]['title'];
+      print(latestversion);
+
+      List links2 = document.querySelectorAll('details > div > div > div > a');
+      List<Map<String, String>> linkMap2 = [];
+      for (var link in links2) {
+        linkMap2.add({
+          'title': 'https://github.com'+link.attributes['href'],
+        });
+      }
+      var dec2 = jsonDecode(json.encode(linkMap2));
+      updatelink = dec2[0]['title'];
+      print(updatelink);
+
+      if(version.compareTo(latestversion)==1){
+        print('update available');
+        isUpdateAvailable=true;
+        Alert(
+          context: context,
+          type: AlertType.none,
+          title: "UPDATE Available!",
+          desc: "Version: $latestversion\nAfter downloading apk install it.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "UPDATE",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => {_launchURL(updatelink)},
+              color: Color(0xFF333366),
+            ),
+//            DialogButton(
+//              child: Text(
+//                "Cancel",
+//                style: TextStyle(color: Colors.white, fontSize: 20),
+//              ),
+//              onPressed: () => Navigator.pop(context),
+//              color: Colors.blueGrey,
+//            )
+          ],
+        ).show();
+      }
+      else {
+        print('Up-to-Date');
+        isUpdateAvailable = false;
+      }
+//      if(!isUpdateAvailable)
+//        {
+//          Alert(
+//            context: context,
+//            type: AlertType.warning,
+//            title: "UPDATE Available",
+//            desc: "Version: $latestversion\nDownload & install latest version of the app\nUpdates make your app better",
+//            buttons: [
+//              DialogButton(
+//                child: Text(
+//                  "UPDATE",
+//                  style: TextStyle(color: Colors.white, fontSize: 20),
+//                ),
+//                onPressed:  _launchURL(updatelink),
+//                color: Color(0xFF333366),
+//              ),
+//              DialogButton(
+//                child: Text(
+//                  "Cancel",
+//                  style: TextStyle(color: Colors.white, fontSize: 20),
+//                ),
+//                onPressed: () => Navigator.pop(context),
+//                color: Color(0xFF333366),
+//              )
+//            ],
+//          ).show();
+//        }
 //      if(version< )
+    // details > div > div > div > a
 //      _showDialog();
-//
-////      setState(() {
-////        isLoading = false;
-////      });
-////    } else {
-////      throw Exception('Failed to load');
-////    }
-//  }
 
-//  _launchURL(String url) async {
-//    // const url = 'https://flutter.dev';
-//    if (await canLaunch(url)) {
-//      await launch(url);
-//    } else {
-//      throw 'Could not launch $url';
-//    }
-//    return;
-//  }
+      setState(() {
+        isLoading = false;
+      });
+    } else {
+      throw Exception('Failed to load');
+    }
+  }
 
-//  void _showDialog() {
-//    // flutter defined function
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        // return object of type Dialog
-//        return AlertDialog(
-//          title: new Text("UPDATE Available"),
-//          content: new Text("Download & install latest version of the app"),
-//          actions: <Widget>[
-//            new FlatButton(onPressed: _launchURL('https://github.com/KejariwalAyush/NCOV-19/blob/master/app-release.apk?raw=true'),
-//                child: new Text('Update',style: TextStyle(color: Colors.blueAccent,),))
-//            // usually buttons at the bottom of the dialog
-//            new FlatButton(
-//              child: new Text("Cancel"),
-//              onPressed: () {
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
+  _launchURL(String url) async {
+    // const url = 'https://flutter.dev';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+    return;
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("UPDATE Available"),
+          content: new Text("Download & install latest version of the app\nUpdates make your app better"),
+          actions: <Widget>[
+            new FlatButton(onPressed: _launchURL(updatelink),
+                child: new Text('Update',style: TextStyle(color: Colors.blueAccent,),)),
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 //  void setData(){
 //    var inddata = indiaData;
 //    tcaseind = int.parse(inddata['statewise'][0]['confirmed']);
