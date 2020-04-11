@@ -177,6 +177,7 @@ class _IndiaState extends State<India> {
                 Divider(height: 10,),
                 PieChart(),
                 Divider(height: 10,),
+                Center(child: Text('State-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 Container(
                   alignment: Alignment.topCenter,
                   padding: EdgeInsets.all(10),
@@ -266,6 +267,7 @@ class _IndiaState extends State<India> {
                   ),
                 ),
                 Divider(height: 10,),
+                Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 District(),
                 Divider(height: 10,),
                 BarChart(),

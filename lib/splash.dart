@@ -33,6 +33,7 @@ List stateRecov = List(),newstateRecov = List();
 List dates = List();
 List datecases = List();
 List datetotcase = List();
+var lastupdatetime;
 
 var indAllData = List();
 var distdata;
@@ -64,6 +65,7 @@ bool isUpdateAvailable = false;
 
 
 bool firstcall = true;
+DateTime now = new DateTime.now();
 
 var indiaData,newsData,worldData;
 
@@ -150,6 +152,7 @@ class _SplashState extends State<Splash> {
       indiaData = inddata;
 
 //      print(inddata['statewise'][0]['active']);
+      lastupdatetime = inddata['statewise'][0]['lastupdatedtime'];
       tcaseind = int.parse(inddata['statewise'][0]['confirmed']);
       newtcaseind =  int.parse(inddata['statewise'][0]['deltaconfirmed']);
       actcaseind = int.parse(inddata['statewise'][0]['active']);

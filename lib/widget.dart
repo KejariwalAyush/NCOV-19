@@ -65,11 +65,12 @@ class Frontpg extends StatelessWidget {
                         TextSpan(text: 'on tabs to know more!',
                           style: TextStyle(
                               color: Colors.black38, fontSize: 16),
-                        )
+                        ),
                       ]
                   ),
                 ),
               ),
+              Center(child: Text('Last Data Updated on: $lastupdatetime',style: TextStyle(fontSize: 16,color: Colors.black54),),),
               InkWell(
                onTap: (){
                  Navigator.push(context, MaterialPageRoute(builder: (context) => India()));
