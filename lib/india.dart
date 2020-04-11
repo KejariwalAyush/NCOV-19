@@ -4,21 +4,22 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 
-class India extends StatelessWidget {
+class India extends StatefulWidget {
   static const String fontName = 'Comfortaa';
-//  onSort(int columnIndex) {
-//    if (columnIndex == 1) {
-//      stateData.sort();
-//    }
-//  }
 
+  @override
+  _IndiaState createState() => _IndiaState();
+}
+
+class _IndiaState extends State<India> {
+  String dropdownvalue = 'One';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("NCOV - 19",
             style: TextStyle(
-              fontFamily: fontName,
+              fontFamily: India.fontName,
               color: Colors.white,
               fontSize: 20.0,
             )),
@@ -44,7 +45,7 @@ class India extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                       text: 'INDIA',
-                      style: TextStyle(fontFamily: fontName,
+                      style: TextStyle(fontFamily: India.fontName,
                           color: Colors.blue, fontSize: 28),
                       children: <TextSpan>[
                         TextSpan(text: ' Stats',
@@ -181,7 +182,7 @@ class India extends StatelessWidget {
                   padding: EdgeInsets.all(10),
 //                  margin: EdgeInsets.all(5),
                   width: double.maxFinite,
-                  height: 350,
+                  height: 250,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                       color: Colors.blueGrey[300]),
                   child: SingleChildScrollView(
@@ -191,8 +192,8 @@ class India extends StatelessWidget {
                         dataRowHeight: 30,
                         headingRowHeight: 50,
                         horizontalMargin: 10,
-                        sortColumnIndex: 1,
-                        sortAscending: true,
+//                        sortColumnIndex: 1,
+//                        sortAscending: true,
                         columns: [
                           DataColumn(label: Text('States'),),
                           DataColumn(label: Text('Cases'),numeric: true,),
@@ -212,7 +213,7 @@ class India extends StatelessWidget {
                                  RichText(
                                     text: TextSpan(
                                       text: '${states[i]}',
-                                      style: TextStyle(fontFamily: fontName,
+                                      style: TextStyle(fontFamily: India.fontName,
                                           color: Colors.deepPurple),
                                     ),
                                 ),
@@ -220,7 +221,7 @@ class India extends StatelessWidget {
                               DataCell(RichText(
                                 text: TextSpan(
                                     text: '${stateData[i]}',
-                                    style: TextStyle(fontFamily: fontName,
+                                    style: TextStyle(fontFamily: India.fontName,
                                         color: Colors.black),
                                     children: <TextSpan>[
                                       TextSpan(text: '${newstateData[i]=='0'?'':'\n+${newstateData[i]}'}',
@@ -233,7 +234,7 @@ class India extends StatelessWidget {
                               DataCell(RichText(
                                 text: TextSpan(
                                     text: '${stateDeath[i]}',
-                                    style: TextStyle(fontFamily: fontName,
+                                    style: TextStyle(fontFamily: India.fontName,
                                         color: Colors.black),
                                     children: <TextSpan>[
                                       TextSpan(text: '${newstateDeath[i]=='0'?'':'\n+${newstateDeath[i]}'}',
@@ -246,7 +247,7 @@ class India extends StatelessWidget {
                               DataCell(RichText(
                                 text: TextSpan(
                                   text: '${stateRecov[i]}',
-                                  style: TextStyle(fontFamily: fontName,
+                                  style: TextStyle(fontFamily: India.fontName,
                                       color: Colors.black),
                                     children: <TextSpan>[
                                       TextSpan(text: '${newstateRecov[i]=='0'?' ':'\n+${newstateRecov[i]}'}',
@@ -264,6 +265,8 @@ class India extends StatelessWidget {
                       ),
                   ),
                 ),
+                Divider(height: 10,),
+                District(),
                 Divider(height: 10,),
                 BarChart(),
               ],
@@ -289,6 +292,111 @@ class PopulationData {
     this.population,
   );
 }
+
+class District extends StatefulWidget {
+  @override
+  _DistrictState createState() => _DistrictState();
+}
+class _DistrictState extends State<District> {
+  String dropdownvalue = distdata[0]['state'];
+  int stcount = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        alignment: Alignment.topCenter,
+        padding: EdgeInsets.all(10),
+//                  margin: EdgeInsets.all(5),
+        width: double.maxFinite,
+        height: 230,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+            color: Colors.blueGrey[300]),
+        child:SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child:Column(children: <Widget>[
+            DropdownButton<String>(
+              value: dropdownvalue,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: TextStyle(
+                  color: Colors.deepPurple
+              ),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownvalue = newValue;
+//                  stcount = 3;
+                  for(int i=0;i<distdata.length;i++)
+                  if(distdata[i]['state'].compareTo(dropdownvalue.toString())==0){
+                    stcount = i;break;
+                  }
+                });
+              },
+              items: <String>[for(var st=0;st< distdata.length;st++)
+    //            if(stateData[st]==0)
+                  distdata[st]['state'],]
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              })
+                  .toList(),
+            ),
+            DataTable(
+              columnSpacing: 1,
+              dataRowHeight: 30,
+              headingRowHeight: 50,
+              horizontalMargin: 10,
+//                        sortColumnIndex: 1,
+//                        sortAscending: true,
+              columns: [
+                DataColumn(label: Text('Districts'),),
+                DataColumn(label: Text('Cases'),numeric: true,),
+              ],
+              rows: [
+                for(var i in distdata[stcount]['districtData'])
+                  DataRow(
+                    cells:[
+                      DataCell(
+                        RichText(
+                          text: TextSpan(
+                            text: '${i['district']}',
+                            style: TextStyle(fontFamily: India.fontName,
+                                color: Colors.deepPurple),
+                          ),
+                        ),
+                      ),
+                      DataCell(RichText(
+                        text: TextSpan(
+                            text: '${i['confirmed']}',
+                            style: TextStyle(fontFamily: India.fontName,
+                                color: Colors.black),
+                            children: <TextSpan>[
+                              TextSpan(text: '${i['delta']['confirmed']=='0'?'':' +${i['delta']['confirmed']}'}',
+                                style: TextStyle(
+                                    color: Colors.red, fontSize: 12),
+                              )
+                            ]
+                        ),
+                      ),),
+
+                    ],
+//                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
+                  ),
+              ],
+            ),
+          
+          ],
+        ),
+        ),
+    );
+  }
+}
+
 
 class PieChart extends StatelessWidget {
 

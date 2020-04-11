@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widget.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -34,7 +35,8 @@ List datecases = List();
 List datetotcase = List();
 
 var indAllData = List();
-var distdata=List();
+var distdata;
+var diststates;
 
 int tcasewld =0,
     deathwld =0,
@@ -57,7 +59,7 @@ String packageName ;
 String version = '1.0';
 String buildNumber ;
 String updatelink;
-String latestversion = version;
+String latestversion ;
 bool isUpdateAvailable = false;
 
 
@@ -93,7 +95,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return SplashScreen(
-      seconds: 10,//isLoading?sec:1,
+      seconds: 8,//isLoading?sec:1,
       navigateAfterSeconds:Frontpg(),
       title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
         style: new TextStyle(
@@ -121,7 +123,7 @@ class _SplashState extends State<Splash> {
     });
 
     final Response response = await get("https://api.covid19india.org/data.json");
-    final Response response2 = await get("https://api.covid19india.org/state_district_wise.json");
+    final Response response2 = await get("https://api.covid19india.org/v2/state_district_wise.json");
     // final Response helpno = await get("https://covidout.in/helpline");
     if (response.statusCode == 200 && response2.statusCode == 200) {
       states = List();
@@ -138,9 +140,13 @@ class _SplashState extends State<Splash> {
       var inddata = jsonDecode(data);
 
       var data2 = response2.body;
-      var stdata = jsonDecode(data2);
+//      var stdata =
+      distdata=jsonDecode(data2);
 //      distdata = stdata;
-//      print(distdata[0]['Kerala']);
+//      print(distdata['state'].indexOf('Kerala').toString());
+//      for(var i in stdata)
+//        diststates.add(i);
+//      print(diststates[0]);
       indiaData = inddata;
 
 //      print(inddata['statewise'][0]['active']);
@@ -168,6 +174,9 @@ class _SplashState extends State<Splash> {
         datetotcase.add(i['totalconfirmed']);
       }
 
+//      List<Map<String,String>>
+
+//      distdata[dropdownvalue]['districtData'][i]
 //      List<Map<String,dynamic>> indDataMap =[
 //        {'overall':inddata['statewise'][0],
 //          'statewise':[
@@ -416,9 +425,24 @@ class _SplashState extends State<Splash> {
       updatelink = dec2[0]['title'];
       print(updatelink);
 
-      if(version.compareTo(latestversion)==1){
+      if(version.compareTo(latestversion)!=0){
         print('update available');
         isUpdateAvailable=true;
+
+        showSimpleNotification(
+          Text("Update available version: $latestversion"),
+          background: Colors.redAccent,
+          autoDismiss: false,slideDismiss: true,
+          trailing: Builder(builder: (context) {
+            return FlatButton(
+                textColor: Colors.yellow,
+                onPressed: ()=> {
+                  _launchURL(updatelink),
+                },
+                child: Text('UPDATE'));
+          }),
+        );
+        print(version);
         Alert(
           context: context,
           type: AlertType.none,
