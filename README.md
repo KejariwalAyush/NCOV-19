@@ -1,4 +1,6 @@
 # NCOV-19
+![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/Screenshots/icon.png)
+
 An app which keeps track record of CORONA VIRUS infected people,deaths & cured patients in INDIA 
 
 
@@ -13,11 +15,7 @@ This app is made with a porpose to aware you, not to scare you/ So, take precaut
 
 ## Screenshots
 
-![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/Screenshots/one.jpg)
-![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/Screenshots/two.jpg)
-![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/Screenshots/three.jpg)
-![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/Screenshots/four.jpg)
-![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/Screenshots/five.jpg)
+![alt text](https://github.com/KejariwalAyush/NCOV-19/blob/master/screenshot.jpg)
 
 ## Source
 The data used in app has been taken from multiple sources official as well as unofficial. 
