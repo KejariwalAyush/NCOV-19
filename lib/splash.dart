@@ -34,6 +34,8 @@ List dates = List();
 List datecases = List();
 List datetotcase = List();
 var lastupdatetime;
+var male=0,female=0;
+List age = List();
 
 var indAllData = List();
 var distdata;
@@ -126,6 +128,7 @@ class _SplashState extends State<Splash> {
 
     final Response response = await get("https://api.covid19india.org/data.json");
     final Response response2 = await get("https://api.covid19india.org/v2/state_district_wise.json");
+    final Response response3 = await get("https://api.covid19india.org/raw_data.json");
     // final Response helpno = await get("https://covidout.in/helpline");
     if (response.statusCode == 200 && response2.statusCode == 200) {
       states = List();
@@ -142,14 +145,11 @@ class _SplashState extends State<Splash> {
       var inddata = jsonDecode(data);
 
       var data2 = response2.body;
-//      var stdata =
       distdata=jsonDecode(data2);
-//      distdata = stdata;
-//      print(distdata['state'].indexOf('Kerala').toString());
-//      for(var i in stdata)
-//        diststates.add(i);
-//      print(diststates[0]);
       indiaData = inddata;
+
+      var data3 = response3.body;
+      var rawdata = jsonDecode(data3);
 
 //      print(inddata['statewise'][0]['active']);
       lastupdatetime = inddata['statewise'][0]['lastupdatedtime'];
@@ -177,8 +177,23 @@ class _SplashState extends State<Splash> {
         datetotcase.add(i['totalconfirmed']);
       }
 
-//      List<Map<String,String>>
+//      print(rawdata['raw_data'][0]);
 
+      for(var i in rawdata['raw_data'])
+        {
+          if(i['gender']=='F')
+            female++;
+          else if(i['gender']=='M')
+            male++;
+          if(i['agebracket'] != '')
+            age.add(i['agebracket']);
+        }
+      var totalgender = male+female;
+      male = (male*100/totalgender) as int;
+      female = (female*100/totalgender) as int;
+//      print(male+female);
+
+//      List<Map<String,String>>
 //      distdata[dropdownvalue]['districtData'][i]
 //      List<Map<String,dynamic>> indDataMap =[
 //        {'overall':inddata['statewise'][0],

@@ -295,6 +295,13 @@ class StData {
 
 //  GradesData(this.gradeSymbol, this.number,this.col);
 }
+class GenderData{
+  final String gender;
+  final int number;
+  final charts.Color col;
+
+  GenderData(this.gender, this.number,this.col);
+}
 class PopulationData {
   String year;
   int population;
@@ -422,7 +429,7 @@ class PieChart extends StatelessWidget {
 
 
   final data = [
-    GradesData('Active', actcaseind,charts.ColorUtil.fromDartColor(Colors.redAccent)),
+    GradesData('Active', actcaseind,charts.ColorUtil.fromDartColor(Colors.pinkAccent)),
     GradesData('Recovered', recovind,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
     GradesData('Deaths', deathind,charts.ColorUtil.fromDartColor(Colors.blueGrey)),
   ];
@@ -458,6 +465,24 @@ class PieChart extends StatelessWidget {
     ];
     return series;
   }
+  final genderdata = [
+    GenderData('Male',male,charts.ColorUtil.fromDartColor(Colors.lightBlue)),
+    GenderData('Female',female,charts.ColorUtil.fromDartColor(Colors.pinkAccent))
+  ];
+
+  _getGenderData() {
+    List<charts.Series<GenderData, String>> series = [
+      charts.Series(
+        id: "Grades",
+        data: genderdata,
+        labelAccessorFn: (GenderData row, _) => '${row.gender}',
+        domainFn: (GenderData grades, _) => grades.gender,
+        measureFn: (GenderData grades, _) => grades.number,
+        colorFn: (GenderData series, _) => series.col,
+      )
+    ];
+    return series;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -465,7 +490,7 @@ class PieChart extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
               color: Colors.blueGrey[300]),
-          height: 450,
+          height: 600,
           padding: EdgeInsets.all(10),
           child: Card(color: Colors.blueGrey[100],
             child: Padding(
@@ -476,13 +501,14 @@ class PieChart extends StatelessWidget {
                     "Total data represented in PIE Chart",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,color: Colors.deepOrange
+
                     ),
                   ),
 //                  SizedBox(
 //                    height: 20,
 //                  ),
-                  Divider(height: 10,),
+//                  Divider(height: 10,),
                   Divider(height: 10,),
                   Expanded(
                     child: new charts.PieChart(
@@ -490,30 +516,50 @@ class PieChart extends StatelessWidget {
                       animate: true,
                       animationDuration: Duration(milliseconds: 800),
                       defaultRenderer: new charts.ArcRendererConfig(
-                          arcWidth: 150,startAngle: 40,
+                          arcWidth: 200,startAngle: 49,
                           arcRendererDecorators: [new charts.ArcLabelDecorator()]
                       ),
                     ),
                   ),
+                  Divider(height: 10,),
                   Text(
                     "State-wise data represented in PIE Chart",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold ,color: Colors.deepOrange
                     ),
                   ),
-                  Divider(height: 10,),
                   Expanded(
                     child: new charts.PieChart(
                       _getStateData(),
                       animate: true,
                       animationDuration: Duration(milliseconds: 800),
                       defaultRenderer: new charts.ArcRendererConfig(
-                          arcWidth: 30,startAngle: 50,
+                          arcWidth: 30,startAngle: 60,
                           arcRendererDecorators: [new charts.ArcLabelDecorator()]
                       ),
                     ),
-                  )
+                  ),
+                  Divider(height: 10,),
+                  Text(
+                    "Gender data represented in PIE Chart",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
+                        fontWeight: FontWeight.bold ,color: Colors.deepOrange
+                    ),
+                  ),
+                  Expanded(
+                    child: new charts.PieChart(
+                      _getGenderData(),
+                      animate: true,
+                      animationDuration: Duration(milliseconds: 800),
+                      defaultRenderer: new charts.ArcRendererConfig(
+                          arcWidth: 30,startAngle: 60,
+                          arcRendererDecorators: [new charts.ArcLabelDecorator()]
+                      ),
+                    ),
+                  ),
+//                  Divider(height: 10,),
                 ],
               ),
             ),
@@ -567,7 +613,7 @@ class BarChart extends StatelessWidget {
               Expanded(
                 child: charts.BarChart(
                     _getSeriesData(),
-                    animate: true,
+                    animate: true,vertical: true,
                     domainAxis: charts.OrdinalAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(labelStyle: charts.TextStyleSpec(fontSize: 1,))
                     ),
