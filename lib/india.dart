@@ -286,6 +286,15 @@ class GradesData {
 
   GradesData(this.gradeSymbol, this.number,this.col);
 }
+class StData {
+  final String statesName;
+  final int number;
+  final charts.Color col;
+
+  StData(this.statesName, this.number, this.col);
+
+//  GradesData(this.gradeSymbol, this.number,this.col);
+}
 class PopulationData {
   String year;
   int population;
@@ -399,6 +408,15 @@ class _DistrictState extends State<District> {
   }
 }
 
+var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
+  Colors.cyanAccent,Colors.purple[100],Colors.purple[200],Colors.purple[300],
+  Colors.purple[400],Colors.purple[500],Colors.purple[800],Colors.deepPurple[300],
+  Colors.deepPurple[500],Colors.indigo[500],Colors.purpleAccent,Colors.teal[300],
+  Colors.teal[300],Colors.teal[500],Colors.teal[800],Colors.green[300],
+  Colors.green[500],Colors.green[800],Colors.lightGreen[500],Colors.lightGreen[800],
+  Colors.lime[500],Colors.lime[800],Colors.lime[900],Colors.lime[300],
+  Colors.amber[500],Colors.amber[800],Colors.amber[900],Colors.amber[300],
+  Colors.pink[500],Colors.pink[800],Colors.pink[900],Colors.pink[300],Colors.pinkAccent,Colors.redAccent];
 
 class PieChart extends StatelessWidget {
 
@@ -422,6 +440,24 @@ class PieChart extends StatelessWidget {
     ];
     return series;
   }
+  final dataState = [
+    for(int i=1;i<states.length;i++)
+      StData(states[i],int.parse(stateData[i]),charts.ColorUtil.fromDartColor(colorsList[i])),
+  ];
+
+  _getStateData() {
+    List<charts.Series<StData, String>> series = [
+      charts.Series(
+        id: "Grades",
+        data: dataState,
+        labelAccessorFn: (StData row, _) => '${row.statesName}',
+        domainFn: (StData grades, _) => grades.statesName,
+        measureFn: (StData grades, _) => grades.number,
+        colorFn: (StData series, _) => series.col,
+      )
+    ];
+    return series;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -429,7 +465,7 @@ class PieChart extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
               color: Colors.blueGrey[300]),
-          height: 350,
+          height: 450,
           padding: EdgeInsets.all(10),
           child: Card(color: Colors.blueGrey[100],
             child: Padding(
@@ -439,19 +475,41 @@ class PieChart extends StatelessWidget {
                   Text(
                     "Total data represented in PIE Chart",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
                         fontWeight: FontWeight.bold
                     ),
                   ),
 //                  SizedBox(
 //                    height: 20,
 //                  ),
+                  Divider(height: 10,),
+                  Divider(height: 10,),
                   Expanded(
                     child: new charts.PieChart(
                       _getSeriesData(),
                       animate: true,
+                      animationDuration: Duration(milliseconds: 800),
                       defaultRenderer: new charts.ArcRendererConfig(
                           arcWidth: 150,startAngle: 40,
+                          arcRendererDecorators: [new charts.ArcLabelDecorator()]
+                      ),
+                    ),
+                  ),
+                  Text(
+                    "State-wise data represented in PIE Chart",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  Divider(height: 10,),
+                  Expanded(
+                    child: new charts.PieChart(
+                      _getStateData(),
+                      animate: true,
+                      animationDuration: Duration(milliseconds: 800),
+                      defaultRenderer: new charts.ArcRendererConfig(
+                          arcWidth: 30,startAngle: 50,
                           arcRendererDecorators: [new charts.ArcLabelDecorator()]
                       ),
                     ),
