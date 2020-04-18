@@ -5,6 +5,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 
+
+var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
+  Colors.cyanAccent,Colors.purple[100],Colors.purple[200],Colors.purple[300],
+  Colors.purple[400],Colors.purple[500],Colors.purple[800],Colors.deepPurple[300],
+  Colors.deepPurple[500],Colors.indigo[500],Colors.purpleAccent,Colors.teal[300],
+  Colors.teal[300],Colors.teal[500],Colors.teal[800],Colors.green[300],
+  Colors.green[500],Colors.green[800],Colors.lightGreen[500],Colors.lightGreen[800],
+  Colors.lime[500],Colors.lime[800],Colors.lime[900],Colors.lime[300],
+  Colors.amber[500],Colors.amber[800],Colors.amber[900],Colors.amber[300],
+  Colors.pink[500],Colors.pink[800],Colors.pink[900],Colors.pink[300],Colors.pinkAccent,Colors.redAccent];
+
+
 class India extends StatefulWidget {
   static const String fontName = 'Comfortaa';
 
@@ -311,6 +323,7 @@ class GenderData{
   GenderData(this.gender, this.number,this.col);
 }
 class PopulationData {
+//  DateTime ddmm;
   String date;
   int population;
   PopulationData(
@@ -426,16 +439,6 @@ class _DistrictState extends State<District> {
   }
 }
 
-var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
-  Colors.cyanAccent,Colors.purple[100],Colors.purple[200],Colors.purple[300],
-  Colors.purple[400],Colors.purple[500],Colors.purple[800],Colors.deepPurple[300],
-  Colors.deepPurple[500],Colors.indigo[500],Colors.purpleAccent,Colors.teal[300],
-  Colors.teal[300],Colors.teal[500],Colors.teal[800],Colors.green[300],
-  Colors.green[500],Colors.green[800],Colors.lightGreen[500],Colors.lightGreen[800],
-  Colors.lime[500],Colors.lime[800],Colors.lime[900],Colors.lime[300],
-  Colors.amber[500],Colors.amber[800],Colors.amber[900],Colors.amber[300],
-  Colors.pink[500],Colors.pink[800],Colors.pink[900],Colors.pink[300],Colors.pinkAccent,Colors.redAccent];
-
 class PieChart extends StatelessWidget {
 
 
@@ -460,7 +463,8 @@ class PieChart extends StatelessWidget {
   }
   final dataState = [
     for(int i=1;i<states.length;i++)
-      StData(states[i],int.parse(stateData[i]),charts.ColorUtil.fromDartColor(colorsList[i])),
+      StData('${states[i].toString().substring(0,states[i].toString().length>8?9:states[i].toString().length)}${states[i].toString().length>9?'..':''}',
+          int.parse(stateData[i]),charts.ColorUtil.fromDartColor(colorsList[i])),
   ];
 
   _getStateData() {
@@ -612,7 +616,7 @@ class BarChart extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  "Daily cases represented in Bar Chart",
+                  "Daily cases Chart",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold
@@ -670,7 +674,7 @@ class BarChart2 extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  "Daily RECOVERED cases represented in Bar Chart",
+                  "Daily RECOVERED Chart",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold
@@ -728,7 +732,7 @@ class BarChart3 extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  "Daily DEATH cases represented in Bar Chart",
+                  "Daily DEATH cases Chart",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.bold

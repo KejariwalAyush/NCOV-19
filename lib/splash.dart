@@ -37,6 +37,7 @@ List datedeath = List();
 List daterecov = List();
 List datetotdeath = List();
 List datetotrecov = List();
+//DateTime dateTime ;
 var lastupdatetime;
 var male=0,female=0;
 List age = List();
@@ -180,7 +181,12 @@ class _SplashState extends State<Splash> {
       }
       for(var i in inddata['cases_time_series'])
       {
-        dates.add(i['date']);
+        int mm=0;
+        int dd=int.parse(i['date'].toString().split(' ')[0]);
+        String x = i['date'].toString().split(' ')[1].toLowerCase();
+        x == 'january'?mm=1:x=='february'?mm=2:x=='march'?mm=3:x=='april'?mm=4:x=='may'?mm=5:x=='june'?mm=6:
+        x=='july'?mm=7:x=='august'?mm=8:x=='september'?mm=9:x=='october'?mm=10:x=='november'?mm=11:mm=12;
+        dates.add('$dd $mm');
         datecases.add(i['dailyconfirmed']);
         datetotcase.add(i['totalconfirmed']);
         datedeath.add(i['dailydeceased']);
@@ -188,7 +194,7 @@ class _SplashState extends State<Splash> {
         daterecov.add(i['dailyrecovered']);
         datetotrecov.add(i['totalrecovered']);
       }
-
+//      print(dates);
 //      print(rawdata['raw_data'][0]);
 
       for(var i in rawdata['raw_data'])
