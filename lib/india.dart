@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_app/splash.dart';
+//import 'package:syncfusion_flutter_charts/charts.dart';
 
 
 var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
@@ -287,6 +289,7 @@ class _IndiaState extends State<India> {
                 Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 District(),
                 Divider(height: 10,),
+                //LineChart(),
                 BarChart(),
                 BarChart2(),
                 BarChart3(),
@@ -298,38 +301,6 @@ class _IndiaState extends State<India> {
       ),)
     );
   }
-}
-class GradesData {
-  final String gradeSymbol;
-  final int number;
-  final charts.Color col;
-
-  GradesData(this.gradeSymbol, this.number,this.col);
-}
-class StData {
-  final String statesName;
-  final int number;
-  final charts.Color col;
-
-  StData(this.statesName, this.number, this.col);
-
-//  GradesData(this.gradeSymbol, this.number,this.col);
-}
-class GenderData{
-  final String gender;
-  final int number;
-  final charts.Color col;
-
-  GenderData(this.gender, this.number,this.col);
-}
-class PopulationData {
-//  DateTime ddmm;
-  String date;
-  int population;
-  PopulationData(
-    this.date,
-    this.population,
-  );
 }
 
 class District extends StatefulWidget {
@@ -498,6 +469,27 @@ class PieChart extends StatelessWidget {
     ];
     return series;
   }
+  final agedata = [
+    GenderData('0-20',one,charts.ColorUtil.fromDartColor(Colors.amberAccent)),
+    GenderData('20-40',two,charts.ColorUtil.fromDartColor(Colors.amber)),
+    GenderData('40-60',three,charts.ColorUtil.fromDartColor(Colors.lime)),
+    GenderData('60-80',four,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GenderData('>80',four,charts.ColorUtil.fromDartColor(Colors.teal)),
+  ];
+
+  _getAgeData() {
+    List<charts.Series<GenderData, String>> series = [
+      charts.Series(
+        id: "Grades",
+        data: agedata,
+        labelAccessorFn: (GenderData row, _) => '${row.gender}',
+        domainFn: (GenderData grades, _) => grades.gender,
+        measureFn: (GenderData grades, _) => grades.number,
+        colorFn: (GenderData series, _) => series.col,
+      )
+    ];
+    return series;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -505,7 +497,7 @@ class PieChart extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
               color: Colors.blueGrey[300]),
-          height: 600,
+          height: 650,
           padding: EdgeInsets.all(10),
           child: Card(color: Colors.blueGrey[100],
             child: Padding(
@@ -538,7 +530,7 @@ class PieChart extends StatelessWidget {
                   ),
                   Divider(height: 10,),
                   Text(
-                    "State-wise data represented in PIE Chart",
+                    "State-wise data",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
                         fontWeight: FontWeight.bold ,color: Colors.deepOrange
@@ -557,7 +549,7 @@ class PieChart extends StatelessWidget {
                   ),
                   Divider(height: 10,),
                   Text(
-                    "Gender data represented in PIE Chart",
+                    "Gender data",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
                         fontWeight: FontWeight.bold ,color: Colors.deepOrange
@@ -574,7 +566,27 @@ class PieChart extends StatelessWidget {
                       ),
                     ),
                   ),
-//                  Divider(height: 10,),
+
+                    Text(
+                      "Age data",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
+                          fontWeight: FontWeight.bold ,color: Colors.deepOrange
+                      ),
+                    ),
+                    Expanded(
+                      child: new charts.PieChart(
+                        _getAgeData(),
+                        animate: true,
+                        animationDuration: Duration(milliseconds: 800),
+                        defaultRenderer: new charts.ArcRendererConfig(
+                            arcWidth: 30,startAngle: 60,
+                            arcRendererDecorators: [new charts.ArcLabelDecorator()]
+                        ),
+                      ),
+                    ),
+
+                  //                  Divider(height: 10,),
                 ],
               ),
             ),
@@ -758,4 +770,43 @@ class BarChart3 extends StatelessWidget {
 
     );
   }
+}
+
+class GradesData {
+  final String gradeSymbol;
+  final int number;
+  final charts.Color col;
+
+  GradesData(this.gradeSymbol, this.number,this.col);
+}
+class StData {
+  final String statesName;
+  final int number;
+  final charts.Color col;
+
+  StData(this.statesName, this.number, this.col);
+
+//  GradesData(this.gradeSymbol, this.number,this.col);
+}
+class GenderData{
+  final String gender;
+  final int number;
+  final charts.Color col;
+
+  GenderData(this.gender, this.number,this.col);
+}
+class PopulationData {
+//  DateTime ddmm;
+  String date;
+  int population;
+  PopulationData(
+      this.date,
+      this.population,
+      );
+}
+class SalesData {
+  SalesData(this.year, this.sales);
+
+  final String year;
+  final int sales;
 }

@@ -24,6 +24,7 @@ dependencies:
   html:
   package_info: ^0.4.0+16
   charts_flutter: ^0.9.0
+#  syncfusion_flutter_charts: ^18.1.44
   splashscreen:
   url_launcher:
   flutter_launcher_icons: ^0.7.0

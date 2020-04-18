@@ -37,6 +37,7 @@ List datedeath = List();
 List daterecov = List();
 List datetotdeath = List();
 List datetotrecov = List();
+int one=0,two=0,three=0,four=0,five=0;
 //DateTime dateTime ;
 var lastupdatetime;
 var male=0,female=0;
@@ -196,15 +197,18 @@ class _SplashState extends State<Splash> {
       }
 //      print(dates);
 //      print(rawdata['raw_data'][0]);
-
+      one=0;two=0;three=0;four=0;five=0;
       for(var i in rawdata['raw_data'])
         {
           if(i['gender']=='F')
             female++;
           else if(i['gender']=='M')
             male++;
-          if(i['agebracket'] != '')
+          if(i['agebracket'] != '') {
+            var x= int.parse(i['agebracket']);
+            x>0&&x<20?one++:x<40?two++:x<60?three++:x<80?four++:five++;
             age.add(i['agebracket']);
+          }
         }
       var totalgender = male+female;
       male = (male*100/totalgender) as int;
