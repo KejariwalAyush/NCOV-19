@@ -33,6 +33,10 @@ List stateRecov = List(),newstateRecov = List();
 List dates = List();
 List datecases = List();
 List datetotcase = List();
+List datedeath = List();
+List daterecov = List();
+List datetotdeath = List();
+List datetotrecov = List();
 var lastupdatetime;
 var male=0,female=0;
 List age = List();
@@ -138,6 +142,10 @@ class _SplashState extends State<Splash> {
       dates = List();
       datecases = List();
       datetotcase = List();
+      datedeath = List();
+      daterecov = List();
+      datetotdeath = List();
+      datetotrecov = List();
 
 //      indAllData = List();
 
@@ -175,6 +183,10 @@ class _SplashState extends State<Splash> {
         dates.add(i['date']);
         datecases.add(i['dailyconfirmed']);
         datetotcase.add(i['totalconfirmed']);
+        datedeath.add(i['dailydeceased']);
+        datetotdeath.add(i['totaldeceased']);
+        daterecov.add(i['dailyrecovered']);
+        datetotrecov.add(i['totalrecovered']);
       }
 
 //      print(rawdata['raw_data'][0]);

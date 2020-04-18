@@ -1,3 +1,4 @@
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/gestures.dart';
@@ -13,6 +14,7 @@ class India extends StatefulWidget {
 
 class _IndiaState extends State<India> {
   String dropdownvalue = 'One';
+//  ScrollController myScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +26,13 @@ class _IndiaState extends State<India> {
               fontSize: 20.0,
             )),
         centerTitle: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))),
         elevation: 20,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.redAccent,
       ),
-      body:SingleChildScrollView(scrollDirection: Axis.vertical,
+      body:SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child:Column(
          children: <Widget>[
           Container(
@@ -186,7 +189,8 @@ class _IndiaState extends State<India> {
                   height: 250,
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
                       color: Colors.blueGrey[300]),
-                  child: SingleChildScrollView(
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
 //                    scrollDirection: Axis.horizontal,
                       child:DataTable(
                         columnSpacing: 1,
@@ -265,15 +269,19 @@ class _IndiaState extends State<India> {
                         ],
                       ),
                   ),
+                  ),
                 ),
                 Divider(height: 10,),
                 Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 District(),
                 Divider(height: 10,),
                 BarChart(),
+                BarChart2(),
+                BarChart3(),
               ],
             ),
-          )
+          ),
+
         ],
       ),)
     );
@@ -303,10 +311,10 @@ class GenderData{
   GenderData(this.gender, this.number,this.col);
 }
 class PopulationData {
-  String year;
+  String date;
   int population;
   PopulationData(
-    this.year,
+    this.date,
     this.population,
   );
 }
@@ -328,7 +336,9 @@ class _DistrictState extends State<District> {
         height: 230,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        child:SingleChildScrollView(
+        child:Scrollbar(
+//          controller: ScrollController(keepScrollOffset: false,initialScrollOffset: 20),
+            child:SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child:Column(children: <Widget>[
             DropdownButton<String>(
@@ -409,6 +419,7 @@ class _DistrictState extends State<District> {
             ),
           
           ],
+        ),
         ),
         ),
     );
@@ -580,7 +591,7 @@ class BarChart extends StatelessWidget {
       charts.Series(
           id: "Population",
           data: data,overlaySeries: true,
-          domainFn: (PopulationData series, _) => series.year.toString(),//.split(' ')[1],
+          domainFn: (PopulationData series, _) => series.date.toString(),//.split(' ')[1],
 //          domainFormatterFn: ,
           measureFn: (PopulationData series, _) => series.population,
       )
@@ -593,7 +604,7 @@ class BarChart extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 250,
+        height: 200,
         padding: EdgeInsets.all(10),
         child: Card(color: Colors.blueGrey[100],
           child: Padding(
@@ -612,6 +623,122 @@ class BarChart extends StatelessWidget {
 //                  ),
               Expanded(
                 child: charts.BarChart(
+                    _getSeriesData(),
+                    animate: true,vertical: true,
+                    domainAxis: charts.OrdinalAxisSpec(
+                        renderSpec: charts.SmallTickRendererSpec(labelStyle: charts.TextStyleSpec(fontSize: 1,))
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+    );
+  }
+}
+class BarChart2 extends StatelessWidget {
+  final data = [
+    for(int i=0;i<dates.length;i++)
+      new PopulationData(dates[i].toString(),int.parse(daterecov[i])),
+  ];
+  _getSeriesData() {
+    List<charts.Series<PopulationData, String>> series = [
+      charts.Series(
+        id: "Population",
+        data: data,overlaySeries: true,
+        domainFn: (PopulationData series, _) => series.date.toString(),//.split(' ')[1],
+//          domainFormatterFn: ,
+        measureFn: (PopulationData series, _) => series.population,
+      )
+    ];
+    return series;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+            color: Colors.blueGrey[300]),
+        height: 200,
+        padding: EdgeInsets.all(10),
+        child: Card(color: Colors.blueGrey[100],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "Daily RECOVERED cases represented in Bar Chart",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+//                  SizedBox(
+//                    height: 20,
+//                  ),
+                Expanded(
+                  child: charts.BarChart(
+                    _getSeriesData(),
+                    animate: true,vertical: true,
+                    domainAxis: charts.OrdinalAxisSpec(
+                        renderSpec: charts.SmallTickRendererSpec(labelStyle: charts.TextStyleSpec(fontSize: 1,))
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+    );
+  }
+}
+class BarChart3 extends StatelessWidget {
+  final data = [
+    for(int i=0;i<dates.length;i++)
+      new PopulationData(dates[i].toString(),int.parse(datedeath[i])),
+  ];
+  _getSeriesData() {
+    List<charts.Series<PopulationData, String>> series = [
+      charts.Series(
+        id: "Population",
+        data: data,overlaySeries: true,
+        domainFn: (PopulationData series, _) => series.date.toString(),//.split(' ')[1],
+//          domainFormatterFn: ,
+        measureFn: (PopulationData series, _) => series.population,
+      )
+    ];
+    return series;
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+            color: Colors.blueGrey[300]),
+        height: 200,
+        padding: EdgeInsets.all(10),
+        child: Card(color: Colors.blueGrey[100],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "Daily DEATH cases represented in Bar Chart",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+//                  SizedBox(
+//                    height: 20,
+//                  ),
+                Expanded(
+                  child: charts.BarChart(
                     _getSeriesData(),
                     animate: true,vertical: true,
                     domainAxis: charts.OrdinalAxisSpec(

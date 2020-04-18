@@ -16,7 +16,7 @@ class WorldData extends StatelessWidget {
                 fontSize: 20.0,
               )),
           centerTitle: true,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))),
           elevation: 20,
           automaticallyImplyLeading: true,
           backgroundColor: Colors.redAccent,
