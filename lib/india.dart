@@ -1,12 +1,10 @@
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/splash.dart';
-//import 'package:syncfusion_flutter_charts/charts.dart';
-
 
 var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
   Colors.cyanAccent,Colors.purple[100],Colors.purple[200],Colors.purple[300],
@@ -434,7 +432,7 @@ class PieChart extends StatelessWidget {
   }
   final dataState = [
     for(int i=1;i<states.length;i++)
-      StData('${states[i].toString().substring(0,states[i].toString().length>8?9:states[i].toString().length)}${states[i].toString().length>9?'..':''}',
+      StData('${states[i].toString().substring(0,states[i].toString().length>8?9:states[i].toString().length)}${states[i].toString().length>9?'...':''}',
           int.parse(stateData[i]),charts.ColorUtil.fromDartColor(colorsList[i])),
   ];
 
@@ -771,6 +769,7 @@ class BarChart3 extends StatelessWidget {
     );
   }
 }
+
 
 class GradesData {
   final String gradeSymbol;

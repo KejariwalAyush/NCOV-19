@@ -283,7 +283,7 @@ class PieChart extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 350,
+        height: 300,
         padding: EdgeInsets.all(10),
         child: Card(color: Colors.blueGrey[100],
           child: Padding(
@@ -305,7 +305,7 @@ class PieChart extends StatelessWidget {
                     _getSeriesData(),
                     animate: true,
                     defaultRenderer: new charts.ArcRendererConfig(
-                        arcWidth: 150,startAngle: 40,
+                        arcWidth: 200,startAngle: 49,
                         arcRendererDecorators: [new charts.ArcLabelDecorator()]
                     ),
                   ),
