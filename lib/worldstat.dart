@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
+import 'package:photo_view/photo_view.dart';
 
 class WorldData extends StatelessWidget {
   static const String fontName = 'Comfortaa';
@@ -45,6 +46,25 @@ class WorldData extends StatelessWidget {
                                   color: Colors.black38, fontSize: 20),
                             )
                           ]
+                      ),
+                    ),
+                    InkWell(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => WorldMap()));
+                        print('Tapped on India heaT map');
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                            text: 'WORLD heat',
+                            style: TextStyle(fontFamily: WorldData.fontName,
+                                color: Colors.redAccent, fontSize: 20),
+                            children: <TextSpan>[
+                              TextSpan(text: ' Map',
+                                style: TextStyle(
+                                    color: Colors.black38, fontSize: 14),
+                              ),
+                            ]
+                        ),
                       ),
                     ),
                     Divider(height: 20,),
@@ -316,6 +336,35 @@ class PieChart extends StatelessWidget {
         ),
       ),
 
+    );
+  }
+}
+
+class WorldMap extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("NCOV - 19",
+            style: TextStyle(
+              fontFamily: WorldData.fontName,
+              color: Colors.white,
+              fontSize: 20.0,
+            )),
+        centerTitle: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))),
+        elevation: 20,
+        automaticallyImplyLeading: true,
+        backgroundColor: Colors.redAccent,
+      ),
+      body: Container(
+        height: double.maxFinite,width: double.infinity,
+        child: PhotoView(
+          enableRotation: false,basePosition: Alignment.center,tightMode: true,
+          imageProvider: NetworkImage('https://covid19ind.zaoapp.net/wp-content/uploads/2020/03/Global-Map-1024x672.png',),
+          backgroundDecoration: BoxDecoration(color: Colors.white70),
+        ),
+      ),
     );
   }
 }
