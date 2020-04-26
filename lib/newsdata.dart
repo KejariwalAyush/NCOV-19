@@ -1,9 +1,26 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/data.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:flutter_placeholder_textlines/placeholder_lines.dart';
+//class nz extends StatefulWidget {
+//  @override
+//  _nzState createState() => _nzState();
+//}
+//
+//class _nzState extends State<nz> {
+//  @override
+//  void initState() {
+//    // TODO: implement initState
+//    DataSource().fetchnews();
+//  }
+//  @override
+//  Widget build(BuildContext context) {
+//    return Container();
+//  }
+//}
 
 
 class NewsData extends StatelessWidget {

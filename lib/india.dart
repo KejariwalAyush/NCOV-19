@@ -76,25 +76,25 @@ class _IndiaState extends State<India> {
                       ]
                   ),
                 ),
-                InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => IndiaMap()));
-                    print('Tapped on India heaT map');
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                        text: 'INDIA heat',
-                        style: TextStyle(fontFamily: India.fontName,
-                            color: Colors.redAccent, fontSize: 20),
-                        children: <TextSpan>[
-                          TextSpan(text: ' Map',
-                            style: TextStyle(
-                                color: Colors.black38, fontSize: 14),
-                          ),
-                        ]
-                    ),
-                  ),
-                ),
+//                InkWell(
+//                  onTap: (){
+//                    Navigator.push(context, MaterialPageRoute(builder: (context) => IndiaMap()));
+//                    print('Tapped on India heaT map');
+//                  },
+//                  child: RichText(
+//                    text: TextSpan(
+//                        text: 'INDIA heat',
+//                        style: TextStyle(fontFamily: India.fontName,
+//                            color: Colors.redAccent, fontSize: 20),
+//                        children: <TextSpan>[
+//                          TextSpan(text: ' Map',
+//                            style: TextStyle(
+//                                color: Colors.black38, fontSize: 14),
+//                          ),
+//                        ]
+//                    ),
+//                  ),
+//                ),
                 Divider(height: 20,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +148,10 @@ class _IndiaState extends State<India> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           Text('Active Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          Text('$actcaseind',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                          RichText(text:TextSpan(text:'$actcaseind',style: TextStyle(fontSize: 20,color: Colors.white),
+                            children: <TextSpan>[TextSpan(text:'${newtcaseind==0?'':' +${newtcaseind-newdeathind-newrecovind}'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
+                          ),
+                          ),
                         ],
                       ),
                     ),

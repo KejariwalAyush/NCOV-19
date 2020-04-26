@@ -48,25 +48,25 @@ class WorldData extends StatelessWidget {
                           ]
                       ),
                     ),
-                    InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => WorldMap()));
-                        print('Tapped on India heaT map');
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                            text: 'WORLD heat',
-                            style: TextStyle(fontFamily: WorldData.fontName,
-                                color: Colors.redAccent, fontSize: 20),
-                            children: <TextSpan>[
-                              TextSpan(text: ' Map',
-                                style: TextStyle(
-                                    color: Colors.black38, fontSize: 14),
-                              ),
-                            ]
-                        ),
-                      ),
-                    ),
+//                    InkWell(
+//                      onTap: (){
+//                        Navigator.push(context, MaterialPageRoute(builder: (context) => WorldMap()));
+//                        print('Tapped on India heaT map');
+//                      },
+//                      child: RichText(
+//                        text: TextSpan(
+//                            text: 'WORLD heat',
+//                            style: TextStyle(fontFamily: WorldData.fontName,
+//                                color: Colors.redAccent, fontSize: 20),
+//                            children: <TextSpan>[
+//                              TextSpan(text: ' Map',
+//                                style: TextStyle(
+//                                    color: Colors.black38, fontSize: 14),
+//                              ),
+//                            ]
+//                        ),
+//                      ),
+//                    ),
                     Divider(height: 20,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
