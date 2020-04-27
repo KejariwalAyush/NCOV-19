@@ -28,6 +28,7 @@ class DataSource{
       stateData = List();
       stateRecov = List();
       dates = List();
+      days = List();
       datecases = List();
       datetotcase = List();
       datedeath = List();
@@ -66,22 +67,25 @@ class DataSource{
         newstateDeath.add(i['deltadeaths']);
         newstateRecov.add(i['deltarecovered']);
       }
+      day=0;
       for(var i in inddata['cases_time_series'])
       {
         int mm=0;
         int dd=int.parse(i['date'].toString().split(' ')[0]);
         String x = i['date'].toString().split(' ')[1].toLowerCase();
-        x == 'january'?mm=1:x=='february'?mm=2:x=='march'?mm=3:x=='april'?mm=4:x=='may'?mm=5:x=='june'?mm=6:
-        x=='july'?mm=7:x=='august'?mm=8:x=='september'?mm=9:x=='october'?mm=10:x=='november'?mm=11:mm=12;
-        dates.add('$dd $mm');
+        x == 'january'?mm=01:x=='february'?mm=02:x=='march'?mm=03:x=='april'?mm=04:x=='may'?mm=05:x=='june'?mm=06:
+        x=='july'?mm=07:x=='august'?mm=08:x=='september'?mm=09:x=='october'?mm=10:x=='november'?mm=11:mm=12;
+        dates.add('$mm${i['date'].toString().split(' ')[0]}');
+        days.add(day);
         datecases.add(i['dailyconfirmed']);
         datetotcase.add(i['totalconfirmed']);
         datedeath.add(i['dailydeceased']);
         datetotdeath.add(i['totaldeceased']);
         daterecov.add(i['dailyrecovered']);
         datetotrecov.add(i['totalrecovered']);
+        day++;
       }
-//      print(dates);
+      print(day);
 //      print(rawdata['raw_data'][0]);
       one=0;two=0;three=0;four=0;five=0;
       for(var i in rawdata['raw_data'])
@@ -219,10 +223,14 @@ class DataSource{
 //    setState(() {
 //      isLoading = true;
 //    });
-
+    final Response resp = await get("https://corona.lmao.ninja/v2/all?yesterday=true");
+    if(resp.statusCode==200){
+      var data = resp.body;
+      var wld = jsonDecode(data);
+      world = wld;
+    }
     final Response response = await get("https://www.worldometers.info/coronavirus/");
     if (response.statusCode == 200) {
-//      tcasewld=0; deathwld=0; recovwld =0; actcasewld =0;
       var data = response.body;
       var document = parse(response.body);
       List links = document.querySelectorAll('#maincounter-wrap > div > span');
@@ -235,12 +243,6 @@ class DataSource{
       var enc = json.encode(linkMap);
       List worlddata = jsonDecode(enc);
       worldData = worlddata;
-
-      tcasewld = int.parse(worlddata[0]['title'].toString().replaceAll(',', ''));
-      deathwld = int.parse(worlddata[1]['title'].toString().replaceAll(',', ''));
-      recovwld = int.parse(worlddata[2]['title'].toString().replaceAll(',', ''));
-      actcasewld = tcasewld-deathwld-recovwld;
-
       List linkcont = document.querySelectorAll(
           'tr');
       List<Map<String, dynamic>> linkMap2 = [];

@@ -396,7 +396,7 @@ class _FrontpgState extends State<Frontpg> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          '$tcasewld',
+                                          '${world['cases']}',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
@@ -432,7 +432,7 @@ class _FrontpgState extends State<Frontpg> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          '$recovwld',
+                                          '${world['recovered']}',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
@@ -467,7 +467,7 @@ class _FrontpgState extends State<Frontpg> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          '$deathwld',
+                                          '${world['deaths']}',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,

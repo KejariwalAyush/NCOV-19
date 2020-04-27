@@ -33,6 +33,8 @@ List stateData = List(),newstateData = List();
 List stateDeath = List(),newstateDeath = List();
 List stateRecov = List(),newstateRecov = List();
 List dates = List();
+List days = List();
+int day=0;
 List datecases = List();
 List datetotcase = List();
 List datedeath = List();
@@ -49,12 +51,8 @@ var indAllData = List();
 var distdata;
 var diststates;
 
-int tcasewld =0,
-    deathwld =0,
-    recovwld =0,
-    actcasewld =0,
-    newtcasewld=0,
-    newdeathwld=0;
+var world;
+
 List contries = List(),
     casescont = List(),
     newcasecont = List(),

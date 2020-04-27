@@ -5,7 +5,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/LineChart.dart';
 import 'package:flutter_app/splash.dart';
+import 'package:flutter_app/worldstat.dart';
 import 'package:photo_view/photo_view.dart';
 
 var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
@@ -100,117 +102,28 @@ class _IndiaState extends State<India> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Container(
-                      height: 75.0,
-                      width: double.maxFinite,
-                      decoration: new BoxDecoration(
-                        color: new Color(0xFF333366),
-                        shape: BoxShape.rectangle,
-                        borderRadius: new BorderRadius.circular(10.0),
-                        boxShadow: <BoxShadow>[
-                          new BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: new Offset(0.0, 10.0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          RichText(text:TextSpan(text:'$tcaseind',style: TextStyle(fontSize: 20,color: Colors.white),
-                            children: <TextSpan>[TextSpan(text:'${newtcaseind==0?'':' +$newtcaseind'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
-                            ),
-                          ),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        DataCard2('Cases',tcaseind,newtcaseind),
+                        Divider(height: 10,),
+                        DataCard2('Deaths',deathind,newdeathind),
+                      ],
                     ),
                     Divider(height: 10,),
-                    Container(
-                      height: 75.0,
-                      width: double.maxFinite,
-                      decoration: new BoxDecoration(
-                        color: new Color(0xFF333366),
-                        shape: BoxShape.rectangle,
-                        borderRadius: new BorderRadius.circular(10.0),
-                        boxShadow: <BoxShadow>[
-                          new BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: new Offset(0.0, 10.0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text('Active Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          RichText(text:TextSpan(text:'$actcaseind',style: TextStyle(fontSize: 20,color: Colors.white),
-                            children: <TextSpan>[TextSpan(text:'${newtcaseind==0?'':' +${newtcaseind-newdeathind-newrecovind}'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
-                          ),
-                          ),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        DataCard2('Recovered',recovind,newrecovind),
+                        Divider(height: 10,),
+                        DataCard2('Active',actcaseind,'${newtcaseind==0?'':' ${newtcaseind-newdeathind-newrecovind}'}'),
+                      ],
                     ),
                     Divider(height: 10,),
-                    Container(
-                      height: 75.0,
-                      width: double.maxFinite,
-                      decoration: new BoxDecoration(
-                        color: new Color(0xFF333366),
-                        shape: BoxShape.rectangle,
-                        borderRadius: new BorderRadius.circular(10.0),
-                        boxShadow: <BoxShadow>[
-                          new BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: new Offset(0.0, 10.0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          RichText(text:TextSpan(text:'$recovind',style: TextStyle(fontSize: 20,color: Colors.white),
-                            children: <TextSpan>[TextSpan(text:'${newrecovind==0?'':' +$newrecovind'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(height: 10,),
-                    Container(
-                      height: 75.0,
-                      width: double.maxFinite,
-                      decoration: new BoxDecoration(
-                        color: new Color(0xFF333366),
-                        shape: BoxShape.rectangle,
-                        borderRadius: new BorderRadius.circular(10.0),
-                        boxShadow: <BoxShadow>[
-                          new BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: new Offset(0.0, 10.0),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                          RichText(text:TextSpan(text:'$deathind',style: TextStyle(fontSize: 20,color: Colors.white),
-                            children: <TextSpan>[TextSpan(text:'${newdeathind==0?'':' +$newdeathind'}',style: TextStyle(fontSize: 15,color: Colors.red),),],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+
+
                   ],
                 ),
                 Divider(height: 10,),
@@ -312,9 +225,11 @@ class _IndiaState extends State<India> {
                 District(),
                 Divider(height: 10,),
                 //LineChart(),
+                LineChart1(),
                 BarChart(),
                 BarChart2(),
                 BarChart3(),
+
               ],
             ),
           ),
@@ -642,7 +557,7 @@ class BarChart extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 200,
+        height: 250,
         padding: EdgeInsets.all(10),
         child: Card(color: Colors.blueGrey[100],
           child: Padding(

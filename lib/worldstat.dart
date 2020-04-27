@@ -72,104 +72,44 @@ class WorldData extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        Container(
-                          height: 75.0,
-                          width: double.maxFinite,
-                          decoration: new BoxDecoration(
-                            color: new Color(0xFF333366),
-                            shape: BoxShape.rectangle,
-                            borderRadius: new BorderRadius.circular(10.0),
-                            boxShadow: <BoxShadow>[
-                              new BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 10.0,
-                                offset: new Offset(0.0, 10.0),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Text('Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                              Text('$tcasewld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            DataCard2('Cases',world['cases'],world['todayCases']),
+                            Divider(height: 10,),
+                            DataCard2('Deaths',world['deaths'],world['todayDeaths']),
+                          ],
                         ),
                         Divider(height: 10,),
-                        Container(
-                          height: 75.0,
-                          width: double.maxFinite,
-                          decoration: new BoxDecoration(
-                            color: new Color(0xFF333366),
-                            shape: BoxShape.rectangle,
-                            borderRadius: new BorderRadius.circular(10.0),
-                            boxShadow: <BoxShadow>[
-                              new BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 10.0,
-                                offset: new Offset(0.0, 10.0),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text('Active Cases',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                              Text('$actcasewld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                            ],
-                          ),
+                              DataCard('Recovered',world['recovered']),
+                              Divider(height: 10,),
+                              DataCard('Active',world['active']),
+                            ]
                         ),
                         Divider(height: 10,),
-                        Container(
-                          height: 75.0,
-                          width: double.maxFinite,
-                          decoration: new BoxDecoration(
-                            color: new Color(0xFF333366),
-                            shape: BoxShape.rectangle,
-                            borderRadius: new BorderRadius.circular(10.0),
-                            boxShadow: <BoxShadow>[
-                              new BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 10.0,
-                                offset: new Offset(0.0, 10.0),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text('Recovered',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                              Text('$recovwld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                            ],
-                          ),
+                              DataCard('Critical',world['critical']),
+                              Divider(height: 10,),
+                              DataCard('Tests',world['tests']),
+                            ]
                         ),
                         Divider(height: 10,),
-                        Container(
-                          height: 75.0,
-                          width: double.maxFinite,
-                          decoration: new BoxDecoration(
-                            color: new Color(0xFF333366),
-                            shape: BoxShape.rectangle,
-                            borderRadius: new BorderRadius.circular(10.0),
-                            boxShadow: <BoxShadow>[
-                              new BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 10.0,
-                                offset: new Offset(0.0, 10.0),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                        Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text('Deaths',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-                              Text('$deathwld',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-                            ],
-                          ),
+                              DataCard('Cases/Million',world['casesPerOneMillion']),
+                              Divider(height: 10,),
+                              DataCard('Deaths/Million',world['deathsPerOneMillion']),
+                            ]
                         ),
                       ],
                     ),
@@ -278,9 +218,9 @@ class PieChart extends StatelessWidget {
 
 
   final data = [
-    GradesData('Active', actcasewld,charts.ColorUtil.fromDartColor(Colors.redAccent)),
-    GradesData('Recovered', recovwld,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-    GradesData('Deaths', deathwld,charts.ColorUtil.fromDartColor(Colors.blueGrey)),
+    GradesData('Active', world['active'],charts.ColorUtil.fromDartColor(Colors.redAccent)),
+    GradesData('Recovered', world['recovered'],charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GradesData('Deaths', world['deaths'],charts.ColorUtil.fromDartColor(Colors.blueGrey)),
   ];
 
   _getSeriesData() {
@@ -365,6 +305,75 @@ class WorldMap extends StatelessWidget {
           backgroundDecoration: BoxDecoration(color: Colors.white70),
         ),
       ),
+    );
+  }
+}
+// ignore: must_be_immutable
+class DataCard extends StatelessWidget {
+  String txt;
+  var txtdata;
+  DataCard(this.txt,this.txtdata);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 75.0,
+      width: 150,
+      decoration: new BoxDecoration(
+        color: new Color(0xFF333366),
+        shape: BoxShape.rectangle,
+        borderRadius: new BorderRadius.circular(10.0),
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10.0,
+            offset: new Offset(0.0, 10.0),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
+          Text('$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+        ],
+      ),
+    );
+  }
+}
+// ignore: must_be_immutable
+class DataCard2 extends StatelessWidget {
+  String txt,txt2;
+  var txtdata,txt2data;
+  DataCard2(this.txt,this.txtdata,this.txt2data);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 75.0,
+      width: 150,
+      decoration: new BoxDecoration(
+        color: new Color(0xFF333366),
+        shape: BoxShape.rectangle,
+        borderRadius: new BorderRadius.circular(10.0),
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10.0,
+            offset: new Offset(0.0, 10.0),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
+          Text('$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+          Text('${txt2data!='0'?'+$txt2data':''}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
+//          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
+//            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+            ],
+          ),
     );
   }
 }
