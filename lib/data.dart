@@ -229,6 +229,12 @@ class DataSource{
       var wld = jsonDecode(data);
       world = wld;
     }
+    final Response resp2 = await get("https://corona.lmao.ninja/v2/continents?yesterday=true&sort=cases");
+    if(resp2.statusCode==200){
+      var data = resp2.body;
+      var continentData = jsonDecode(data);
+      continent = continentData;
+    }
     final Response response = await get("https://www.worldometers.info/coronavirus/");
     if (response.statusCode == 200) {
       var data = response.body;

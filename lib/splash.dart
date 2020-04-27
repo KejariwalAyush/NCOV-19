@@ -52,7 +52,7 @@ var distdata;
 var diststates;
 
 var world;
-
+var continent;
 List contries = List(),
     casescont = List(),
     newcasecont = List(),

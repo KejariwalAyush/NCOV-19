@@ -116,6 +116,43 @@ class WorldData extends StatelessWidget {
                     Divider(height: 10,),
                     PieChart(),
                     Divider(height: 10,),
+//                    Container(
+//                      child:GridView.count(
+//                        shrinkWrap: true,
+//                        crossAxisCount: 2,
+//                        children: <Widget>[
+////                        for(var i in continent[0])
+//                          ContinentCard(continent[0]['continent'],
+//                              continent[0]['cases'], continent[0]['deaths'],
+//                              continent[0]['recovered'], continent[0]['active']),
+//                      ],
+//                    ),),
+                    Center(child:RichText(
+                      text: TextSpan(
+                          text: 'CONTINENT-wise',
+                          style: TextStyle(fontFamily: fontName,
+                              color: Colors.blue, fontSize: 20),
+                          children: <TextSpan>[
+                            TextSpan(text: ' Stats',
+                              style: TextStyle(
+                                  color: Colors.black38, fontSize: 16),
+                            )
+                          ]
+                      ),
+                    ),),
+                    Divider(height: 5,),
+                    for(int i=0;i<6;i+=2)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          ContinentCard(continent[i]['continent'],
+                              continent[i]['cases'], continent[i]['deaths'],
+                              continent[i]['recovered'], continent[i]['active']),
+                          ContinentCard(continent[i+1]['continent'],
+                              continent[i+1]['cases'], continent[i+1]['deaths'],
+                              continent[i+1]['recovered'], continent[i+1]['active']),
+                      ],),
                     Container(
                       alignment: Alignment.topCenter,
                       padding: EdgeInsets.all(10),
@@ -375,5 +412,49 @@ class DataCard2 extends StatelessWidget {
             ],
           ),
     );
+  }
+}
+// ignore: must_be_immutable
+class ContinentCard extends StatelessWidget {
+  String continentName;
+  var cases,deaths,recovered,active;
+  ContinentCard(this.continentName,this.cases,this.deaths,this.recovered,this.active);
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      Container(
+        height: 125.0,
+        width: 150,
+        decoration: new BoxDecoration(
+          color: new Color(0xFF333366),
+          shape: BoxShape.rectangle,
+          borderRadius: new BorderRadius.circular(10.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.0,
+              offset: new Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text('$continentName',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+            Divider(height: 5,),
+            Text('Cases: $cases',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
+            Text('Recov.: $recovered',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
+            Text('Deaths: $deaths',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
+            Text('Active: $active',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
+            Divider(height: 2,),
+  //          Text('${txt2data!='0'?'+$txt2data':''}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
+  //          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
+  //            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+          ],
+        ),
+      ),
+      Divider(height: 10,),
+    ],);
   }
 }
