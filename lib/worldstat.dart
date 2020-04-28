@@ -1,11 +1,32 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:photo_view/photo_view.dart';
 
+import 'LineChart.dart';
+
 class WorldData extends StatelessWidget {
   static const String fontName = 'Comfortaa';
+  static var _days=world['cases'].length;
+  static var timeline = 0;
+  static var keys = worldHistory['cases'].keys;
+  static int cnt1=0;
+  final List<FlSpot> wldCaseHist = [
+    for (var i in worldHistory['cases'].keys)
+      FlSpot(double.parse((cnt1++).toString()), double.parse(worldHistory['cases'][i].toString())),
+  ];
+  static int cnt2=0;
+  final List<FlSpot> wldRecovHist = [
+    for (var i in worldHistory['cases'].keys)
+      FlSpot(double.parse((cnt2++).toString()), double.parse(worldHistory['recovered'][i].toString())),
+  ];
+  static int cnt3=0;
+  final List<FlSpot> wldDeathHist = [
+    for (var i in worldHistory['cases'].keys)
+      FlSpot(double.parse((cnt3++).toString()), double.parse(worldHistory['deaths'][i].toString())),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +97,9 @@ class WorldData extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            DataCard2('Cases',world['cases'],world['todayCases']),
+                            DataCard3('Cases',tcasewld,'${newcasecont[8]}',world['cases'],world['todayCases']),
                             Divider(height: 10,),
-                            DataCard2('Deaths',world['deaths'],world['todayDeaths']),
+                            DataCard3('Deaths',deathwld,'${newdeathcont[8]}',world['deaths'],world['todayDeaths']),
                           ],
                         ),
                         Divider(height: 10,),
@@ -153,6 +174,8 @@ class WorldData extends StatelessWidget {
                               continent[i+1]['cases'], continent[i+1]['deaths'],
                               continent[i+1]['recovered'], continent[i+1]['active']),
                       ],),
+                    LineChart1(wldCaseHist,wldRecovHist,wldDeathHist,tcasewld/4),
+                    Divider(height: 10,),
                     Container(
                       alignment: Alignment.topCenter,
                       padding: EdgeInsets.all(10),
@@ -458,3 +481,57 @@ class ContinentCard extends StatelessWidget {
     ],);
   }
 }
+// ignore: must_be_immutable
+class DataCard3 extends StatelessWidget {
+  String txt;
+  var txtdata,txt2data,txt3data,txt4data;
+  DataCard3(this.txt,this.txtdata,this.txt2data,this.txt3data,this.txt4data);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 135.0,
+      width: 150,
+      decoration: new BoxDecoration(
+        color: new Color(0xFF333366),
+        shape: BoxShape.rectangle,
+        borderRadius: new BorderRadius.circular(10.0),
+        boxShadow: <BoxShadow>[
+          new BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10.0,
+            offset: new Offset(0.0, 10.0),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
+          Text('$txtdata',style: TextStyle(fontSize: 18,color: Colors.white),textAlign: TextAlign.center,),
+          Text('${txt2data!='0'?'$txt2data':''}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
+          Text('Yesterday',style: TextStyle(fontSize: 14,color: Colors.white60),textAlign: TextAlign.center,),
+          Text('$txt3data',style: TextStyle(fontSize: 18,color: Colors.white),textAlign: TextAlign.center,),
+          Text('${txt4data!='0'?'+$txt4data':''}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
+
+//          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
+//            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+        ],
+      ),
+    );
+  }
+}
+//class _Charts{
+
+
+//
+//  final List<FlSpot> allSpots2 = [
+//    for (int i = timeline; i < days.length; i++)
+//      FlSpot(double.parse(days[i].toString()), double.parse(datetotrecov[i])),
+//  ];
+//
+//  final List<FlSpot> allSpots3 = [
+//    for (int i = timeline; i < days.length; i++)
+//      FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
+//  ];
+//}

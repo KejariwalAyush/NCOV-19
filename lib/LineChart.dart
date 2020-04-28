@@ -2,25 +2,28 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 
+// ignore: must_be_immutable
 class LineChart1 extends StatelessWidget {
 
-  static var timeline = day-30;
   final List<int> showIndexes = const [0, 19];
 
-  final List<FlSpot> allSpots = [
+  static var timeline = day-30;
+  List<FlSpot> allSpots = [
     for (int i = timeline; i < days.length; i++)
       FlSpot(double.parse(days[i].toString()), double.parse(datetotcase[i])),
   ];
 
-  final List<FlSpot> allSpots2 = [
+  List<FlSpot> allSpots2 = [
     for (int i = timeline; i < days.length; i++)
       FlSpot(double.parse(days[i].toString()), double.parse(datetotrecov[i])),
   ];
 
-  final List<FlSpot> allSpots3 = [
+  List<FlSpot> allSpots3 = [
     for (int i = timeline; i < days.length; i++)
       FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
   ];
+  var intervals;
+  LineChart1(this.allSpots,this.allSpots2,this.allSpots3,this.intervals);
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +108,10 @@ class LineChart1 extends StatelessWidget {
         belowBarData: BarAreaData(
           show: true,
           colors: [
+            Colors.purple
 //            const Color(0xfea8f059).withOpacity(0.8),
-            const Color(0xffa30fff).withOpacity(0.4),
-            const Color(0xfff64f59).withOpacity(0.4),
+//            const Color(0xffa30fff).withOpacity(1),
+//            const Color(0xfff64f59).withOpacity(0.4),
           ],
         ),
         dotData: FlDotData(
@@ -147,10 +151,10 @@ class LineChart1 extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(
-                "Last 30 days",
-                textAlign: TextAlign.center,
-              ),
+//              Text(
+//                "Last 30 days",
+//                textAlign: TextAlign.center,
+//              ),
               SizedBox(
 //      width: ,
                 height: 200,
@@ -190,19 +194,19 @@ class LineChart1 extends StatelessWidget {
                         getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                           return lineBarsSpot.map((lineBarSpot) {
                             return LineTooltipItem(
-                              lineBarSpot.y.toString().split('.')[0] +
-                                  '  :  ' +
-                                  dates[int.parse(lineBarSpot.x
-                                          .toString()
-                                          .split('.')[0])]
-                                      .toString()
-                                      .substring(1, 3) +
-                                  '/' +
-                                  dates[int.parse(lineBarSpot.x
-                                          .toString()
-                                          .split('.')[0])]
-                                      .toString()
-                                      .substring(0, 1),
+                              lineBarSpot.y.toString().split('.')[0],//+':'+lineBarSpot.x.toString().split('.')[0],
+//                                  + '  :  ' +
+//                                  dates[int.parse(lineBarSpot.x
+//                                          .toString()
+//                                          .split('.')[0])]
+//                                      .toString()
+//                                      .substring(1, 3) +
+//                                  '/' +
+//                                  dates[int.parse(lineBarSpot.x
+//                                          .toString()
+//                                          .split('.')[0])]
+//                                      .toString()
+//                                      .substring(0, 1),
                               //lineBarSpot.x.toString().substring(1,3)+'/'+lineBarSpot.x.toString().substring(0,1),
                               const TextStyle(
                                   color: Colors.white, fontSize: 10),
@@ -216,16 +220,16 @@ class LineChart1 extends StatelessWidget {
                     titlesData: FlTitlesData(
                       leftTitles: SideTitles(
                           showTitles: true,
-                          reservedSize: 25,
-                          interval: tcaseind / 4,
+                          reservedSize: 30,
+                          interval: intervals,rotateAngle: 20,
                           textStyle: TextStyle(
                               fontSize: 10,
                               color: Colors.blueGrey,
                               letterSpacing: -1)),
                       bottomTitles: SideTitles(
                           showTitles: false,
-                          interval: 5,
-                          margin: 5,
+                          interval: dates.length/10,
+                          margin: 5,rotateAngle: 90,
                           textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.blueGrey,
@@ -247,7 +251,29 @@ class LineChart1 extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
+              ),
+              Divider(height: 10,),
+              Container(
+                  child: Column(children: <Widget>[Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text('Cases'),
+                      Icon(Icons.assignment_return,color: Colors.orangeAccent,size: 20,),
+                      Divider(height: 10,),
+                      Text('Recovered'),
+                      Icon(Icons.assignment_return,color: Colors.lightGreen,size: 20,),
+                      Divider(height: 10,),
+                      Text('Deaths'),
+                      Icon(Icons.assignment_return,color: Colors.purple,size: 20,),
+                  ],
+                  ),
+//                    Divider(height: 5,),
+//                    Text('Cases : Day no.'),
+//                    Text('Recovered : Day no.'),
+//                    Text('Deaths : Day no.'),
+                  ],),
+              ),
             ],
           ),
         ),

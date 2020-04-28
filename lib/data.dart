@@ -235,6 +235,17 @@ class DataSource{
       var continentData = jsonDecode(data);
       continent = continentData;
     }
+    final Response resp3 = await get("https://disease.sh/v2/historical/all?lastdays=all");
+    if(resp3.statusCode==200){
+      var data = resp3.body;
+      var historyData = jsonDecode(data);
+      worldHistory = historyData;
+//      for(var key in worldHistory['cases'].keys)
+//      print(worldHistory['cases'][key]);
+//      print(worldHistory['cases'].length);
+
+//      continent = continentData;
+    }
     final Response response = await get("https://www.worldometers.info/coronavirus/");
     if (response.statusCode == 200) {
       var data = response.body;
@@ -249,6 +260,12 @@ class DataSource{
       var enc = json.encode(linkMap);
       List worlddata = jsonDecode(enc);
       worldData = worlddata;
+
+      tcasewld = int.parse(worlddata[0]['title'].toString().replaceAll(',', ''));
+      deathwld = int.parse(worlddata[1]['title'].toString().replaceAll(',', ''));
+      recovwld = int.parse(worlddata[2]['title'].toString().replaceAll(',', ''));
+      actcasewld = tcasewld-deathwld-recovwld;
+      newrecovwld = recovwld-world['recovered'];
       List linkcont = document.querySelectorAll(
           'tr');
       List<Map<String, dynamic>> linkMap2 = [];

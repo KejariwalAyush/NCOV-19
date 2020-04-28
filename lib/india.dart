@@ -1,4 +1,5 @@
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/gestures.dart';
@@ -225,7 +226,7 @@ class _IndiaState extends State<India> {
                 District(),
                 Divider(height: 10,),
                 //LineChart(),
-                LineChart1(),
+                LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4),
                 BarChart(),
                 BarChart2(),
                 BarChart3(),
@@ -239,6 +240,22 @@ class _IndiaState extends State<India> {
     );
   }
 }
+
+var timeline = 0;
+final List<FlSpot> allSpots = [
+  for (int i = timeline; i < days.length; i++)
+    FlSpot(double.parse(days[i].toString()), double.parse(datetotcase[i])),
+];
+
+final List<FlSpot> allSpots2 = [
+  for (int i = timeline; i < days.length; i++)
+    FlSpot(double.parse(days[i].toString()), double.parse(datetotrecov[i])),
+];
+
+final List<FlSpot> allSpots3 = [
+  for (int i = timeline; i < days.length; i++)
+    FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
+];
 
 class District extends StatefulWidget {
   @override
@@ -325,7 +342,7 @@ class _DistrictState extends State<District> {
                             style: TextStyle(fontFamily: India.fontName,
                                 color: Colors.black),
                             children: <TextSpan>[
-                              TextSpan(text: '${i['delta']['confirmed']=='0'?'':' +${i['delta']['confirmed']}'}',
+                              TextSpan(text: '${i['delta']['confirmed']==0?'':' +${i['delta']['confirmed']}'}',
                                 style: TextStyle(
                                     color: Colors.red, fontSize: 12),
                               )

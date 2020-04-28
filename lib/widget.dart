@@ -236,6 +236,7 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
+                                        if(newtcaseind!=0)
                                         Text(
                                           '${newtcaseind == 0 ? '' : '+$newtcaseind'}',
                                           style: TextStyle(
@@ -276,8 +277,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
+                                        if(newtcaseind!=0)
                                         Text(
-                                          '${newrecovind == 0 ? '' : '+$newrecovind'}',
+                                          '${newrecovind == 0 ? '0' : '+$newrecovind'}',
                                           style: TextStyle(
                                               fontSize: 15, color: Colors.red),
                                           textAlign: TextAlign.center,
@@ -316,8 +318,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
+                                        if(newtcaseind!=0)
                                         Text(
-                                          '${newdeathind == 0 ? '' : '+$newdeathind'}',
+                                          '${newdeathind == 0 ? '0' : '+$newdeathind'}',
                                           style: TextStyle(
                                               fontSize: 15, color: Colors.red),
                                           textAlign: TextAlign.center,
@@ -396,13 +399,14 @@ class _FrontpgState extends State<Frontpg> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          '${world['cases']}',
+                                          '$tcasewld',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-//                                        Text('${newcasecont[8]==0?'':'${newcasecont[8]}'}',
-//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                                        if(newcasecont[8]!=0)
+                                        Text('${newcasecont[8]==0?'':'${newcasecont[8]}'}',
+                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                                       ],
                                     ),
                                   ),
@@ -432,11 +436,14 @@ class _FrontpgState extends State<Frontpg> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          '${world['recovered']}',
+                                          '$recovwld',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
+                                        if(newcasecont[8]!=0)
+                                        Text('${newrecovwld==0?'0':'$newrecovwld'}',
+                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 //                                        Text('${newdeathcont[8]}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                                       ],
                                     ),
@@ -467,11 +474,14 @@ class _FrontpgState extends State<Frontpg> {
                                           textAlign: TextAlign.center,
                                         ),
                                         Text(
-                                          '${world['deaths']}',
+                                          '$deathwld',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
+                                        if(newcasecont[8]!=0)
+                                        Text('${newdeathcont[8]==0?'0':'${newdeathcont[8]}'}',
+                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 //                                        Text('${newdeathcont[8]==0?'':'${newdeathcont[8]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                                       ],
                                     ),

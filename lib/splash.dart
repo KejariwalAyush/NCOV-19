@@ -53,6 +53,15 @@ var diststates;
 
 var world;
 var continent;
+var worldHistory;
+int tcasewld =0,
+    deathwld =0,
+    recovwld =0,
+    actcasewld =0,
+    newtcasewld=0,
+    newrecovwld=0,
+    newdeathwld=0;
+
 List contries = List(),
     casescont = List(),
     newcasecont = List(),
