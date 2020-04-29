@@ -108,7 +108,7 @@ class _FrontpgState extends State<Frontpg> {
                       //Alert(),
                       Padding(
                         padding: EdgeInsets.only(top: 10,bottom: 5),
-                        child: tcaseind !=0 || tcasewld !=0?
+                        child: tcaseind !=0 && tcasewld !=0?
                         FadeAnimatedTextKit(
                             isRepeatingAnimation: true,
 //                            duration: Duration(seconds: 3),
