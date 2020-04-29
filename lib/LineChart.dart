@@ -132,7 +132,7 @@ class LineChart1 extends StatelessWidget {
       ),
     ];
 
-    final LineChartBarData tooltipsOnBar = lineBarsData[0];
+//    final LineChartBarData tooltipsOnBar = lineBarsData[0];
 
     return Container(
       decoration: BoxDecoration(

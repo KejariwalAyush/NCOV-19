@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:package_info/package_info.dart';
 
+
+// ignore: camel_case_types
 class update extends StatefulWidget {
   @override
   _updateState createState() => _updateState();
 }
 var isLoading = false;
+// ignore: camel_case_types
 class _updateState extends State<update> {
-  var apklink = null;
+  var apklink;
   @override
   void initState() {
     _getThingsOnStartup().then((value) {
@@ -83,12 +85,12 @@ class _updateState extends State<update> {
     setState(() {
       isLoading = true;
     });
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-  var version = packageInfo.version;
+//    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+//  var version = packageInfo.version;
     // String version;
     final Response response = await get("https://github.com/KejariwalAyush/NCOV-19/releases/latest");
     if (response.statusCode == 200) {
-      var data = response.body;
+//      var data = response.body;
       var document = parse(response.body);
       List links = document.querySelectorAll('div.d-flex.flex-justify-between.flex-items-center.py-1.py-md-2.Box-body.px-2 > a');
       // List updatetag = document.querySelectorAll('ul > li:nth-child(1) > a > span.css-truncate-target');

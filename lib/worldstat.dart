@@ -10,7 +10,7 @@ import 'LineChart.dart';
 
 class WorldData extends StatelessWidget {
   static const String fontName = 'Comfortaa';
-  static var _days=world['cases'].length;
+//  static var _days=world['cases'].length;
   static var timeline = 0;
   static var keys = worldHistory['cases'].keys;
   static int cnt1=0;

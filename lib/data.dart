@@ -71,7 +71,7 @@ class DataSource{
       for(var i in inddata['cases_time_series'])
       {
         int mm=0;
-        int dd=int.parse(i['date'].toString().split(' ')[0]);
+//        int dd=int.parse(i['date'].toString().split(' ')[0]);
         String x = i['date'].toString().split(' ')[1].toLowerCase();
         x == 'january'?mm=01:x=='february'?mm=02:x=='march'?mm=03:x=='april'?mm=04:x=='may'?mm=05:x=='june'?mm=06:
         x=='july'?mm=07:x=='august'?mm=08:x=='september'?mm=09:x=='october'?mm=10:x=='november'?mm=11:mm=12;
@@ -148,7 +148,7 @@ class DataSource{
     final Response response = await get("https://indianexpress.com/about/coronavirus/");
     if (response.statusCode == 200) {
       newsAllData = List();
-      var data = response.body;
+//      var data = response.body;
       var document = parse(response.body);
       List links = document.querySelectorAll('h3 > a');
       List<Map<String, dynamic>> linkMap = [];
@@ -265,7 +265,7 @@ class DataSource{
     }
     final Response response = await get("https://www.worldometers.info/coronavirus/");
     if (response.statusCode == 200) {
-      var data = response.body;
+//      var data = response.body;
       var document = parse(response.body);
       List links = document.querySelectorAll('#maincounter-wrap > div > span');
       List<Map<String, dynamic>> linkMap = [];

@@ -33,10 +33,7 @@ class _CountriesDataState extends State<CountriesData> {
   bool moreData = false;
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
-//    _getThingsOnStartup().then((value){
       for(int i=0;i<countryData.length;i++)
       {
         if(countryData[i]['country'].toString().toLowerCase().compareTo(newContName.toString().toLowerCase())==0)
@@ -49,13 +46,7 @@ class _CountriesDataState extends State<CountriesData> {
       setState(() {
         data = fetch(countryData[no]['country']);
       });
-
-//    });
   }
-  Future _getThingsOnStartup() async {
-    await Future.delayed(Duration(seconds: 2));
-  }
-//  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +192,6 @@ class LineChart2 extends StatelessWidget {
   StatelessElement createElement() {
     // TODO: implement createElement
     return super.createElement();
-    Future.delayed(Duration(seconds: 5));
   }
   var data;
   var timeline;
@@ -274,7 +264,7 @@ class LineChart2 extends StatelessWidget {
       ),
     ];
 //    Future.delayed(Duration(seconds: 10));
-    final LineChartBarData tooltipsOnBar = lineBarsData[0];
+//    final LineChartBarData tooltipsOnBar = lineBarsData[0];
 
     return Container(
 //      decoration: BoxDecoration(

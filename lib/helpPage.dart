@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 
+// ignore: camel_case_types
 class helpPage extends StatelessWidget {
   static const String fontName = 'Comfortaa';
   @override

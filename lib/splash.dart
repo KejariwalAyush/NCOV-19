@@ -150,7 +150,7 @@ class _SplashState extends State<Splash> {
 
     final Response response = await get('https://github.com/KejariwalAyush/NCOV-19/releases/latest');
     if (response.statusCode == 200) {
-      var data = response.body;
+//      var data = response.body;
       var document = parse(response.body);
       List links = document.querySelectorAll('div > ul > li > a > span ');
       List<Map<String, String>> linkMap = [];
@@ -270,61 +270,28 @@ class _SplashState extends State<Splash> {
     return;
   }
 
-  void _showDialog() {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("UPDATE Available"),
-          content: new Text("Download & install latest version of the app\nUpdates make your app better"),
-          actions: <Widget>[
-            new FlatButton(onPressed: _launchURL(updatelink),
-                child: new Text('Update',style: TextStyle(color: Colors.blueAccent,),)),
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-//  void setData(){
-//    var inddata = indiaData;
-//    tcaseind = int.parse(inddata['statewise'][0]['confirmed']);
-//    actcaseind = int.parse(inddata['statewise'][0]['active']);
-//    deathind = int.parse(inddata['statewise'][0]['deaths']);
-//    recovind = int.parse(inddata['statewise'][0]['recovered']);
-//    for(var i in inddata['statewise'])
-//    {
-//      states.add(i['state']);
-//      stateData.add(i['confirmed']);
-//      stateDeath.add(i['deaths']);
-//      stateRecov.add(i['recovered']);
-//    }
-//    for(var i in inddata['cases_time_series'])
-//    {
-//      dates.add(i['date']);
-//      datecases.add(i['dailyconfirmed']);
-//      datetotcase.add(i['totalconfirmed']);
-//    }
-//
-//    var worlddata = worldData;
-//    tcasewld = int.parse(worlddata[0]['title'].toString().replaceAll(',', ''));
-//    deathwld = int.parse(worlddata[1]['title'].toString().replaceAll(',', ''));
-//    recovwld = int.parse(worlddata[2]['title'].toString().replaceAll(',', ''));
-//    actcasewld = tcasewld-deathwld-recovwld;
-//
-//    var newsdata = newsData;
-//    for (var i = 0; i < newsdata.length; i++) {
-//      newslist.add(newsdata[i]['title']);
-//      newslink.add(newsdata[i]['link']);
-//    }
-//
+//  void _showDialog() {
+//    // flutter defined function
+//    showDialog(
+//      context: context,
+//      builder: (BuildContext context) {
+//        // return object of type Dialog
+//        return AlertDialog(
+//          title: new Text("UPDATE Available"),
+//          content: new Text("Download & install latest version of the app\nUpdates make your app better"),
+//          actions: <Widget>[
+//            new FlatButton(onPressed: _launchURL(updatelink),
+//                child: new Text('Update',style: TextStyle(color: Colors.blueAccent,),)),
+//            // usually buttons at the bottom of the dialog
+//            new FlatButton(
+//              child: new Text("Cancel"),
+//              onPressed: () {
+//                Navigator.of(context).pop();
+//              },
+//            ),
+//          ],
+//        );
+//      },
+//    );
 //  }
 }
