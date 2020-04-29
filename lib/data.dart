@@ -240,11 +240,28 @@ class DataSource{
       var data = resp3.body;
       var historyData = jsonDecode(data);
       worldHistory = historyData;
-//      for(var key in worldHistory['cases'].keys)
-//      print(worldHistory['cases'][key]);
-//      print(worldHistory['cases'].length);
-
-//      continent = continentData;
+    }
+    final Response resp4 = await get("https://disease.sh/v2/countries?yesterday=true&sort=cases");
+    if(resp4.statusCode==200){
+      var data = resp4.body;
+      var countrywiseData = jsonDecode(data);
+      countryData = countrywiseData;
+//      List<Map> hist = List();
+////      print(countryData['countries']);
+//      for(var i in countryData)
+//        {
+//          String name = i['country'];
+//          final Response respo = await get("https://disease.sh/v2/historical/$name?lastdays=all");
+//          if(respo.statusCode==200) {
+//            var data = respo.body;
+//            var doc = jsonDecode(data);
+//            hist.add(doc);
+//          }
+//          else
+//            hist.add(null);
+//        }
+//      print(hist[0]);
+//      worldHistory = historyData;
     }
     final Response response = await get("https://www.worldometers.info/coronavirus/");
     if (response.statusCode == 200) {

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Countries.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -107,9 +108,12 @@ class WorldData extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              DataCard('Recovered',world['recovered']),
+                              DataCard2('Recovered',world['recovered'],newrecovwld),
                               Divider(height: 10,),
-                              DataCard('Active',world['active']),
+                              DataCard2('Active',world['active'],
+                                  int.parse(newcasecont[8].toString().replaceAll(',', '').replaceAll('+', ''))
+                                      -int.parse(newdeathcont[8].toString().replaceAll(',', '').replaceAll('+', ''))
+                                      -newrecovwld),
                             ]
                         ),
                         Divider(height: 10,),
@@ -176,6 +180,31 @@ class WorldData extends StatelessWidget {
                       ],),
                     LineChart1(wldCaseHist,wldRecovHist,wldDeathHist,tcasewld/4),
                     Divider(height: 10,),
+//                    InkWell(
+//                      onTap: () {
+//                        Navigator.push(context,
+//                            MaterialPageRoute(builder: (context) => CountriesData()));
+//                        print('Tapped on World');
+//                      },
+//                      child:Container(
+//                        height: 40,
+//                        width: double.maxFinite,
+//                        decoration: new BoxDecoration(
+//                          color: new Color(0xFF333366),
+//                          shape: BoxShape.rectangle,
+//                          borderRadius: new BorderRadius.circular(10.0),
+//                          boxShadow: <BoxShadow>[
+//                            new BoxShadow(
+//                              color: Colors.black12,
+//                              blurRadius: 10.0,
+//                              offset: new Offset(0.0, 10.0),
+//                            ),
+//                          ],
+//                        ),
+//                      child: Center(child:Text('Country-Wise Data',style: TextStyle(color: Colors.white,fontSize: 20),)),
+//                      ),
+//                    ),
+                    Divider(height: 10,),
                     Container(
                       alignment: Alignment.topCenter,
                       padding: EdgeInsets.all(10),
@@ -186,8 +215,10 @@ class WorldData extends StatelessWidget {
                           color: Colors.blueGrey[300]),
                       child: SingleChildScrollView(scrollDirection: Axis.vertical,
                         child:Column(children: <Widget>[
-                          Center(child:Text('Stats of Top 50 Countries',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
-                        DataTable(
+                          Center(child:Text('Stats of Top 100 Countries',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)),
+                          Center(child:Text('Tap on Countries Name to know more!',
+                            style: TextStyle(fontSize: 14,color: Colors.blueGrey[700]),)),
+                          DataTable(
                           columnSpacing: 10,
                           dataRowHeight: 35,
                           headingRowHeight: 50,
@@ -201,17 +232,26 @@ class WorldData extends StatelessWidget {
                             DataColumn(label: Text('Recovered'),),
                           ],
                           rows: [
-                            for(int i=8;i<=58;i++)
+                            for(int i=9;i<=109;i++)
                             DataRow(
                                 cells:[
                               DataCell(
-                                RichText(
-                                text: TextSpan(
-                                    text: '${contries[i]}',
-                                    style: TextStyle(fontFamily: fontName,
-                                        color: Colors.deepPurple),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => CountriesData(contries[i])));
+                                    print('Tapped on ${contries[i]}');
+                                  },
+                                  child: Container(
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: '${contries[i]}',
+                                        style: TextStyle(fontFamily: fontName,
+                                            color: Colors.deepPurple),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
                               ),
                               DataCell(RichText(
                                 text: TextSpan(
@@ -278,9 +318,9 @@ class PieChart extends StatelessWidget {
 
 
   final data = [
-    GradesData('Active', world['active'],charts.ColorUtil.fromDartColor(Colors.redAccent)),
-    GradesData('Recovered', world['recovered'],charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-    GradesData('Deaths', world['deaths'],charts.ColorUtil.fromDartColor(Colors.blueGrey)),
+    GradesData('Active %', int.parse((world['active']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.redAccent)),
+    GradesData('Recov %', int.parse((world['recovered']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GradesData('Deaths %', int.parse((world['deaths']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.blueGrey)),
   ];
 
   _getSeriesData() {
@@ -303,7 +343,7 @@ class PieChart extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 300,
+        height: 200,width: double.maxFinite,
         padding: EdgeInsets.all(10),
         child: Card(color: Colors.blueGrey[100],
           child: Padding(

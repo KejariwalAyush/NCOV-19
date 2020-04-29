@@ -28,9 +28,9 @@ class India extends StatefulWidget {
   @override
   _IndiaState createState() => _IndiaState();
 }
-
+String dropdownvalue = distdata[0]['state'];
 class _IndiaState extends State<India> {
-  String dropdownvalue = 'One';
+//  String dropdownvalue = 'One';
 //  ScrollController myScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -225,8 +225,8 @@ class _IndiaState extends State<India> {
                 Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 District(),
                 Divider(height: 10,),
-                //LineChart(),
                 LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4),
+                Divider(height: 10,),
                 BarChart(),
                 BarChart2(),
                 BarChart3(),
@@ -261,8 +261,9 @@ class District extends StatefulWidget {
   @override
   _DistrictState createState() => _DistrictState();
 }
+
 class _DistrictState extends State<District> {
-  String dropdownvalue = distdata[0]['state'];
+
   int stcount = 0;
   @override
   Widget build(BuildContext context) {

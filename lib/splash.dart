@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widget.dart';
+import 'package:flutter_app/home.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -54,6 +54,7 @@ var diststates;
 var world;
 var continent;
 var worldHistory;
+var countryData;
 int tcasewld =0,
     deathwld =0,
     recovwld =0,

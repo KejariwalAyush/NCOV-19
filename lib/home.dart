@@ -59,7 +59,7 @@ class _FrontpgState extends State<Frontpg> {
             return <Widget>[
               SliverAppBar(
                 automaticallyImplyLeading: false,
-                expandedHeight: 250.0,
+                expandedHeight: 200.0,
                 floating: false,
                 pinned: true,
                 backgroundColor: Colors.redAccent,
@@ -91,15 +91,13 @@ class _FrontpgState extends State<Frontpg> {
                         color: Colors.white,
                         fontSize: 20.0,
                       )),
-                  background: Image(
-                    image: AssetImage(
+                  background: RotatedBox(
+                    quarterTurns: 5,
+                    child: Image.asset(
                       'assets/backround1.png',
+                      fit: BoxFit.cover,
                     ),
-                    fit: BoxFit.cover,
                   ),
-//                      "https://github.com/KejariwalAyush/NCOV-19/blob/master/assets/icon.png",
-//                      fit: BoxFit.cover,
-//                    )),
                 ),
               ),
             ];
@@ -110,7 +108,7 @@ class _FrontpgState extends State<Frontpg> {
                       //Alert(),
                       Padding(
                         padding: EdgeInsets.only(top: 10,bottom: 5),
-                        child: tcaseind !=0?
+                        child: tcaseind !=0 || tcasewld !=0?
                         FadeAnimatedTextKit(
                             isRepeatingAnimation: true,
 //                            duration: Duration(seconds: 3),
@@ -174,10 +172,10 @@ class _FrontpgState extends State<Frontpg> {
                         },
                         child: Container(
                           alignment: Alignment.topCenter,
-                          padding: EdgeInsets.only(top: 20),
-                          margin: EdgeInsets.all(10),
+                          padding: EdgeInsets.only(top: 10),
+                          margin: EdgeInsets.only(top: 10,left: 10,right: 10),
                           width: double.maxFinite,
-                          height: 183,
+//                          height: 175,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.blueGrey[100]),
@@ -199,7 +197,7 @@ class _FrontpgState extends State<Frontpg> {
                                     ]),
                               ),
                               Divider(
-                                height: 20,
+                                height: 10,
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -236,9 +234,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-                                        if(newtcaseind!=0)
+//                                        if(newtcaseind!=0)
                                         Text(
-                                          '${newtcaseind == 0 ? '' : '+$newtcaseind'}',
+                                          '${newtcaseind == 0 ? 'N/A' : '+$newtcaseind'}',
                                           style: TextStyle(
                                               fontSize: 15, color: Colors.red),
                                           textAlign: TextAlign.center,
@@ -277,9 +275,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-                                        if(newtcaseind!=0)
+//                                        if(newtcaseind!=0)
                                         Text(
-                                          '${newrecovind == 0 ? '0' : '+$newrecovind'}',
+                                          '${newrecovind == 0 ? 'N/A' : '+$newrecovind'}',
                                           style: TextStyle(
                                               fontSize: 15, color: Colors.red),
                                           textAlign: TextAlign.center,
@@ -318,9 +316,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-                                        if(newtcaseind!=0)
+//                                        if(newtcaseind!=0)
                                         Text(
-                                          '${newdeathind == 0 ? '0' : '+$newdeathind'}',
+                                          '${newdeathind == 0 ? 'N/A' : '+$newdeathind'}',
                                           style: TextStyle(
                                               fontSize: 15, color: Colors.red),
                                           textAlign: TextAlign.center,
@@ -330,6 +328,7 @@ class _FrontpgState extends State<Frontpg> {
                                   ),
                                 ],
                               ),
+                              Divider(height: 7,),
                             ],
                           ),
                         ),
@@ -342,10 +341,10 @@ class _FrontpgState extends State<Frontpg> {
                         },
                         child: Container(
                           alignment: Alignment.topCenter,
-                          padding: EdgeInsets.only(top: 20),
-                          margin: EdgeInsets.all(10),
+                          padding: EdgeInsets.only(top: 10),
+                          margin: EdgeInsets.only(top: 10,left: 10,right: 10),
                           width: double.maxFinite,
-                          height: 183,
+//                          height: 175,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: Colors.blueGrey[100]),
@@ -367,7 +366,7 @@ class _FrontpgState extends State<Frontpg> {
                                     ]),
                               ),
                               Divider(
-                                height: 20,
+                                height: 10,
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -404,9 +403,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-                                        if(newcasecont[8]!=0)
-                                        Text('${newcasecont[8]==0?'':'${newcasecont[8]}'}',
-                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                        if(newcasecont[8]!=0)
+//                                        Text('${newcasecont[8]==0?'N/A':'${newcasecont[8]}'}',
+//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                                       ],
                                     ),
                                   ),
@@ -441,9 +440,9 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-                                        if(newcasecont[8]!=0)
-                                        Text('${newrecovwld==0?'0':'$newrecovwld'}',
-                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                        if(newcasecont[8]!=0)
+//                                        Text('${newrecovwld==0?'N/A':'$newrecovwld'}',
+//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 //                                        Text('${newdeathcont[8]}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                                       ],
                                     ),
@@ -479,15 +478,16 @@ class _FrontpgState extends State<Frontpg> {
                                               fontSize: 20, color: Colors.white),
                                           textAlign: TextAlign.center,
                                         ),
-                                        if(newcasecont[8]!=0)
-                                        Text('${newdeathcont[8]==0?'0':'${newdeathcont[8]}'}',
-                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                        if(newcasecont[8]!=0)
+//                                        Text('${newdeathcont[8]==0?'N/A':'${newdeathcont[8]}'}',
+//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 //                                        Text('${newdeathcont[8]==0?'':'${newdeathcont[8]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
+                              Divider(height: 7,),
                             ],
                           ),
                         ),
@@ -498,31 +498,79 @@ class _FrontpgState extends State<Frontpg> {
                               MaterialPageRoute(builder: (context) => NewsData()));
                           print('Tapped on News');
                         },
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.all(10),
-                          width: double.maxFinite,
+                        child: Column(children: <Widget>[
+                          Container(
+                            alignment: Alignment.topCenter,
+                            padding: EdgeInsets.all(10),
+                            margin: EdgeInsets.only(top: 10,left: 10,right: 10),
+                            width: double.maxFinite,
 //                  height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueGrey[100]),
-                          child: RichText(
-                            text: TextSpan(
-                                text: 'CORONA',
-                                style: TextStyle(
-                                    fontFamily: Frontpg.fontName,
-                                    color: Colors.blue,
-                                    fontSize: 28),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: ' NEWS',
-                                    style:
-                                    TextStyle(color: Colors.black38, fontSize: 20),
-                                  )
-                                ]),
-                          ),
-                        ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.blueGrey[100]),
+                            child: Column(
+                              children: <Widget>[
+                                RichText(
+                                  text: TextSpan(
+                                      text: 'NEWS',
+                                      style: TextStyle(
+                                          fontFamily: Frontpg.fontName,
+                                          color: Colors.blue,
+                                          fontSize: 28),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: ' Headlines',
+                                          style:
+                                          TextStyle(color: Colors.black38, fontSize: 20),
+                                        ),
+                                        TextSpan(
+                                          text: '\nTap to know more!',
+                                          style:
+                                          TextStyle(color: Colors.black38, fontSize: 14),
+                                        ),
+                                      ]),textAlign: TextAlign.center,
+                                ),
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  padding: EdgeInsets.only(top: 10),
+                                  margin: EdgeInsets.only(top: 10,left: 10,right: 10),
+                                  width: double.maxFinite,
+//                          height: 175,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.blueGrey[100]),
+                                  child: Column(children: <Widget>[
+                                    for(int i=0;i<5;i++)
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                          RichText(
+                                            text: TextSpan(
+                                                text: '${i+1}. ',
+                                                style: TextStyle(
+                                                    fontFamily: Frontpg.fontName,
+                                                    color: Colors.blue,
+                                                    fontSize: 16),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: '${newsAllData[i]['title']}.',
+                                                    style:
+                                                    TextStyle(color: Colors.black54, fontSize: 16,),
+                                                  )
+                                                ]),textAlign: TextAlign.justify,
+                                          ),
+                                        Divider(height: 5,),
+                                      ],
+                                    ),
+                                  ],
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                          )
+                        ],),
                       ),
                       InkWell(
                         onTap: () {
@@ -533,7 +581,7 @@ class _FrontpgState extends State<Frontpg> {
                         child: Container(
                           alignment: Alignment.topCenter,
                           padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(top: 10,left: 10,right: 10),
                           width: double.maxFinite,
 //                  height: 50,
                           decoration: BoxDecoration(
@@ -565,7 +613,7 @@ class _FrontpgState extends State<Frontpg> {
                         child: Container(
                           alignment: Alignment.topCenter,
                           padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(top: 10,left: 10,right: 10),
                           width: double.maxFinite,
 //                  height: 50,
                           decoration: BoxDecoration(
@@ -587,7 +635,7 @@ class _FrontpgState extends State<Frontpg> {
                         child: Container(
                           alignment: Alignment.topCenter,
                           padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(top: 10,left: 10,right: 10),
                           width: double.maxFinite,
 //                  height: 50,
                           decoration: BoxDecoration(
