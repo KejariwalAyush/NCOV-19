@@ -207,7 +207,7 @@ class _IndiaState extends State<India> {
                 Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 District(),
                 Divider(height: 10,),
-                LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4,firstCase),
+                LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4,firstCase,timeline),
                 Divider(height: 10,),
                 Container(
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
@@ -275,25 +275,25 @@ class _IndiaState extends State<India> {
   }
 }
 
-var timeline = 0;
+
 
 //var d = dates[0].toString().substring(1,9);
 //firstCase = DateTime(2020,int.parse(d.split('/')[0]),int.parse(d.split('/')[1]));
 final List<FlSpot> allSpots = [
-  for (int i = timeline; i < days.length; i++)
+  for (int i = 0; i < days.length; i++)
     FlSpot(double.parse(days[i].toString()), double.parse(datetotcase[i])),
 ];
 
 final List<FlSpot> allSpots2 = [
-  for (int i = timeline; i < days.length; i++)
+  for (int i = 0; i < days.length; i++)
     FlSpot(double.parse(days[i].toString()), double.parse(datetotrecov[i])),
 ];
 
 final List<FlSpot> allSpots3 = [
-  for (int i = timeline; i < days.length; i++)
+  for (int i = 0; i < days.length; i++)
     FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
 ];
-
+var timeline = days.length;
 class District extends StatefulWidget {
   @override
   _DistrictState createState() => _DistrictState();

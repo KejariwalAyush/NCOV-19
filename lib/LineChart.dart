@@ -3,35 +3,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 
 // ignore: must_be_immutable
-class LineChart1 extends StatelessWidget {
+class LineChart1 extends StatefulWidget {
+  DateTime firstCase = DateTime(
+      2020,
+      int.parse(dates[0].toString().split('/')[0]),
+      int.parse(dates[0].toString().split('/')[1]));
 
-  final List<int> showIndexes = const [0, 19];
-  DateTime firstCase = DateTime(2020,int.parse(dates[0].toString().split('/')[0]),int.parse(dates[0].toString().split('/')[1]));
-
-  static var timeline = day-30;
+  var timeline = 0;
   List<FlSpot> allSpots = [
-    for (int i = timeline; i < days.length; i++)
+    for (int i = 0; i < days.length; i++)
       FlSpot(double.parse(days[i].toString()), double.parse(datetotcase[i])),
   ];
 
   List<FlSpot> allSpots2 = [
-    for (int i = timeline; i < days.length; i++)
+    for (int i = 0; i < days.length; i++)
       FlSpot(double.parse(days[i].toString()), double.parse(datetotrecov[i])),
   ];
 
   List<FlSpot> allSpots3 = [
-    for (int i = timeline; i < days.length; i++)
+    for (int i = 0; i < days.length; i++)
       FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
   ];
   var intervals;
-  LineChart1(this.allSpots,this.allSpots2,this.allSpots3,this.intervals,this.firstCase);
+  LineChart1(this.allSpots, this.allSpots2, this.allSpots3, this.intervals,
+      this.firstCase, this.timeline);
+
+  @override
+  _LineChart1State createState() => _LineChart1State();
+}
+
+class _LineChart1State extends State<LineChart1> {
+  final List<int> showIndexes = const [0, 19];
+  bool _isSwitched1 = true;
+  bool _isSwitched2 = false;
+  bool _isSwitched3 = false;
 
   @override
   Widget build(BuildContext context) {
     final lineBarsData = [
       LineChartBarData(
 //          showingIndicators: showIndexes,
-        spots: allSpots,
+        spots: [
+          if (_isSwitched1)
+            for (int i = 0; i < widget.timeline;i++) widget.allSpots[i]
+          else if(_isSwitched2)
+            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots[i]
+          else if(_isSwitched3)
+              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots[i]
+            else
+              for (int i = 0; i < widget.timeline; i++) widget.allSpots[i]
+        ],
         isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
@@ -65,7 +86,16 @@ class LineChart1 extends StatelessWidget {
       ),
       LineChartBarData(
 //        showingIndicators: showIndexes,
-        spots: allSpots2,
+        spots: [
+          if (_isSwitched1)
+            for (int i = 0; i < widget.timeline;i++) widget.allSpots2[i]
+          else if(_isSwitched2)
+            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots2[i]
+          else if(_isSwitched3)
+              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots2[i]
+            else
+              for (int i = 0; i < widget.timeline; i++) widget.allSpots2[i]
+        ],
         isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
@@ -99,7 +129,16 @@ class LineChart1 extends StatelessWidget {
       ),
       LineChartBarData(
 //        showingIndicators: showIndexes,
-        spots: allSpots3,
+        spots: [
+          if (_isSwitched1)
+            for (int i = 0; i < widget.timeline;i++) widget.allSpots3[i]
+          else if(_isSwitched2)
+            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots3[i]
+          else if(_isSwitched3)
+              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots3[i]
+            else
+              for (int i = 0; i < widget.timeline; i++) widget.allSpots3[i]
+        ],
         isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
@@ -152,6 +191,40 @@ class LineChart1 extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
+              Divider(height: 3,),
+              Text(
+                "Tap/Drag on graph to see details.",
+                textAlign: TextAlign.center,
+//                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Divider(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(children: <Widget>[
+                    Text('Beginning'),
+                    Switch(
+                      onChanged: (val) => setState(() => {_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}),
+                      value: _isSwitched1,activeColor: Colors.redAccent,
+                    ),
+                  ],),
+                  Column(children: <Widget>[
+                    Text('30 Days'),
+                    Switch(
+                      onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}),
+                      value: _isSwitched2,activeColor: Colors.redAccent,
+                    ),
+                  ],),
+                  Column(children: <Widget>[
+                    Text('15 Days'),
+                    Switch(
+                      onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}),
+                      value: _isSwitched3,activeColor: Colors.redAccent,
+                    ),
+                  ],),
+                ],
+              ),
 //              Text(
 //                "Last 30 days",
 //                textAlign: TextAlign.center,
@@ -195,9 +268,10 @@ class LineChart1 extends StatelessWidget {
                         getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                           return lineBarsSpot.map((lineBarSpot) {
                             return LineTooltipItem(
-                              lineBarSpot.y.toString().split('.')[0]+': '+
-                                  '${firstCase.add(Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).month}/'+
-                                  '${firstCase.add(Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).day}',
+                              lineBarSpot.y.toString().split('.')[0] +
+                                  ': ' +
+                                  '${widget.firstCase.add(Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).month}/' +
+                                  '${widget.firstCase.add(Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).day}',
 //                                  + '  :  ' +
 //                                  dates[int.parse(lineBarSpot.x
 //                                          .toString()
@@ -224,15 +298,17 @@ class LineChart1 extends StatelessWidget {
                       leftTitles: SideTitles(
                           showTitles: true,
                           reservedSize: 30,
-                          interval: intervals,rotateAngle: 20,
+                          interval: widget.intervals,
+                          rotateAngle: 20,
                           textStyle: TextStyle(
                               fontSize: 10,
                               color: Colors.blueGrey,
                               letterSpacing: -1)),
                       bottomTitles: SideTitles(
                           showTitles: false,
-                          interval: dates.length/10,
-                          margin: 5,rotateAngle: 90,
+                          interval: dates.length / 10,
+                          margin: 5,
+                          rotateAngle: 90,
                           textStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.blueGrey,
@@ -255,27 +331,48 @@ class LineChart1 extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(height: 10,),
+              Divider(
+                height: 10,
+              ),
               Container(
-                  child: Column(children: <Widget>[Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text('Cases'),
-                      Icon(Icons.assignment_return,color: Colors.orangeAccent,size: 20,),
-                      Divider(height: 10,),
-                      Text('Recovered'),
-                      Icon(Icons.assignment_return,color: Colors.lightGreen,size: 20,),
-                      Divider(height: 10,),
-                      Text('Deaths'),
-                      Icon(Icons.assignment_return,color: Colors.purple,size: 20,),
-                  ],
-                  ),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Text('Cases'),
+                        Icon(
+                          Icons.assignment_return,
+                          color: Colors.orangeAccent,
+                          size: 20,
+                        ),
+                        Divider(
+                          height: 10,
+                        ),
+                        Text('Recovered'),
+                        Icon(
+                          Icons.assignment_return,
+                          color: Colors.lightGreen,
+                          size: 20,
+                        ),
+                        Divider(
+                          height: 10,
+                        ),
+                        Text('Deaths'),
+                        Icon(
+                          Icons.assignment_return,
+                          color: Colors.purple,
+                          size: 20,
+                        ),
+                      ],
+                    ),
 //                    Divider(height: 5,),
 //                    Text('Cases : Day no.'),
 //                    Text('Recovered : Day no.'),
 //                    Text('Deaths : Day no.'),
-                  ],),
+                  ],
+                ),
               ),
             ],
           ),

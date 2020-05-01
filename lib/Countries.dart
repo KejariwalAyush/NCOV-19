@@ -3,20 +3,23 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/india.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:http/http.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+
 String newContName;
 var data;
 var timeline;
 var intervals;
 bool isLoading = false;
 int no;
-List<FlSpot> allSpots,allSpots2,allSpots3;
+List<FlSpot> allSpots, allSpots2, allSpots3;
+
 // ignore: must_be_immutable
 class CountriesData extends StatefulWidget {
   var newName;
-  CountriesData(this.newName){
+  CountriesData(this.newName) {
     newContName = newName;
   }
 
@@ -29,23 +32,25 @@ class _CountriesDataState extends State<CountriesData> {
 //  var isLoading = false;
 
   var data;
-  var allSpots,allSpots2,allSpots3;
+  var allSpots, allSpots2, allSpots3;
   bool moreData = false;
   @override
   void initState() {
     super.initState();
-      for(int i=0;i<countryData.length;i++)
-      {
-        if(countryData[i]['country'].toString().toLowerCase().compareTo(newContName.toString().toLowerCase())==0)
-          {
-            data = fetch(countryData[i]['country']);
-            no = i;
-            break;
-          }
+    for (int i = 0; i < countryData.length; i++) {
+      if (countryData[i]['country']
+              .toString()
+              .toLowerCase()
+              .compareTo(newContName.toString().toLowerCase()) ==
+          0) {
+        data = fetch(countryData[i]['country']);
+        no = i;
+        break;
       }
-      setState(() {
-        data = fetch(countryData[no]['country']);
-      });
+    }
+    setState(() {
+      data = fetch(countryData[no]['country']);
+    });
   }
 
   @override
@@ -59,7 +64,10 @@ class _CountriesDataState extends State<CountriesData> {
               fontSize: 20.0,
             )),
         centerTitle: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(25),
+                bottomRight: Radius.circular(25))),
         elevation: 20,
         automaticallyImplyLeading: true,
         backgroundColor: Colors.redAccent,
@@ -72,7 +80,8 @@ class _CountriesDataState extends State<CountriesData> {
             Container(
               margin: EdgeInsets.all(10),
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
                   color: Colors.blueGrey[100]),
               child: Column(
                 children: <Widget>[
@@ -96,11 +105,23 @@ class _CountriesDataState extends State<CountriesData> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Divider(height: 10,),
-                        Image.network(countryData[no]['countryInfo']['flag'],height: 100,),
-                        Text('${countryData[no]['country']}',
-                          style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
-                        Divider(height: 10,),
+                        Divider(
+                          height: 10,
+                        ),
+                        Image.network(
+                          countryData[no]['countryInfo']['flag'],
+                          height: 100,
+                        ),
+                        Text(
+                          '${countryData[no]['country']}',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Divider(
+                          height: 10,
+                        ),
                         Container(
                           width: double.maxFinite,
                           padding: EdgeInsets.all(15),
@@ -108,106 +129,143 @@ class _CountriesDataState extends State<CountriesData> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text('Cases:\nRecovered:\nDeaths:\nActive:\nCritical:\n\nYesterday Cases:\nYesterday Deaths:\nCases/Million:\nDeaths/Million:',
-                                textAlign: TextAlign.start,softWrap: true,
-                                style: TextStyle(fontSize: 20,color: Colors.white70),),
-
-                              Text('${countryData[no]['cases']}'
-                                  '\n${countryData[no]['recovered']}\n${countryData[no]['deaths']}'
+                              Text(
+                                'Cases:\nRecovered:\nDeaths:\nActive:\nCritical:\n\nYesterday Cases:\nYesterday Deaths:\nCases/Million:\nDeaths/Million:',
+                                textAlign: TextAlign.start,
+                                softWrap: true,
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white70),
+                              ),
+                              Text(
+                                '${countryData[no]['cases']}'
+                                '\n${countryData[no]['recovered']}\n${countryData[no]['deaths']}'
                                 '\n${countryData[no]['active']}\n${countryData[no]['critical']}\n'
-                                  '\n+${countryData[no]['todayCases']}\n+${countryData[no]['todayDeaths']}'
+                                '\n+${countryData[no]['todayCases']}\n+${countryData[no]['todayDeaths']}'
                                 '\n${countryData[no]['casesPerOneMillion']}\n${countryData[no]['deathsPerOneMillion']}',
-                                textAlign: TextAlign.end,softWrap: true,
-                                style: TextStyle(fontSize: 20,color: Colors.white70,fontWeight: FontWeight.bold),),
-
-                          ],),
+                                textAlign: TextAlign.end,
+                                softWrap: true,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white70,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                   PieChart(),
-                  Divider(height: 10,),
-                  isLoading || data==null?Center(child:CircularProgressIndicator()):
-                  Container(
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
-                          color: Colors.blueGrey[300]),
-//                      height: 250,
-                      padding: EdgeInsets.all(10),
-                      child:Card(color: Colors.blueGrey[100],
-                        child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: LineChart2(allSpots,allSpots2,allSpots3,intervals,firstCase),
-                        ),
-                      ),
-
+                  Divider(
+                    height: 10,
                   ),
+                  isLoading || data == null
+                      ? Center(child: CircularProgressIndicator())
+                      : Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.blueGrey[300]),
+//                      height: 250,
+                          padding: EdgeInsets.all(10),
+                          child: Card(
+                            color: Colors.blueGrey[100],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: LineChart2(allSpots, allSpots2, allSpots3,
+                                  intervals, firstCase,timeline),
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
-          ],),
+          ],
+        ),
       ),
     );
   }
+
   DateTime firstCase;
-  fetch(String countryName) async{
+  fetch(String countryName) async {
     setState(() {
       isLoading = true;
     });
-    final Response resp = await get("https://disease.sh/v2/historical/$countryName?lastdays=all");
-    if(resp.statusCode==200){
+    final Response resp =
+        await get("https://disease.sh/v2/historical/$countryName?lastdays=all");
+    if (resp.statusCode == 200) {
       var data1 = resp.body;
       data = jsonDecode(data1);
 //    print(data);
-      timeline = 0;
-      int cnt1=0;
-      var d = data['timeline']['cases'].keys.toString().substring(1,9);
-      firstCase = DateTime(2020,int.parse(d.split('/')[0]),int.parse(d.split('/')[1]));
+//      timeline = 0;
+      int cnt1 = 0;
+      var d = data['timeline']['cases'].keys.toString().substring(1, 9);
+      firstCase = DateTime(
+          2020, int.parse(d.split('/')[0]), int.parse(d.split('/')[1]));
 //      print(firstCase);
       allSpots = [
         for (var i in data['timeline']['cases'].keys)
-          FlSpot(double.parse((cnt1++).toString()), double.parse(data['timeline']['cases'][i].toString())),
+          FlSpot(double.parse((cnt1++).toString()),
+              double.parse(data['timeline']['cases'][i].toString())),
       ];
-      int cnt2=0;
+      int cnt2 = 0;
       allSpots2 = [
         for (var i in data['timeline']['cases'].keys)
-          FlSpot(double.parse((cnt2++).toString()), double.parse(data['timeline']['recovered'][i].toString())),
+          FlSpot(double.parse((cnt2++).toString()),
+              double.parse(data['timeline']['recovered'][i].toString())),
       ];
-      int cnt3=0;
+      int cnt3 = 0;
       allSpots3 = [
         for (var i in data['timeline']['cases'].keys)
-          FlSpot(double.parse((cnt3++).toString()), double.parse(data['timeline']['deaths'][i].toString())),
+          FlSpot(double.parse((cnt3++).toString()),
+              double.parse(data['timeline']['deaths'][i].toString())),
       ];
-      intervals = countryData[no]['cases']/4;
+      intervals = countryData[no]['cases'] / 4;
+      timeline=cnt1;
       setState(() {
         isLoading = false;
       });
 //    print(allSpots3);
       return data;
-    }
-    else return null;
+    } else
+      return null;
   }
 }
 
-
 // ignore: must_be_immutable
-class LineChart2 extends StatelessWidget {
-  @override
-  StatelessElement createElement() {
-    // TODO: implement createElement
-    return super.createElement();
-  }
-  var data;
-  var timeline;
+class LineChart2 extends StatefulWidget {
   var intervals;
-  DateTime firstCase ;
-  List<FlSpot> allSpots,allSpots2,allSpots3;
-  LineChart2(this.allSpots,this.allSpots2,this.allSpots3,this.intervals,this.firstCase);
+  var timeline;
+  DateTime firstCase;
+  List<FlSpot> allSpots, allSpots2, allSpots3;
+  LineChart2(this.allSpots, this.allSpots2, this.allSpots3, this.intervals,
+      this.firstCase,this.timeline);
+
+  @override
+  _LineChart2State createState() => _LineChart2State();
+}
+
+class _LineChart2State extends State<LineChart2> {
+  var data;
+  bool _isSwitched1 = true;
+  bool _isSwitched2 = false;
+  bool _isSwitched3 = false;
+//  var timeline;
+
   @override
   Widget build(BuildContext context) {
     final lineBarsData = [
       LineChartBarData(
 //          showingIndicators: showIndexes,
-        spots: allSpots,
+        spots: [
+          if (_isSwitched1)
+            for (int i = 0; i < timeline; i++) widget.allSpots[i]
+          else if(_isSwitched2)
+            for (int i = timeline-30; i < timeline; i++) widget.allSpots[i]
+          else if(_isSwitched3)
+            for (int i = timeline-15; i < timeline; i++) widget.allSpots[i]
+          else
+              for (int i = 0; i < timeline; i++) widget.allSpots[i]
+        ],
         isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
@@ -226,7 +284,16 @@ class LineChart2 extends StatelessWidget {
       ),
       LineChartBarData(
 //        showingIndicators: showIndexes,
-        spots: allSpots2,
+        spots: [
+          if (_isSwitched1)
+            for (int i = 0; i < timeline; i++) widget.allSpots2[i]
+          else if(_isSwitched2)
+            for (int i = timeline-30; i < timeline; i++) widget.allSpots2[i]
+          else if(_isSwitched3)
+              for (int i = timeline-15; i < timeline; i++) widget.allSpots2[i]
+            else
+              for (int i = 0; i < timeline; i++) widget.allSpots2[i]
+        ],
         isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
@@ -235,9 +302,7 @@ class LineChart2 extends StatelessWidget {
         ),
         belowBarData: BarAreaData(
           show: true,
-          colors: [
-            Colors.lightGreen
-          ],
+          colors: [Colors.lightGreen],
         ),
         dotData: FlDotData(
           show: false,
@@ -247,7 +312,16 @@ class LineChart2 extends StatelessWidget {
       ),
       LineChartBarData(
 //        showingIndicators: showIndexes,
-        spots: allSpots3,
+        spots: [
+          if (_isSwitched1)
+            for (int i = 0; i < timeline; i++) widget.allSpots3[i]
+          else if(_isSwitched2)
+            for (int i = timeline-30; i < timeline; i++) widget.allSpots3[i]
+          else if(_isSwitched3)
+              for (int i = timeline-15; i < timeline; i++) widget.allSpots3[i]
+            else
+              for (int i = 0; i < timeline; i++) widget.allSpots3[i]
+        ],
         isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
@@ -256,9 +330,7 @@ class LineChart2 extends StatelessWidget {
         ),
         belowBarData: BarAreaData(
           show: true,
-          colors: [
-            Colors.purple
-          ],
+          colors: [Colors.purple],
         ),
         dotData: FlDotData(
           show: false,
@@ -275,61 +347,97 @@ class LineChart2 extends StatelessWidget {
 //          borderRadius: BorderRadius.circular(15), color: Colors.blueGrey[300]),
 //      height: 240,
 //      width: 165,
-      padding: EdgeInsets.all(8),
-      child:Column(
-        children: <Widget>[
-          Text(
-            "Cases Timeline",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+        padding: EdgeInsets.all(8),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "Cases Timeline",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Divider(height: 3,),
+            Text(
+              "Tap/Drag on graph to see details.",
+              textAlign: TextAlign.center,
+//                style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Divider(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Column(children: <Widget>[
+                  Text('Beginning'),
+                  Switch(
+                    onChanged: (val) => setState(() => {_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}),
+                    value: _isSwitched1,activeColor: Colors.redAccent,
+                  ),
+                ],),
+                Column(children: <Widget>[
+                  Text('30 Days'),
+                  Switch(
+                    onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}),
+                    value: _isSwitched2,activeColor: Colors.redAccent,
+                  ),
+                ],),
+                Column(children: <Widget>[
+                  Text('15 Days'),
+                  Switch(
+                    onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}),
+                    value: _isSwitched3,activeColor: Colors.redAccent,
+                  ),
+                ],),
+              ],
+            ),
+
 //              Text(
 //                "Last 30 days",
 //                textAlign: TextAlign.center,
 //              ),
-          SizedBox(
+            SizedBox(
 //                width: 100,
 //                height: 100,
-            child: LineChart(
-              LineChartData(
+              child: LineChart(
+                LineChartData(
 //                    showingTooltipIndicators: showIndexes.map((index) {
 //                      return ShowingTooltipIndicators(index, [
 //                        LineBarSpot(
 //                            tooltipsOnBar, lineBarsData.indexOf(tooltipsOnBar), tooltipsOnBar.spots[index]),
 //                      ]);
 //                    }).toList(),
-                lineTouchData: LineTouchData(
-                  enabled: true,
-                  getTouchedSpotIndicator:
-                      (LineChartBarData barData, List<int> spotIndexes) {
-                    return spotIndexes.map((index) {
-                      return TouchedSpotIndicatorData(
-                        FlLine(
-                          color: Colors.pink,
-                        ),
-                        FlDotData(
-                          show: true,
-                          dotSize: 1,
-                          strokeWidth: 1,
+                  lineTouchData: LineTouchData(
+                    enabled: true,
+                    getTouchedSpotIndicator:
+                        (LineChartBarData barData, List<int> spotIndexes) {
+                      return spotIndexes.map((index) {
+                        return TouchedSpotIndicatorData(
+                          FlLine(
+                            color: Colors.pink,
+                          ),
+                          FlDotData(
+                            show: true,
+                            dotSize: 1,
+                            strokeWidth: 1,
 //                    getStrokeColor: (spot, percent, barData) => Colors.black,
-                          getDotColor: (spot, percent, barData) {
-                            return lerpGradient(barData.colors,
-                                barData.colorStops, percent / 100);
-                          },
-                        ),
-                      );
-                    }).toList();
-                  },
-                  touchTooltipData: LineTouchTooltipData(
-                    tooltipBgColor: Colors.redAccent,
-                    tooltipRoundedRadius: 10,
-                    getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
-                      return lineBarsSpot.map((lineBarSpot) {
-                        return LineTooltipItem(
-                          lineBarSpot.y.toString().split('.')[0] +': '+
-                          '${firstCase.add(new Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).month}/'+
-                              '${firstCase.add(new Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).day}',
-                          //+':'+lineBarSpot.x.toString().split('.')[0],
+                            getDotColor: (spot, percent, barData) {
+                              return lerpGradient(barData.colors,
+                                  barData.colorStops, percent / 100);
+                            },
+                          ),
+                        );
+                      }).toList();
+                    },
+                    touchTooltipData: LineTouchTooltipData(
+                      tooltipBgColor: Colors.redAccent,
+                      tooltipRoundedRadius: 10,
+                      getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+                        return lineBarsSpot.map((lineBarSpot) {
+                          return LineTooltipItem(
+                            lineBarSpot.y.toString().split('.')[0] +
+                                ': ' +
+                                '${widget.firstCase.add(new Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).month}/' +
+                                '${widget.firstCase.add(new Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).day}',
+                            //+':'+lineBarSpot.x.toString().split('.')[0],
 //                                  + '  :  ' +
 //                                  dates[int.parse(lineBarSpot.x
 //                                          .toString()
@@ -342,78 +450,98 @@ class LineChart2 extends StatelessWidget {
 //                                          .split('.')[0])]
 //                                      .toString()
 //                                      .substring(0, 1),
-                          //lineBarSpot.x.toString().substring(1,3)+'/'+lineBarSpot.x.toString().substring(0,1),
-                          const TextStyle(
-                              color: Colors.white, fontSize: 10),
-                        );
-                      }).toList();
-                    },
+                            //lineBarSpot.x.toString().substring(1,3)+'/'+lineBarSpot.x.toString().substring(0,1),
+                            const TextStyle(color: Colors.white, fontSize: 10),
+                          );
+                        }).toList();
+                      },
+                    ),
                   ),
-                ),
-                lineBarsData: lineBarsData,
-                minY: 0, //clipToBorder: true,
-                titlesData: FlTitlesData(
-                  leftTitles: SideTitles(
-                      showTitles: true,
-                      reservedSize: 30,
-                      interval: intervals,rotateAngle: 20,
-                      textStyle: TextStyle(
-                          fontSize: 10,
+                  lineBarsData: lineBarsData,
+                  minY: 0, //clipToBorder: true,
+                  titlesData: FlTitlesData(
+                    leftTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 30,
+                        interval: widget.intervals,
+                        rotateAngle: 20,
+                        textStyle: TextStyle(
+                            fontSize: 10,
+                            color: Colors.blueGrey,
+                            letterSpacing: -1)),
+                    bottomTitles: SideTitles(
+                        showTitles: false,
+                        interval: dates.length / 10,
+                        margin: 5,
+                        rotateAngle: 90,
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
                           color: Colors.blueGrey,
-                          letterSpacing: -1)),
-                  bottomTitles: SideTitles(
-                      showTitles: false,
-                      interval: dates.length/10,
-                      margin: 5,rotateAngle: 90,
-                      textStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey,
-                        fontFamily: 'Digital',
-                        fontSize: 10,
-                      )),
-                ),
-                axisTitleData: FlAxisTitleData(
-                  //            rightTitle: AxisTitle(showTitle: true, titleText: 'count'),
-                  //            leftTitle: AxisTitle(showTitle: true, titleText: 'count'),
-                  topTitle: AxisTitle(
-                      showTitle: false,
-                      titleText: '30 day data',
-                      textAlign: TextAlign.center),
-                ),
-                gridData: FlGridData(show: false),
-                borderData: FlBorderData(
-                  show: false,
+                          fontFamily: 'Digital',
+                          fontSize: 10,
+                        )),
+                  ),
+                  axisTitleData: FlAxisTitleData(
+                    //            rightTitle: AxisTitle(showTitle: true, titleText: 'count'),
+                    //            leftTitle: AxisTitle(showTitle: true, titleText: 'count'),
+                    topTitle: AxisTitle(
+                        showTitle: false,
+                        titleText: '30 day data',
+                        textAlign: TextAlign.center),
+                  ),
+                  gridData: FlGridData(show: false),
+                  borderData: FlBorderData(
+                    show: false,
+                  ),
                 ),
               ),
             ),
-          ),
-          Divider(height: 10,),
-          Container(
-            child: Column(children: <Widget>[Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Text('Cases'),
-                Icon(Icons.assignment_return,color: Colors.orangeAccent,size: 20,),
-                Divider(height: 10,),
-                Text('Recovered'),
-                Icon(Icons.assignment_return,color: Colors.lightGreen,size: 20,),
-                Divider(height: 10,),
-                Text('Deaths'),
-                Icon(Icons.assignment_return,color: Colors.purple,size: 20,),
-              ],
+            Divider(
+              height: 10,
             ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Text('Cases'),
+                      Icon(
+                        Icons.assignment_return,
+                        color: Colors.orangeAccent,
+                        size: 20,
+                      ),
+                      Divider(
+                        height: 10,
+                      ),
+                      Text('Recovered'),
+                      Icon(
+                        Icons.assignment_return,
+                        color: Colors.lightGreen,
+                        size: 20,
+                      ),
+                      Divider(
+                        height: 10,
+                      ),
+                      Text('Deaths'),
+                      Icon(
+                        Icons.assignment_return,
+                        color: Colors.purple,
+                        size: 20,
+                      ),
+                    ],
+                  ),
 //              Text('Start Date : '),
 //                    Divider(height: 5,),
 //                    Text('Cases : Day no.'),
 //                    Text('Recovered : Day no.'),
 //                    Text('Deaths : Day no.'),
-            ],),
-          ),
-        ],
-      )
-
-    );
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }
 
@@ -441,20 +569,36 @@ Color lerpGradient(List<Color> colors, List<double> stops, double t) {
   }
   return colors.last;
 }
+
 class GradesData {
   final String gradeSymbol;
   final int number;
   final charts.Color col;
 
-  GradesData(this.gradeSymbol, this.number,this.col);
+  GradesData(this.gradeSymbol, this.number, this.col);
 }
+
 class PieChart extends StatelessWidget {
-
-
   final data = [
-    GradesData('Active',int.parse( (countryData[no]['active']/countryData[no]['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.pinkAccent)),
-    GradesData('Recov.', int.parse((countryData[no]['recovered']/countryData[no]['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-    GradesData('Deaths',int.parse( (countryData[no]['deaths']/countryData[no]['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.blueGrey)),
+    GradesData(
+        'Active',
+        int.parse((countryData[no]['active'] / countryData[no]['cases'] * 100)
+            .toString()
+            .split('.')[0]),
+        charts.ColorUtil.fromDartColor(Colors.pinkAccent)),
+    GradesData(
+        'Recov.',
+        int.parse(
+            (countryData[no]['recovered'] / countryData[no]['cases'] * 100)
+                .toString()
+                .split('.')[0]),
+        charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GradesData(
+        'Deaths',
+        int.parse((countryData[no]['deaths'] / countryData[no]['cases'] * 100)
+            .toString()
+            .split('.')[0]),
+        charts.ColorUtil.fromDartColor(Colors.blueGrey)),
   ];
 
   _getSeriesData() {
@@ -462,7 +606,8 @@ class PieChart extends StatelessWidget {
       charts.Series(
         id: "Grades",
         data: data,
-        labelAccessorFn: (GradesData row, _) => '${row.gradeSymbol}:${row.number}%',
+        labelAccessorFn: (GradesData row, _) =>
+            '${row.gradeSymbol}:${row.number}%',
         domainFn: (GradesData grades, _) => grades.gradeSymbol,
         measureFn: (GradesData grades, _) => grades.number,
         colorFn: (GradesData series, _) => series.col,
@@ -475,11 +620,13 @@ class PieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
         height: 250,
         padding: EdgeInsets.all(10),
-        child: Card(color: Colors.blueGrey[100],
+        child: Card(
+          color: Colors.blueGrey[100],
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -487,25 +634,30 @@ class PieChart extends StatelessWidget {
                 Text(
                   "Total data represented in PIE Chart",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
-                      fontWeight: FontWeight.bold,color: Colors.deepOrange
-
-                  ),
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepOrange),
                 ),
 //                  SizedBox(
 //                    height: 20,
 //                  ),
 //                  Divider(height: 10,),
-                Divider(height: 10,),
+                Divider(
+                  height: 10,
+                ),
                 Expanded(
                   child: new charts.PieChart(
                     _getSeriesData(),
                     animate: true,
                     animationDuration: Duration(milliseconds: 800),
                     defaultRenderer: new charts.ArcRendererConfig(
-                        arcWidth: 200,startAngle: 49,
-                        arcRendererDecorators: [new charts.ArcLabelDecorator()]
-                    ),
+                        arcWidth: 200,
+                        startAngle: 49,
+                        arcRendererDecorators: [
+                          new charts.ArcLabelDecorator()
+                        ]),
                   ),
                 ),
               ],
@@ -513,7 +665,6 @@ class PieChart extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }

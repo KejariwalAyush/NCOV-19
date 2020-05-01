@@ -12,8 +12,6 @@ const String fontName = 'Comfortaa';
 // ignore: must_be_immutable
 class WorldData extends StatelessWidget {
 
-//  static var _days=world['cases'].length;
-  static var timeline = 0;
   static var keys = worldHistory['cases'].keys;
   static int cnt1=0;
   static var d = worldHistory['cases'].keys.toString().substring(1,9);
@@ -32,6 +30,7 @@ class WorldData extends StatelessWidget {
     for (var i in worldHistory['cases'].keys)
       FlSpot(double.parse((cnt3++).toString()), double.parse(worldHistory['deaths'][i].toString())),
   ];
+  static var timeline = cnt1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -243,32 +242,8 @@ class WorldData extends StatelessWidget {
                               continent[i+1]['cases'], continent[i+1]['deaths'],
                               continent[i+1]['recovered'], continent[i+1]['active']),
                       ],),
-                    LineChart1(wldCaseHist,wldRecovHist,wldDeathHist,tcasewld/4,firstCase),
+                    LineChart1(wldCaseHist,wldRecovHist,wldDeathHist,tcasewld/4,firstCase,timeline),
                     Divider(height: 10,),
-//                    InkWell(
-//                      onTap: () {
-//                        Navigator.push(context,
-//                            MaterialPageRoute(builder: (context) => CountriesData()));
-//                        print('Tapped on World');
-//                      },
-//                      child:Container(
-//                        height: 40,
-//                        width: double.maxFinite,
-//                        decoration: new BoxDecoration(
-//                          color: new Color(0xFF333366),
-//                          shape: BoxShape.rectangle,
-//                          borderRadius: new BorderRadius.circular(10.0),
-//                          boxShadow: <BoxShadow>[
-//                            new BoxShadow(
-//                              color: Colors.black12,
-//                              blurRadius: 10.0,
-//                              offset: new Offset(0.0, 10.0),
-//                            ),
-//                          ],
-//                        ),
-//                      child: Center(child:Text('Country-Wise Data',style: TextStyle(color: Colors.white,fontSize: 20),)),
-//                      ),
-//                    ),
                     Divider(height: 10,),
                     Container(
                       alignment: Alignment.topCenter,
@@ -288,8 +263,6 @@ class WorldData extends StatelessWidget {
                           dataRowHeight: 35,
                           headingRowHeight: 50,
                           horizontalMargin: 10,
-//                        sortColumnIndex: 1,
-//                        sortAscending: true,
                           columns: [
                             DataColumn(label: Text('Countries'),),
                             DataColumn(label: Text('Cases'),),
