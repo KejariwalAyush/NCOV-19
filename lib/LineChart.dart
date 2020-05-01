@@ -205,21 +205,21 @@ class _LineChart1State extends State<LineChart1> {
                   Column(children: <Widget>[
                     Text('Beginning'),
                     Switch(
-                      onChanged: (val) => setState(() => {_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}),
+                      onChanged: (val) => setState(() => {if(_isSwitched1!=true){_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}}),
                       value: _isSwitched1,activeColor: Colors.redAccent,
                     ),
                   ],),
                   Column(children: <Widget>[
                     Text('30 Days'),
                     Switch(
-                      onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}),
+                      onChanged: (val) => setState(() => {if(_isSwitched2!=true){_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}}),
                       value: _isSwitched2,activeColor: Colors.redAccent,
                     ),
                   ],),
                   Column(children: <Widget>[
                     Text('15 Days'),
                     Switch(
-                      onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}),
+                      onChanged: (val) => setState(() => {if(_isSwitched3!=true){_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}}),
                       value: _isSwitched3,activeColor: Colors.redAccent,
                     ),
                   ],),

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/india.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:http/http.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -369,21 +368,21 @@ class _LineChart2State extends State<LineChart2> {
                 Column(children: <Widget>[
                   Text('Beginning'),
                   Switch(
-                    onChanged: (val) => setState(() => {_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}),
+                    onChanged: (val) => setState(() => {if(_isSwitched1!=true){_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}}),
                     value: _isSwitched1,activeColor: Colors.redAccent,
                   ),
                 ],),
                 Column(children: <Widget>[
                   Text('30 Days'),
                   Switch(
-                    onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}),
+                    onChanged: (val) => setState(() => {if(_isSwitched2!=true){_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}}),
                     value: _isSwitched2,activeColor: Colors.redAccent,
                   ),
                 ],),
                 Column(children: <Widget>[
                   Text('15 Days'),
                   Switch(
-                    onChanged: (val) => setState(() => {_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}),
+                    onChanged: (val) => setState(() => {if(_isSwitched3!=true){_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}}),
                     value: _isSwitched3,activeColor: Colors.redAccent,
                   ),
                 ],),
