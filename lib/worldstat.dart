@@ -9,12 +9,15 @@ import 'package:photo_view/photo_view.dart';
 import 'LineChart.dart';
 
 const String fontName = 'Comfortaa';
+// ignore: must_be_immutable
 class WorldData extends StatelessWidget {
 
 //  static var _days=world['cases'].length;
   static var timeline = 0;
   static var keys = worldHistory['cases'].keys;
   static int cnt1=0;
+  static var d = worldHistory['cases'].keys.toString().substring(1,9);
+  DateTime firstCase = DateTime(2020,int.parse(d.split('/')[0]),int.parse(d.split('/')[1]));
   final List<FlSpot> wldCaseHist = [
     for (var i in worldHistory['cases'].keys)
       FlSpot(double.parse((cnt1++).toString()), double.parse(worldHistory['cases'][i].toString())),
@@ -240,7 +243,7 @@ class WorldData extends StatelessWidget {
                               continent[i+1]['cases'], continent[i+1]['deaths'],
                               continent[i+1]['recovered'], continent[i+1]['active']),
                       ],),
-                    LineChart1(wldCaseHist,wldRecovHist,wldDeathHist,tcasewld/4),
+                    LineChart1(wldCaseHist,wldRecovHist,wldDeathHist,tcasewld/4,firstCase),
                     Divider(height: 10,),
 //                    InkWell(
 //                      onTap: () {

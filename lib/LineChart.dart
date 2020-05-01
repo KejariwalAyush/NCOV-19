@@ -6,6 +6,7 @@ import 'package:flutter_app/splash.dart';
 class LineChart1 extends StatelessWidget {
 
   final List<int> showIndexes = const [0, 19];
+  DateTime firstCase = DateTime(2020,int.parse(dates[0].toString().split('/')[0]),int.parse(dates[0].toString().split('/')[1]));
 
   static var timeline = day-30;
   List<FlSpot> allSpots = [
@@ -23,7 +24,7 @@ class LineChart1 extends StatelessWidget {
       FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
   ];
   var intervals;
-  LineChart1(this.allSpots,this.allSpots2,this.allSpots3,this.intervals);
+  LineChart1(this.allSpots,this.allSpots2,this.allSpots3,this.intervals,this.firstCase);
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +195,9 @@ class LineChart1 extends StatelessWidget {
                         getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                           return lineBarsSpot.map((lineBarSpot) {
                             return LineTooltipItem(
-                              lineBarSpot.y.toString().split('.')[0],//+':'+lineBarSpot.x.toString().split('.')[0],
+                              lineBarSpot.y.toString().split('.')[0]+': '+
+                                  '${firstCase.add(Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).month}/'+
+                                  '${firstCase.add(Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).day}',
 //                                  + '  :  ' +
 //                                  dates[int.parse(lineBarSpot.x
 //                                          .toString()

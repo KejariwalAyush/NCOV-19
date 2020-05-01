@@ -68,6 +68,7 @@ class DataSource{
         newstateRecov.add(i['deltarecovered']);
       }
       day=0;
+
       for(var i in inddata['cases_time_series'])
       {
         int mm=0;
@@ -75,7 +76,7 @@ class DataSource{
         String x = i['date'].toString().split(' ')[1].toLowerCase();
         x == 'january'?mm=01:x=='february'?mm=02:x=='march'?mm=03:x=='april'?mm=04:x=='may'?mm=05:x=='june'?mm=06:
         x=='july'?mm=07:x=='august'?mm=08:x=='september'?mm=09:x=='october'?mm=10:x=='november'?mm=11:mm=12;
-        dates.add('$mm${i['date'].toString().split(' ')[0]}');
+        dates.add('$mm/${i['date'].toString().split(' ')[0]}');
         days.add(day);
         datecases.add(i['dailyconfirmed']);
         datetotcase.add(i['totalconfirmed']);
@@ -85,7 +86,8 @@ class DataSource{
         datetotrecov.add(i['totalrecovered']);
         day++;
       }
-      print(day);
+//      DateTime mmdd = DateTime(2020,int.parse(dates[0].toString().split('/')[0]),int.parse(dates[0].toString().split('/')[1]));
+//      print(mmdd);
 //      print(rawdata['raw_data'][0]);
       one=0;two=0;three=0;four=0;five=0;
       for(var i in rawdata['raw_data'])

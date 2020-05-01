@@ -28,6 +28,8 @@ class India extends StatefulWidget {
 }
 String dropdownvalue = distdata[0]['state'];
 class _IndiaState extends State<India> {
+  DateTime firstCase = DateTime(2020,int.parse(dates[0].toString().split('/')[0]),int.parse(dates[0].toString().split('/')[1]));
+
 //  String dropdownvalue = 'One';
 //  ScrollController myScrollController = ScrollController();
   @override
@@ -205,7 +207,7 @@ class _IndiaState extends State<India> {
                 Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
                 District(),
                 Divider(height: 10,),
-                LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4),
+                LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4,firstCase),
                 Divider(height: 10,),
                 Container(
                   decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
@@ -274,6 +276,9 @@ class _IndiaState extends State<India> {
 }
 
 var timeline = 0;
+
+//var d = dates[0].toString().substring(1,9);
+//firstCase = DateTime(2020,int.parse(d.split('/')[0]),int.parse(d.split('/')[1]));
 final List<FlSpot> allSpots = [
   for (int i = timeline; i < days.length; i++)
     FlSpot(double.parse(days[i].toString()), double.parse(datetotcase[i])),

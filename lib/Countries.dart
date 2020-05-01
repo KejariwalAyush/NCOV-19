@@ -136,7 +136,7 @@ class _CountriesDataState extends State<CountriesData> {
                       child:Card(color: Colors.blueGrey[100],
                         child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: LineChart2(allSpots,allSpots2,allSpots3,intervals),
+                            child: LineChart2(allSpots,allSpots2,allSpots3,intervals,firstCase),
                         ),
                       ),
 
@@ -148,7 +148,7 @@ class _CountriesDataState extends State<CountriesData> {
       ),
     );
   }
-
+  DateTime firstCase;
   fetch(String countryName) async{
     setState(() {
       isLoading = true;
@@ -160,6 +160,9 @@ class _CountriesDataState extends State<CountriesData> {
 //    print(data);
       timeline = 0;
       int cnt1=0;
+      var d = data['timeline']['cases'].keys.toString().substring(1,9);
+      firstCase = DateTime(2020,int.parse(d.split('/')[0]),int.parse(d.split('/')[1]));
+//      print(firstCase);
       allSpots = [
         for (var i in data['timeline']['cases'].keys)
           FlSpot(double.parse((cnt1++).toString()), double.parse(data['timeline']['cases'][i].toString())),
@@ -196,8 +199,9 @@ class LineChart2 extends StatelessWidget {
   var data;
   var timeline;
   var intervals;
+  DateTime firstCase ;
   List<FlSpot> allSpots,allSpots2,allSpots3;
-  LineChart2(this.allSpots,this.allSpots2,this.allSpots3,this.intervals);
+  LineChart2(this.allSpots,this.allSpots2,this.allSpots3,this.intervals,this.firstCase);
   @override
   Widget build(BuildContext context) {
     final lineBarsData = [
@@ -322,7 +326,10 @@ class LineChart2 extends StatelessWidget {
                     getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                       return lineBarsSpot.map((lineBarSpot) {
                         return LineTooltipItem(
-                          lineBarSpot.y.toString().split('.')[0],//+':'+lineBarSpot.x.toString().split('.')[0],
+                          lineBarSpot.y.toString().split('.')[0] +': '+
+                          '${firstCase.add(new Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).month}/'+
+                              '${firstCase.add(new Duration(days: int.parse(lineBarSpot.x.toString().split('.')[0]))).day}',
+                          //+':'+lineBarSpot.x.toString().split('.')[0],
 //                                  + '  :  ' +
 //                                  dates[int.parse(lineBarSpot.x
 //                                          .toString()
