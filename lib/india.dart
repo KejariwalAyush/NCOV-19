@@ -2,14 +2,12 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-//import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/LineChart.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:flutter_app/worldstat.dart';
-import 'package:photo_view/photo_view.dart';
 
 var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
   Colors.cyanAccent,Colors.purple[100],Colors.purple[200],Colors.purple[300],
@@ -246,17 +244,17 @@ class _IndiaState extends State<India> {
                       Card(color: Colors.blueGrey[100],
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: PhotoView(
-                            enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
-                            imageProvider: NetworkImage(
-                              'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',),
-                              backgroundDecoration: BoxDecoration(color: Colors.blueGrey[100]),
+                          child: Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
+                            fit: BoxFit.fitWidth,
                           ),
+//                          PhotoView(
+//                            enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
+//                            imageProvider: NetworkImage(
+//                              'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',),
+//                              backgroundDecoration: BoxDecoration(color: Colors.blueGrey[100]),
+//                          ),
                         ),
                       ),
-//                      Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
-//                        fit: BoxFit.fitWidth,
-//                      ),
                     ],
                   ),
                 ),
@@ -739,9 +737,6 @@ class BarChart3 extends StatelessWidget {
                       fontWeight: FontWeight.bold
                   ),
                 ),
-//                  SizedBox(
-//                    height: 20,
-//                  ),
                 Expanded(
                   child: charts.BarChart(
                     _getSeriesData(),
@@ -826,7 +821,20 @@ class IndiaMap extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   Divider(),
-                  Center(child: Text('Cases Heat Map of India',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),),
+                  Center(child: Text('Deaths Heat Map of India',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),),
+                  Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/COVID-19_Death_Cases_in_India.png/800px-COVID-19_Death_Cases_in_India.png',
+                    width: double.maxFinite,
+                  ),
+
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: Column(
+                children: <Widget>[
+                  Divider(),
+                  Center(child: Text('Cases Heat Map Timeline',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),),
                   Image.network(
                     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/COVID-19_India_Total_Cases_Animated_Map.gif/800px-COVID-19_India_Total_Cases_Animated_Map.gif',
                     width: double.maxFinite,fit: BoxFit.cover,
@@ -837,19 +845,6 @@ class IndiaMap extends StatelessWidget {
 //                      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg',),
 //                    backgroundDecoration: BoxDecoration(color: Colors.white70),
 //                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: Column(
-                children: <Widget>[
-                  Divider(),
-                  Center(child: Text('Deaths Heat Map of India',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),),
-                  Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/COVID-19_Death_Cases_in_India.png/800px-COVID-19_Death_Cases_in_India.png',
-                    width: double.maxFinite,
-                  ),
-
                 ],
               ),
             ),

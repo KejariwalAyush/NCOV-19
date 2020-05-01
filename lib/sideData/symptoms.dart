@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:photo_view/photo_view.dart';
+
 class Symptoms extends StatelessWidget {
   static const String fontName = 'Comfortaa';
   @override
@@ -38,6 +40,31 @@ class Symptoms extends StatelessWidget {
                   ),
                 ),
                 Divider(height: 10,),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Divider(),
+                      Center(child: Text('Body Diagram',style: TextStyle(fontSize: 20),),),
+//                                Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/COVID-19_Outbreak_World_Map_per_Capita.svg/1920px-COVID-19_Outbreak_World_Map_per_Capita.svg.png',
+//                                  width: double.maxFinite,fit: BoxFit.fitWidth,
+//                                ),
+                      Card(color: Colors.blueGrey[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: PhotoView(
+                            enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
+                            imageProvider: NetworkImage(
+                            'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Symptoms_of_coronavirus_disease_2019_4.0.svg/1920px-Symptoms_of_coronavirus_disease_2019_4.0.svg.png',),
+                            backgroundDecoration: BoxDecoration(color: Colors.blueGrey[100]),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             Card(margin: EdgeInsets.all(10),
                   child: Padding(padding: EdgeInsets.all(10),
                     child: Text('Symptoms of COVID-19 are non-specific and those infected may either be asymptomatic or develop flu like symptoms such as fever, cough, fatigue, shortness of breath, or muscle pain.\nThe typical signs and symptoms and their prevalence, are shown in the corresponding table.Further development can lead to severe pneumonia, acute respiratory distress syndrome, sepsis, septic shock and death.\n\nSome of those infected may be asymptomatic, returning test results that confirm infection but show no clinical symptoms, so researchers have issued advice that those with close contact to confirmed infected people should be closely monitored and examined to rule out infection.The usual incubation period (the time between infection and symptom onset) ranges from one to fourteen days; it is most commonly five days.\n\nIn one case, it had an incubation period of 27 days',
