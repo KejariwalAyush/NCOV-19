@@ -79,25 +79,7 @@ class _IndiaState extends State<India> {
                       ]
                   ),
                 ),
-//                InkWell(
-//                  onTap: (){
-//                    Navigator.push(context, MaterialPageRoute(builder: (context) => IndiaMap()));
-//                    print('Tapped on India heaT map');
-//                  },
-//                  child: RichText(
-//                    text: TextSpan(
-//                        text: 'INDIA heat',
-//                        style: TextStyle(fontFamily: India.fontName,
-//                            color: Colors.redAccent, fontSize: 20),
-//                        children: <TextSpan>[
-//                          TextSpan(text: ' Map',
-//                            style: TextStyle(
-//                                color: Colors.black38, fontSize: 14),
-//                          ),
-//                        ]
-//                    ),
-//                  ),
-//                ),
+
                 Divider(height: 20,),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -226,6 +208,58 @@ class _IndiaState extends State<India> {
                 District(),
                 Divider(height: 10,),
                 LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4),
+                Divider(height: 10,),
+                Container(
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                      color: Colors.blueGrey[300]),
+                  width:double.maxFinite,
+//                  height: 650,
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    children: <Widget>[
+
+                      InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => IndiaMap()));
+                          print('Tapped on India heat map');
+                        },
+                        child: RichText(
+                          textAlign:TextAlign.center,
+                          text: TextSpan(
+                              text: 'INDIA heat',
+                              style: TextStyle(fontFamily: India.fontName,
+                                  color: Colors.redAccent, fontSize: 20),
+                              children: <TextSpan>[
+                                TextSpan(text: ' Map',
+                                  style: TextStyle(
+                                      color: Colors.black38, fontSize: 14),
+                                ),
+                                TextSpan(text:'\nTAP HERE! to explore more maps',
+                                  style: TextStyle(fontSize: 16,color: Colors.blue),
+                                ),
+                              ]
+                          ),
+                        ),
+                      ),
+                      Divider(height: 10,),
+                      Text('Cases in India',style: TextStyle(fontSize: 16,color: Colors.black87),),
+                      Card(color: Colors.blueGrey[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: PhotoView(
+                            enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
+                            imageProvider: NetworkImage(
+                              'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',),
+                              backgroundDecoration: BoxDecoration(color: Colors.blueGrey[100]),
+                          ),
+                        ),
+                      ),
+//                      Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
+//                        fit: BoxFit.fitWidth,
+//                      ),
+                    ],
+                  ),
+                ),
                 Divider(height: 10,),
                 BarChart(),
                 BarChart2(),
@@ -575,7 +609,7 @@ class BarChart extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 250,
+        height: 200,
         padding: EdgeInsets.all(10),
         child: Card(color: Colors.blueGrey[100],
           child: Padding(
@@ -784,14 +818,44 @@ class IndiaMap extends StatelessWidget {
         automaticallyImplyLeading: true,
         backgroundColor: Colors.redAccent,
       ),
-      body: Container(
-        height: double.maxFinite,width: double.infinity,
-        child: PhotoView(
-          enableRotation: false,basePosition: Alignment.center,tightMode: true,
-          imageProvider: NetworkImage('https://covid19ind.zaoapp.net/wp-content/uploads/2020/03/India.png',),
-          backgroundDecoration: BoxDecoration(color: Colors.white70),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: double.infinity,
+              child: Column(
+                children: <Widget>[
+                  Divider(),
+                  Center(child: Text('Cases Heat Map of India',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),),
+                  Image.network(
+                    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/COVID-19_India_Total_Cases_Animated_Map.gif/800px-COVID-19_India_Total_Cases_Animated_Map.gif',
+                    width: double.maxFinite,fit: BoxFit.cover,
+                  ),
+//                  PhotoView(
+//                    enableRotation: false,basePosition: Alignment.center,//tightMode: true,//minScale: 10,
+//                    imageProvider: NetworkImage(
+//                      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg',),
+//                    backgroundDecoration: BoxDecoration(color: Colors.white70),
+//                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              child: Column(
+                children: <Widget>[
+                  Divider(),
+                  Center(child: Text('Deaths Heat Map of India',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),),
+                  Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/COVID-19_Death_Cases_in_India.png/800px-COVID-19_Death_Cases_in_India.png',
+                    width: double.maxFinite,
+                  ),
+
+                ],
+              ),
+            ),
+          ],
         ),
-      ),
+      )
     );
   }
 }

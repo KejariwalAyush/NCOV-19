@@ -8,8 +8,9 @@ import 'package:photo_view/photo_view.dart';
 
 import 'LineChart.dart';
 
+const String fontName = 'Comfortaa';
 class WorldData extends StatelessWidget {
-  static const String fontName = 'Comfortaa';
+
 //  static var _days=world['cases'].length;
   static var timeline = 0;
   static var keys = worldHistory['cases'].keys;
@@ -139,6 +140,66 @@ class WorldData extends StatelessWidget {
                       ],
                     ),
                     Divider(height: 10,),
+                    Container(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                          color: Colors.blueGrey[300]),
+                      width:double.maxFinite,
+//                  height: 650,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => WorldMap()));
+                              print('Tapped on World heat map');
+                            },
+                            child: Center(child: RichText(textAlign: TextAlign.center,
+                              text: TextSpan(
+                                  text: 'WORLD',
+                                  style: TextStyle(fontFamily: fontName,
+                                      color: Colors.redAccent, fontSize: 20,fontWeight: FontWeight.bold),
+                                  children: <TextSpan>[
+                                    TextSpan(text: ' Map & other Graphs',
+                                      style: TextStyle(
+                                          color: Colors.black38, fontSize: 14),
+                                    ),
+                                    TextSpan(text: '\nTAP HERE! to explore more maps & Graphs',
+                                      style: TextStyle(fontSize: 16,color: Colors.blue),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Divider(),
+                                Center(child: Text('Cases Heat Map Area-wise',style: TextStyle(fontSize: 20),),),
+//                                Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/COVID-19_Outbreak_World_Map_per_Capita.svg/1920px-COVID-19_Outbreak_World_Map_per_Capita.svg.png',
+//                                  width: double.maxFinite,fit: BoxFit.fitWidth,
+//                                ),
+                                Card(color: Colors.blueGrey[100],
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: PhotoView(
+                                      enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
+                                      imageProvider: NetworkImage(
+                                        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/COVID-19_Outbreak_World_Map_per_Capita.svg/1920px-COVID-19_Outbreak_World_Map_per_Capita.svg.png',),
+                                      backgroundDecoration: BoxDecoration(color: Colors.blueGrey[100]),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Divider(height: 10,),
                     PieChart(),
                     Divider(height: 10,),
 //                    Container(
@@ -152,6 +213,7 @@ class WorldData extends StatelessWidget {
 //                              continent[0]['recovered'], continent[0]['active']),
 //                      ],
 //                    ),),
+
                     Center(child:RichText(
                       text: TextSpan(
                           text: 'CONTINENT-wise',
@@ -295,9 +357,18 @@ class WorldData extends StatelessWidget {
                             ])
                           ],
                         ),
+
                         ],),
                       ),
                     ),
+//                    Divider(),
+//                    Center(child: Text('Pinch-IN/OUT to zoom-in/out'),),
+//                    PhotoView(
+//                      enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
+//                      imageProvider: NetworkImage(
+//                        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Trakectproes-Covid-confirmed-cases-since-100th-case.svg/1280px-Trakectproes-Covid-confirmed-cases-since-100th-case.svg.png',),
+//                      backgroundDecoration: BoxDecoration(color: Colors.white70),
+//                    ),
                   ],
                 ),
               )
@@ -380,34 +451,6 @@ class PieChart extends StatelessWidget {
   }
 }
 
-class WorldMap extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("NCOV - 19",
-            style: TextStyle(
-              fontFamily: WorldData.fontName,
-              color: Colors.white,
-              fontSize: 20.0,
-            )),
-        centerTitle: true,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))),
-        elevation: 20,
-        automaticallyImplyLeading: true,
-        backgroundColor: Colors.redAccent,
-      ),
-      body: Container(
-        height: double.maxFinite,width: double.infinity,
-        child: PhotoView(
-          enableRotation: false,basePosition: Alignment.center,tightMode: true,
-          imageProvider: NetworkImage('https://covid19ind.zaoapp.net/wp-content/uploads/2020/03/Global-Map-1024x672.png',),
-          backgroundDecoration: BoxDecoration(color: Colors.white70),
-        ),
-      ),
-    );
-  }
-}
 // ignore: must_be_immutable
 class DataCard extends StatelessWidget {
   String txt;
@@ -469,7 +512,7 @@ class DataCard2 extends StatelessWidget {
         children: <Widget>[
           Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
           Text('$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-          Text('${txt2data!='0'?'+$txt2data':''}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
+          Text('${txt2data.toString()!='0'?'+$txt2data':'N/A'}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
 //          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
 //            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
             ],
@@ -549,10 +592,10 @@ class DataCard3 extends StatelessWidget {
         children: <Widget>[
           Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
           Text('$txtdata',style: TextStyle(fontSize: 18,color: Colors.white),textAlign: TextAlign.center,),
-          Text('${txt2data!='0'?'$txt2data':''}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
+          Text('${txt2data.toString()!='0'?'$txt2data':'N/A'}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
           Text('Yesterday',style: TextStyle(fontSize: 14,color: Colors.white60),textAlign: TextAlign.center,),
           Text('$txt3data',style: TextStyle(fontSize: 18,color: Colors.white),textAlign: TextAlign.center,),
-          Text('${txt4data!='0'?'+$txt4data':''}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
+          Text('${txt4data.toString()!='0'?'+$txt4data':'N/A'}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
 
 //          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
 //            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
@@ -561,17 +604,124 @@ class DataCard3 extends StatelessWidget {
     );
   }
 }
-//class _Charts{
 
+class WorldMap extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("NCOV - 19",
+              style: TextStyle(
+                fontFamily: fontName,
+                color: Colors.white,
+                fontSize: 20.0,
+              )),
+          centerTitle: true,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(25),bottomRight: Radius.circular(25))),
+          elevation: 20,
+          automaticallyImplyLeading: true,
+          backgroundColor: Colors.redAccent,
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            alignment: Alignment.topCenter,
+            padding: EdgeInsets.only(top: 20),
+            margin: EdgeInsets.all(10),
+            width: double.maxFinite,
+//            height: ,
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                color: Colors.blueGrey[100]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
 
-//
-//  final List<FlSpot> allSpots2 = [
-//    for (int i = timeline; i < days.length; i++)
-//      FlSpot(double.parse(days[i].toString()), double.parse(datetotrecov[i])),
-//  ];
-//
-//  final List<FlSpot> allSpots3 = [
-//    for (int i = timeline; i < days.length; i++)
-//      FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
-//  ];
-//}
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+//                      Divider(),
+                      Center(child: Text('Cases HEAT map Country wise',style: TextStyle(fontSize: 20),),),
+                      Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/COVID-19_Outbreak_World_Map.svg/1920px-COVID-19_Outbreak_World_Map.svg.png',
+                        width: double.maxFinite,
+                      ),
+//                  PhotoView(
+//                    enableRotation: false,basePosition: Alignment.center,//tightMode: true,//minScale: 10,
+//                    imageProvider: NetworkImage(
+//                      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg',),
+//                    backgroundDecoration: BoxDecoration(color: Colors.white70),
+//                  ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Divider(),
+                      Center(child: Text('Deaths HEAT map Country wise per Capita',style: TextStyle(fontSize: 16),),),
+                      Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/COVID-19_Outbreak_World_Map_Total_Deaths_per_Capita.svg/1920px-COVID-19_Outbreak_World_Map_Total_Deaths_per_Capita.svg.png',
+                        width: double.maxFinite,
+                      ),
+                    ],
+                  ),
+                ),
+//                Divider(height: 10,),
+              for(var link in imgLinks)
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Divider(),
+                      PhotoView(
+                        enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
+                        imageProvider: NetworkImage(link),
+                        backgroundDecoration: BoxDecoration(color: Colors.white70),
+                      ),
+//                      Center(child: Text('Deaths HEAT map Country wise per Capita',style: TextStyle(fontSize: 16),),),
+//                      Image.network(link,
+//                        width: double.maxFinite,
+//                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+    );
+  }
+}
+
+List imgLinks = ['https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Total-confirmed-cases-of-covid-19-per-million-people.png/1280px-Total-confirmed-cases-of-covid-19-per-million-people.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/2020_coronavirus_cases_by_date_of_report.svg/494px-2020_coronavirus_cases_by_date_of_report.svg.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coronavirus_-_Most_affected_countries_-_top_10.png/441px-Coronavirus_-_Most_affected_countries_-_top_10.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Covid-19_new_cases_in_top_5_countries_and_the_world.png/501px-Covid-19_new_cases_in_top_5_countries_and_the_world.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Time_series_of_active_COVID-19_cases%2C_most_affected_countries.svg/440px-Time_series_of_active_COVID-19_cases%2C_most_affected_countries.svg.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Covid-19_daily_cases_trajectory_per_million_all_continents_4-27.svg/468px-Covid-19_daily_cases_trajectory_per_million_all_continents_4-27.svg.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Worldwide_Coronavirus_Curve_4-24-20.png/519px-Worldwide_Coronavirus_Curve_4-24-20.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Covid-19_total_cases_per_100_000_population_from_selected_countries.png/462px-Covid-19_total_cases_per_100_000_population_from_selected_countries.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Total-covid-deaths-per-million.png/553px-Total-covid-deaths-per-million.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Covid-19_daily_deaths_in_top_5_countries_and_the_world.png/634px-Covid-19_daily_deaths_in_top_5_countries_and_the_world.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Covid-19-total-confirmed-cases-vs-total-confirmed-deaths.svg/553px-Covid-19-total-confirmed-cases-vs-total-confirmed-deaths.svg.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Coronavirus-cfr.svg/553px-Coronavirus-cfr.svg.png',
+
+'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Covid-19_deaths_per_100_000_population.png/546px-Covid-19_deaths_per_100_000_population.png',
+];

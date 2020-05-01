@@ -97,7 +97,7 @@ class _CountriesDataState extends State<CountriesData> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Divider(height: 10,),
-                        Image.network(countryData[no]['countryInfo']['flag'],height: 100,width: 150,),
+                        Image.network(countryData[no]['countryInfo']['flag'],height: 100,),
                         Text('${countryData[no]['country']}',
                           style: TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),),
                         Divider(height: 10,),
