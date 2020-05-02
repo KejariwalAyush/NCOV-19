@@ -322,7 +322,7 @@ class _LineChart2State extends State<LineChart2> {
             else
               for (int i = 0; i < widget.timeline; i++) widget.allSpots3[i]
         ],
-//        isCurved: true,
+        isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
           blurRadius: 2,

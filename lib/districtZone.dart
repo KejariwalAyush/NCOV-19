@@ -24,14 +24,18 @@ class StatePage extends StatelessWidget {
     deaths = int.parse(stateDeath[stateIndex]);
     recov = int.parse(stateRecov[stateIndex]);
     active = int.parse(stateData[stateIndex])-int.parse(stateRecov[stateIndex])-int.parse(stateDeath[stateIndex]);
+    int c=0,r=0,d=0;
     for(var i in statesDaily['states_daily'])
       {
-        if(i['status']=='Confirmed')
-          conf.add(i[stateCode.toLowerCase()]);
-        else if(i['status']=='Recovered')
-          reco.add(i[stateCode.toLowerCase()]);
+        if(i['status']=='Confirmed'){
+          c+=int.parse(i[stateCode.toLowerCase()]);
+          conf.add(c);}
+        else if(i['status']=='Recovered'){
+          r+=int.parse(i[stateCode.toLowerCase()]);
+          reco.add(r);}
         else if(i['status']=='Deceased'){
-          deat.add(i[stateCode.toLowerCase()]);
+          d+=int.parse(i[stateCode.toLowerCase()]);
+          deat.add(d);
           dat.add(i['date']);
         }
       }
