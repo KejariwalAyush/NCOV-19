@@ -28,7 +28,7 @@ List newssubhead = List();
 List newsAllData = List();
 
 int tcaseind = 0, recovind = 0, deathind = 0, actcaseind = 0,newtcaseind=0,newrecovind=0,newdeathind=0;
-List states = List();
+List states = List(),statesCode = List(),stateTimeUpdate = List();
 List stateData = List(),newstateData = List();
 List stateDeath = List(),newstateDeath = List();
 List stateRecov = List(),newstateRecov = List();
@@ -50,6 +50,7 @@ List age = List();
 var indAllData = List();
 var distdata;
 var diststates;
+var zone,statesDaily;
 
 var world;
 var continent;

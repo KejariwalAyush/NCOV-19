@@ -274,22 +274,19 @@ class WorldData extends StatelessWidget {
                             DataRow(
                                 cells:[
                               DataCell(
-                                InkWell(
+                                RichText(
+                                  text: TextSpan(
+                                    text: '${contries[i]}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.deepPurple),
+                                  ),
+                                ),
+                                  placeholder: true,
                                   onTap: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) => CountriesData(contries[i])));
                                     print('Tapped on ${contries[i]}');
                                   },
-                                  child: Container(
-                                    child: RichText(
-                                      text: TextSpan(
-                                        text: '${contries[i]}',
-                                        style: TextStyle(fontFamily: fontName,
-                                            color: Colors.deepPurple),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ),
                               DataCell(RichText(
                                 text: TextSpan(
@@ -303,7 +300,12 @@ class WorldData extends StatelessWidget {
                                       )
                                     ]
                                 ),
-                              ),),
+                              ),placeholder: true,
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => CountriesData(contries[i])));
+                                    print('Tapped on ${contries[i]}');
+                                  },),
                               DataCell(RichText(
                                 text: TextSpan(
                                     text: '${deathcont[i]}\n',
@@ -316,7 +318,12 @@ class WorldData extends StatelessWidget {
                                       )
                                     ]
                                 ),
-                              ),),
+                              ),placeholder: true,
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => CountriesData(contries[i])));
+                                    print('Tapped on ${contries[i]}');
+                                  },),
                               DataCell(RichText(
                                 text: TextSpan(
                                     text: '${recovercont[i]}',
@@ -329,7 +336,12 @@ class WorldData extends StatelessWidget {
 //                                      )
 //                                    ]
                                 ),
-                              ),),
+                              ),placeholder: true,
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => CountriesData(contries[i])));
+                                    print('Tapped on ${contries[i]}');
+                                  },),
                             ])
                           ],
                         ),

@@ -9,6 +9,8 @@ import 'package:flutter_app/LineChart.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:flutter_app/worldstat.dart';
 
+import 'districtZone.dart';
+
 var colorsList = [Colors.blue[100],Colors.blue[200],Colors.blue[300],Colors.blueAccent,
   Colors.cyanAccent,Colors.purple[100],Colors.purple[200],Colors.purple[300],
   Colors.purple[400],Colors.purple[500],Colors.purple[800],Colors.deepPurple[300],
@@ -112,7 +114,17 @@ class _IndiaState extends State<India> {
                 Divider(height: 10,),
                 PieChart(),
                 Divider(height: 10,),
-                Center(child: Text('State-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
+                Center(child:RichText(
+                  textAlign: TextAlign.center,
+                  text:  TextSpan(text:'State-wise Data',
+                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(text: '\nTap on States to know more!',
+                      style: TextStyle(
+                          color: Colors.black38, fontSize: 15),
+                    ),
+                  ]),
+                )),
                 Container(
                   alignment: Alignment.topCenter,
                   padding: EdgeInsets.all(10),
@@ -134,16 +146,12 @@ class _IndiaState extends State<India> {
                         columns: [
                           DataColumn(label: Text('States'),),
                           DataColumn(label: Text('Cases'),numeric: true,),
-//                            onSort: (columnIndex, ascending) {
-////                            setState(() {
-////                            sort = !sort;
-////                            });
-//                            onSort(columnIndex);}),
                           DataColumn(label: Text('Deaths'),numeric: true),
                           DataColumn(label: Text('Recovered'),numeric: true,),
                         ],
                         rows: [
                           for(int i=1;i<states.length;i++)
+                            if(stateData[i].toString()!='0')
                             DataRow(
                                 cells:[
                               DataCell(
@@ -154,6 +162,12 @@ class _IndiaState extends State<India> {
                                           color: Colors.deepPurple),
                                     ),
                                 ),
+                                placeholder: true,
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                      StatePage(states[i],statesCode[i],i)));
+                                  print('Tapped on ${states[i]}');
+                                },
                               ),
                               DataCell(RichText(
                                 text: TextSpan(
@@ -167,7 +181,12 @@ class _IndiaState extends State<India> {
                                       )
                                     ]
                                 ),
-                              ),),
+                              ),
+                                placeholder: true,
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                      StatePage(states[i],statesCode[i],i)));
+                                  print('Tapped on ${states[i]}');},),
                               DataCell(RichText(
                                 text: TextSpan(
                                     text: '${stateDeath[i]}',
@@ -180,7 +199,12 @@ class _IndiaState extends State<India> {
                                       )
                                     ]
                                 ),
-                              ),),
+                              ),
+                                placeholder: true,
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                      StatePage(states[i],statesCode[i],i)));
+                                  print('Tapped on ${states[i]}');},),
                               DataCell(RichText(
                                 text: TextSpan(
                                   text: '${stateRecov[i]}',
@@ -194,6 +218,11 @@ class _IndiaState extends State<India> {
                                     ]
                                 ),
                               ),
+                                placeholder: true,
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) =>
+                                      StatePage(states[i],statesCode[i],i)));
+                                  print('Tapped on ${states[i]}');},
                               ),
                             ],
 //                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
@@ -203,9 +232,6 @@ class _IndiaState extends State<India> {
                   ),
                   ),
                 ),
-                Divider(height: 10,),
-                Center(child: Text('District-wise Data',style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),),),
-                District(),
                 Divider(height: 10,),
                 LineChart1(allSpots,allSpots2,allSpots3,tcaseind/4,firstCase,timeline),
                 Divider(height: 10,),
@@ -294,114 +320,6 @@ final List<FlSpot> allSpots3 = [
     FlSpot(double.parse(days[i].toString()), double.parse(datetotdeath[i])),
 ];
 var timeline = days.length;
-class District extends StatefulWidget {
-  @override
-  _DistrictState createState() => _DistrictState();
-}
-
-class _DistrictState extends State<District> {
-
-  int stcount = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.topCenter,
-        padding: EdgeInsets.all(10),
-//                  margin: EdgeInsets.all(5),
-        width: double.maxFinite,
-        height: 230,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
-            color: Colors.blueGrey[300]),
-        child:Scrollbar(
-//          controller: ScrollController(keepScrollOffset: false,initialScrollOffset: 20),
-            child:SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child:Column(children: <Widget>[
-            DropdownButton<String>(
-              value: dropdownvalue,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              style: TextStyle(
-                  color: Colors.deepPurple
-              ),
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownvalue = newValue;
-//                  stcount = 3;
-                  for(int i=0;i<distdata.length;i++)
-                  if(distdata[i]['state'].compareTo(dropdownvalue.toString())==0){
-                    stcount = i;break;
-                  }
-                });
-              },
-              items: <String>[for(var st=0;st< distdata.length;st++)
-    //            if(stateData[st]==0)
-                  distdata[st]['state'],]
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              })
-                  .toList(),
-            ),
-            DataTable(
-              columnSpacing: 1,
-              dataRowHeight: 30,
-              headingRowHeight: 50,
-              horizontalMargin: 10,
-//                        sortColumnIndex: 1,
-//                        sortAscending: true,
-              columns: [
-                DataColumn(label: Text('Districts'),),
-                DataColumn(label: Text('Cases'),numeric: true,),
-              ],
-              rows: [
-                for(var i in distdata[stcount]['districtData'])
-                  DataRow(
-                    cells:[
-                      DataCell(
-                        RichText(
-                          text: TextSpan(
-                            text: '${i['district']}',
-                            style: TextStyle(fontFamily: India.fontName,
-                                color: Colors.deepPurple),
-                          ),
-                        ),
-                      ),
-                      DataCell(RichText(
-                        text: TextSpan(
-                            text: '${i['confirmed']}',
-                            style: TextStyle(fontFamily: India.fontName,
-                                color: Colors.black),
-                            children: <TextSpan>[
-                              TextSpan(text: '${i['delta']['confirmed']==0?'':' +${i['delta']['confirmed']}'}',
-                                style: TextStyle(
-                                    color: Colors.red, fontSize: 12),
-                              )
-                            ]
-                        ),
-                      ),),
-
-                    ],
-//                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
-                  ),
-              ],
-            ),
-          
-          ],
-        ),
-        ),
-        ),
-    );
-  }
-}
-
 class PieChart extends StatelessWidget {
 
 

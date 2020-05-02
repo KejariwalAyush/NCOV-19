@@ -196,6 +196,7 @@ class _CountriesDataState extends State<CountriesData> {
       data = jsonDecode(data1);
 //    print(data);
 //      timeline = 0;
+      allSpots = null;allSpots2 = null;allSpots3 = null;
       int cnt1 = 0;
       var d = data['timeline']['cases'].keys.toString().substring(1, 9);
       firstCase = DateTime(
@@ -257,13 +258,13 @@ class _LineChart2State extends State<LineChart2> {
 //          showingIndicators: showIndexes,
         spots: [
           if (_isSwitched1)
-            for (int i = 0; i < timeline; i++) widget.allSpots[i]
+            for (int i = 0; i < widget.timeline; i++) widget.allSpots[i]
           else if(_isSwitched2)
-            for (int i = timeline-30; i < timeline; i++) widget.allSpots[i]
+            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots[i]
           else if(_isSwitched3)
-            for (int i = timeline-15; i < timeline; i++) widget.allSpots[i]
+            for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots[i]
           else
-              for (int i = 0; i < timeline; i++) widget.allSpots[i]
+              for (int i = 0; i < widget.timeline; i++) widget.allSpots[i]
         ],
         isCurved: true,
         barWidth: 2,
@@ -285,13 +286,13 @@ class _LineChart2State extends State<LineChart2> {
 //        showingIndicators: showIndexes,
         spots: [
           if (_isSwitched1)
-            for (int i = 0; i < timeline; i++) widget.allSpots2[i]
+            for (int i = 0; i < widget.timeline; i++) widget.allSpots2[i]
           else if(_isSwitched2)
-            for (int i = timeline-30; i < timeline; i++) widget.allSpots2[i]
+            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots2[i]
           else if(_isSwitched3)
-              for (int i = timeline-15; i < timeline; i++) widget.allSpots2[i]
+              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots2[i]
             else
-              for (int i = 0; i < timeline; i++) widget.allSpots2[i]
+              for (int i = 0; i < widget.timeline; i++) widget.allSpots2[i]
         ],
         isCurved: true,
         barWidth: 2,
@@ -313,15 +314,15 @@ class _LineChart2State extends State<LineChart2> {
 //        showingIndicators: showIndexes,
         spots: [
           if (_isSwitched1)
-            for (int i = 0; i < timeline; i++) widget.allSpots3[i]
+            for (int i = 0; i < widget.timeline; i++) widget.allSpots3[i]
           else if(_isSwitched2)
-            for (int i = timeline-30; i < timeline; i++) widget.allSpots3[i]
+            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots3[i]
           else if(_isSwitched3)
-              for (int i = timeline-15; i < timeline; i++) widget.allSpots3[i]
+              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots3[i]
             else
-              for (int i = 0; i < timeline; i++) widget.allSpots3[i]
+              for (int i = 0; i < widget.timeline; i++) widget.allSpots3[i]
         ],
-        isCurved: true,
+//        isCurved: true,
         barWidth: 2,
         shadow: const Shadow(
           blurRadius: 2,

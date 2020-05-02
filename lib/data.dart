@@ -23,6 +23,8 @@ class DataSource{
     final Response response3 = await get("https://api.covid19india.org/raw_data.json");
     final Response response4 = await get("https://api.covid19india.org/raw_data2.json");
     final Response response5 = await get("https://api.covid19india.org/raw_data3.json");
+    final Response response6 = await get("https://api.covid19india.org/zones.json");
+    final Response response7 = await get("https://api.covid19india.org/states_daily.json");
     // final Response helpno = await get("https://covidout.in/helpline");
     if (response.statusCode == 200 && response2.statusCode == 200) {
       states = List();
@@ -54,6 +56,12 @@ class DataSource{
       var data5 = response5.body;
       var rawdata3 = jsonDecode(data5);
 
+      var data6 = response6.body;
+      zone = jsonDecode(data6);
+
+      var data7 = response7.body;
+      statesDaily = jsonDecode(data7);
+
 //      print(inddata['statewise'][0]['active']);
       lastupdatetime = inddata['statewise'][0]['lastupdatedtime'];
       tcaseind = int.parse(inddata['statewise'][0]['confirmed']);
@@ -66,12 +74,14 @@ class DataSource{
       for(var i in inddata['statewise'])
       {
         states.add(i['state']);
+        statesCode.add(i['statecode']);
         stateData.add(i['confirmed']);
         stateDeath.add(i['deaths']);
         stateRecov.add(i['recovered']);
         newstateData.add(i['deltaconfirmed']);
         newstateDeath.add(i['deltadeaths']);
         newstateRecov.add(i['deltarecovered']);
+        stateTimeUpdate.add(i['lastupdatedtime']);
       }
       day=0;
 
