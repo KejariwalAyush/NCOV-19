@@ -21,16 +21,19 @@ class Frontpg extends StatefulWidget {
 }
 
 class _FrontpgState extends State<Frontpg> {
-  static var date = lastupdatetime.toString().split(' ')[0];
-  static var time = lastupdatetime.toString().split(' ')[1];
-  DateTime updateTime= DateTime(int.parse(date.split('/')[2]),int.parse(date.split('/')[1]),int.parse(date.split('/')[0]),
-      int.parse(time.split(':')[0]),int.parse(time.split(':')[1]),int.parse(time.split(':')[2]));
+
+  DateTime updateTime;
 //  DateTime now = DateTime.now();
 
   var isLoading = false;
     Future<void> _fetch() async{
     setState(() {
       DataSource().fetchAll();
+
+      var date = lastupdatetime.toString().split(' ')[0];
+      var time = lastupdatetime.toString().split(' ')[1];
+      updateTime= DateTime(int.parse(date.split('/')[2]),int.parse(date.split('/')[1]),int.parse(date.split('/')[0]),
+          int.parse(time.split(':')[0]),int.parse(time.split(':')[1]),int.parse(time.split(':')[2]));
     });
   }
   @override
@@ -40,22 +43,7 @@ class _FrontpgState extends State<Frontpg> {
 //      isLoading = true;
       _fetch();
     });
-//    _getThingsOnStartup().then((value) {
-//      DataSource().fetchAll();
-//      print('Async done');
-//      firstcall = false;
-////      setData();
-//    });
-//    if (tcaseind != 0 || tcasewld != 0)
-//      setState(() {
-//        isLoading = false;
-//      });
-
   }
-//
-//  Future _getThingsOnStartup() async {
-//    await Future.delayed(Duration(seconds: 0));
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +73,6 @@ class _FrontpgState extends State<Frontpg> {
                         // ignore: unnecessary_statements
                         RefreshIndicatorMode.refresh;_fetch();
                       });
-//                        Navigator.push(context,
-//                            MaterialPageRoute(builder: (context) =>  Frontpg()));
                       }),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
@@ -135,20 +121,6 @@ class _FrontpgState extends State<Frontpg> {
                             textAlign: TextAlign.center,
                             alignment: AlignmentDirectional.center // or Alignment.topLeft
                         )
-//                        RichText(
-//                          text: TextSpan(
-//                              text: 'TAP ',
-//                              style: TextStyle(
-//                                  fontFamily: Frontpg.fontName,
-//                                  color: Colors.black54,
-//                                  fontSize: 18),
-//                              children: <TextSpan>[
-//                                TextSpan(
-//                                  text: 'on tabs to know more!',
-//                                  style: TextStyle(color: Colors.black38, fontSize: 16),
-//                                ),
-//                              ]),
-//                        )
                             :RichText(textAlign: TextAlign.center,
                           text: TextSpan(
                               text: 'PULL to refresh!',
@@ -770,3 +742,4 @@ class _FrontpgState extends State<Frontpg> {
     return;
   }
 }
+

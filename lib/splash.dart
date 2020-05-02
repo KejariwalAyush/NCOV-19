@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/home.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:package_info/package_info.dart';
@@ -89,11 +92,44 @@ DateTime now = new DateTime.now();
 var indiaData,newsData,worldData;
 
 class _SplashState extends State<Splash> {
-
+ bool noInternet = false;
   @override
   void initState() {
-    _getThingsOnStartup().then((value){
-
+    _getThingsOnStartup().then((value) async {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          print('connected');
+        }
+      } on SocketException catch (_) {
+        print('not connected');
+        noInternet = true;
+        Alert(
+          context: context,
+          closeFunction: ()=>{SystemNavigator.pop()},
+          type: AlertType.warning,
+          title: "Internet Unavailable !!",
+          desc: "Check your internet connection please.",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Retry",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => Splash()))},
+              color: Color(0xFF333366),
+            ),
+            DialogButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => SystemNavigator.pop(),
+              color: Colors.blueGrey,
+            )
+          ],
+        ).show();
+      }
       fetchupdate();
       DataSource().fetchnews();
       DataSource().fetchData();
@@ -115,9 +151,9 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SplashScreen(
+    return noInternet?Center():SplashScreen(
       seconds: 8,//isLoading?sec:1,
-      navigateAfterSeconds:Frontpg(),
+      navigateAfterSeconds:noInternet?Center():Frontpg(),
       title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
         style: new TextStyle(
           fontWeight: FontWeight.bold,
@@ -222,37 +258,6 @@ class _SplashState extends State<Splash> {
         print('Up-to-Date');
         isUpdateAvailable = false;
       }
-//      if(!isUpdateAvailable)
-//        {
-//          Alert(
-//            context: context,
-//            type: AlertType.warning,
-//            title: "UPDATE Available",
-//            desc: "Version: $latestversion\nDownload & install latest version of the app\nUpdates make your app better",
-//            buttons: [
-//              DialogButton(
-//                child: Text(
-//                  "UPDATE",
-//                  style: TextStyle(color: Colors.white, fontSize: 20),
-//                ),
-//                onPressed:  _launchURL(updatelink),
-//                color: Color(0xFF333366),
-//              ),
-//              DialogButton(
-//                child: Text(
-//                  "Cancel",
-//                  style: TextStyle(color: Colors.white, fontSize: 20),
-//                ),
-//                onPressed: () => Navigator.pop(context),
-//                color: Color(0xFF333366),
-//              )
-//            ],
-//          ).show();
-//        }
-//      if(version< )
-    // details > div > div > div > a
-//      _showDialog();
-
       setState(() {
         isLoading = false;
       });
