@@ -365,9 +365,9 @@ class PieChart extends StatelessWidget {
 
 
   final data = [
-    GradesData('Active %', int.parse((world['active']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.redAccent)),
-    GradesData('Recov %', int.parse((world['recovered']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-    GradesData('Deaths %', int.parse((world['deaths']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.blueGrey)),
+    GradesData('Active', int.parse((world['active']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.redAccent)),
+    GradesData('Recov', int.parse((world['recovered']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GradesData('Deaths', int.parse((world['deaths']/world['cases']*100).toString().split('.')[0]),charts.ColorUtil.fromDartColor(Colors.blueGrey)),
   ];
 
   _getSeriesData() {
@@ -375,7 +375,7 @@ class PieChart extends StatelessWidget {
       charts.Series(
         id: "Grades",
         data: data,
-        labelAccessorFn: (GradesData row, _) => '${row.gradeSymbol}:${row.number}',
+        labelAccessorFn: (GradesData row, _) => '${row.gradeSymbol}:${row.number}%',
         domainFn: (GradesData grades, _) => grades.gradeSymbol,
         measureFn: (GradesData grades, _) => grades.number,
         colorFn: (GradesData series, _) => series.col,
@@ -412,7 +412,7 @@ class PieChart extends StatelessWidget {
                     _getSeriesData(),
                     animate: true,
                     defaultRenderer: new charts.ArcRendererConfig(
-                        arcWidth: 200,startAngle: 49,
+                        arcWidth: 200,startAngle: 84,
                         arcRendererDecorators: [new charts.ArcLabelDecorator()]
                     ),
                   ),

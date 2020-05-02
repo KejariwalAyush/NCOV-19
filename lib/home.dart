@@ -21,6 +21,12 @@ class Frontpg extends StatefulWidget {
 }
 
 class _FrontpgState extends State<Frontpg> {
+  static var date = lastupdatetime.toString().split(' ')[0];
+  static var time = lastupdatetime.toString().split(' ')[1];
+  DateTime updateTime= DateTime(int.parse(date.split('/')[2]),int.parse(date.split('/')[1]),int.parse(date.split('/')[0]),
+      int.parse(time.split(':')[0]),int.parse(time.split(':')[1]),int.parse(time.split(':')[2]));
+//  DateTime now = DateTime.now();
+
   var isLoading = false;
     Future<void> _fetch() async{
     setState(() {
@@ -77,7 +83,7 @@ class _FrontpgState extends State<Frontpg> {
                       ),
                       onPressed: () {setState(() {
                         // ignore: unnecessary_statements
-                        RefreshIndicatorMode.refresh;
+                        RefreshIndicatorMode.refresh;_fetch();
                       });
 //                        Navigator.push(context,
 //                            MaterialPageRoute(builder: (context) =>  Frontpg()));
@@ -160,8 +166,10 @@ class _FrontpgState extends State<Frontpg> {
                       ),
                       Center(
                         child: Text(
-                          'Last Data Updated on: $lastupdatetime',
-                          style: TextStyle(fontSize: 16, color: Colors.black54),
+                          'Last India data Updated on: ${updateTime!=null?DateTime.now().difference(updateTime).inMinutes>60?
+                          '${DateTime.now().difference(updateTime).inHours} hours ago':DateTime.now().difference(updateTime).inMinutes<=0?
+                          '${DateTime.now().difference(updateTime).inSeconds} seconds ago':'${DateTime.now().difference(updateTime).inMinutes} minutes ago':null}',
+                          style: TextStyle(fontSize: 14, color: Colors.black54),
                         ),
                       ),
                       InkWell(

@@ -21,6 +21,8 @@ class DataSource{
     final Response response = await get("https://api.covid19india.org/data.json");
     final Response response2 = await get("https://api.covid19india.org/v2/state_district_wise.json");
     final Response response3 = await get("https://api.covid19india.org/raw_data.json");
+    final Response response4 = await get("https://api.covid19india.org/raw_data2.json");
+    final Response response5 = await get("https://api.covid19india.org/raw_data3.json");
     // final Response helpno = await get("https://covidout.in/helpline");
     if (response.statusCode == 200 && response2.statusCode == 200) {
       states = List();
@@ -47,6 +49,10 @@ class DataSource{
 
       var data3 = response3.body;
       var rawdata = jsonDecode(data3);
+      var data4 = response4.body;
+      var rawdata2 = jsonDecode(data4);
+      var data5 = response5.body;
+      var rawdata3 = jsonDecode(data5);
 
 //      print(inddata['statewise'][0]['active']);
       lastupdatetime = inddata['statewise'][0]['lastupdatedtime'];
@@ -97,14 +103,47 @@ class DataSource{
         else if(i['gender']=='M')
           male++;
         if(i['agebracket'] != '') {
-          var x= int.parse(i['agebracket']);
+          var x= i['agebracket'].toString().contains('.')?int.parse(double.parse(i['agebracket'].toString().length>2?i['agebracket'].toString().substring(0,2)
+              :i['agebracket']).floor().toString()):int.parse(i['agebracket'].toString().length>2?i['agebracket'].toString().substring(0,2)
+              :i['agebracket'].toString());
+//          print(i['agebracket']+', $x');
+          x>0&&x<20?one++:x<40?two++:x<60?three++:x<80?four++:five++;
+          age.add(i['agebracket']);
+        }
+      }
+      for(var i in rawdata2['raw_data'])
+      {
+        if(i['gender']=='F')
+          female++;
+        else if(i['gender']=='M')
+          male++;
+        if(i['agebracket'] != '') {
+          var x= i['agebracket'].toString().contains('.')?int.parse(double.parse(i['agebracket'].toString().length>2?i['agebracket'].toString().substring(0,2)
+              :i['agebracket']).floor().toString()):int.parse(i['agebracket'].toString().length>2?i['agebracket'].toString().substring(0,2)
+              :i['agebracket'].toString());
+//          print(i['agebracket']+', $x');
+          x>0&&x<20?one++:x<40?two++:x<60?three++:x<80?four++:five++;
+          age.add(i['agebracket']);
+        }
+      }
+      for(var i in rawdata3['raw_data'])
+      {
+        if(i['gender']=='F')
+          female++;
+        else if(i['gender']=='M')
+          male++;
+        if(i['agebracket'] != '') {
+          var x= i['agebracket'].toString().contains('.')?int.parse(double.parse(i['agebracket'].toString().length>2?i['agebracket'].toString().substring(0,2)
+              :i['agebracket']).floor().toString()):int.parse(i['agebracket'].toString().length>2?i['agebracket'].toString().substring(0,2)
+              :i['agebracket'].toString());
+//          print(i['agebracket']+', $x');
           x>0&&x<20?one++:x<40?two++:x<60?three++:x<80?four++:five++;
           age.add(i['agebracket']);
         }
       }
       var totalgender = male+female;
-      male = (male*100/totalgender) as int;
-      female = (female*100/totalgender) as int;
+      male = int.parse((male*100/totalgender).floor().toString());
+      female = int.parse((female*100/totalgender).floor().toString());
 //      print(male+female);
 
 //      List<Map<String,String>>

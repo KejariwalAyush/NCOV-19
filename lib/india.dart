@@ -101,7 +101,7 @@ class _IndiaState extends State<India> {
                       children: <Widget>[
                         DataCard2('Recovered',recovind,newrecovind),
                         Divider(height: 10,),
-                        DataCard2('Active',actcaseind,'${newtcaseind==0?'':' ${newtcaseind-newdeathind-newrecovind}'}'),
+                        DataCard2('Active',actcaseind,'${newtcaseind==0?'N/A':' ${newtcaseind-newdeathind-newrecovind}'}'),
                       ],
                     ),
                     Divider(height: 10,),
@@ -407,7 +407,7 @@ class PieChart extends StatelessWidget {
 
   final data = [
     GradesData('Active', actcaseind,charts.ColorUtil.fromDartColor(Colors.pinkAccent)),
-    GradesData('Recovered', recovind,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GradesData('Recov', recovind,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
     GradesData('Deaths', deathind,charts.ColorUtil.fromDartColor(Colors.blueGrey)),
   ];
 
@@ -416,7 +416,7 @@ class PieChart extends StatelessWidget {
       charts.Series(
           id: "Grades",
           data: data,
-          labelAccessorFn: (GradesData row, _) => '${row.gradeSymbol}:${row.number}',
+          labelAccessorFn: (GradesData row, _) => '${row.gradeSymbol}:${(row.number/tcaseind*100).floor()}%',
           domainFn: (GradesData grades, _) => grades.gradeSymbol,
           measureFn: (GradesData grades, _) => grades.number,
           colorFn: (GradesData series, _) => series.col,
@@ -443,30 +443,30 @@ class PieChart extends StatelessWidget {
     ];
     return series;
   }
-  final genderdata = [
-    GenderData('Male',male,charts.ColorUtil.fromDartColor(Colors.lightBlue)),
-    GenderData('Female',female,charts.ColorUtil.fromDartColor(Colors.pinkAccent))
-  ];
-
-  _getGenderData() {
-    List<charts.Series<GenderData, String>> series = [
-      charts.Series(
-        id: "Grades",
-        data: genderdata,
-        labelAccessorFn: (GenderData row, _) => '${row.gender}',
-        domainFn: (GenderData grades, _) => grades.gender,
-        measureFn: (GenderData grades, _) => grades.number,
-        colorFn: (GenderData series, _) => series.col,
-      )
-    ];
-    return series;
-  }
+//  final genderdata = [
+//    GenderData('Male : $male',male,charts.ColorUtil.fromDartColor(Colors.lightBlue)),
+//    GenderData('Female : $female',female,charts.ColorUtil.fromDartColor(Colors.pinkAccent))
+//  ];
+//
+//  _getGenderData() {
+//    List<charts.Series<GenderData, String>> series = [
+//      charts.Series(
+//        id: "Grades",
+//        data: genderdata,
+//        labelAccessorFn: (GenderData row, _) => '${row.gender}',
+//        domainFn: (GenderData grades, _) => grades.gender,
+//        measureFn: (GenderData grades, _) => grades.number,
+//        colorFn: (GenderData series, _) => series.col,
+//      )
+//    ];
+//    return series;
+//  }
   final agedata = [
     GenderData('0-20',one,charts.ColorUtil.fromDartColor(Colors.amberAccent)),
-    GenderData('20-40',two,charts.ColorUtil.fromDartColor(Colors.amber)),
-    GenderData('40-60',three,charts.ColorUtil.fromDartColor(Colors.lime)),
-    GenderData('60-80',four,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-    GenderData('>80',four,charts.ColorUtil.fromDartColor(Colors.teal)),
+    GenderData('21-40',two,charts.ColorUtil.fromDartColor(Colors.amber)),
+    GenderData('41-60',three,charts.ColorUtil.fromDartColor(Colors.lime)),
+    GenderData('61-80',four,charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+    GenderData('>80',five,charts.ColorUtil.fromDartColor(Colors.teal)),
   ];
 
   _getAgeData() {
@@ -489,7 +489,7 @@ class PieChart extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
               color: Colors.blueGrey[300]),
-          height: 650,
+          height: 550,
           padding: EdgeInsets.all(10),
           child: Card(color: Colors.blueGrey[100],
             child: Padding(
@@ -515,7 +515,7 @@ class PieChart extends StatelessWidget {
                       animate: true,
                       animationDuration: Duration(milliseconds: 800),
                       defaultRenderer: new charts.ArcRendererConfig(
-                          arcWidth: 200,startAngle: 49,
+                          arcWidth: 200,startAngle: 84,
                           arcRendererDecorators: [new charts.ArcLabelDecorator()]
                       ),
                     ),
@@ -534,30 +534,30 @@ class PieChart extends StatelessWidget {
                       animate: true,
                       animationDuration: Duration(milliseconds: 800),
                       defaultRenderer: new charts.ArcRendererConfig(
-                          arcWidth: 30,startAngle: 60,
+                          arcWidth: 100,startAngle: 60,
                           arcRendererDecorators: [new charts.ArcLabelDecorator()]
                       ),
                     ),
                   ),
                   Divider(height: 10,),
-                  Text(
-                    "Gender data",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
-                        fontWeight: FontWeight.bold ,color: Colors.deepOrange
-                    ),
-                  ),
-                  Expanded(
-                    child: new charts.PieChart(
-                      _getGenderData(),
-                      animate: true,
-                      animationDuration: Duration(milliseconds: 800),
-                      defaultRenderer: new charts.ArcRendererConfig(
-                          arcWidth: 30,startAngle: 60,
-                          arcRendererDecorators: [new charts.ArcLabelDecorator()]
-                      ),
-                    ),
-                  ),
+//                  Text(
+//                    "Gender data",
+//                    textAlign: TextAlign.center,
+//                    style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
+//                        fontWeight: FontWeight.bold ,color: Colors.deepOrange
+//                    ),
+//                  ),
+//                  Expanded(
+//                    child: new charts.PieChart(
+//                      _getGenderData(),
+//                      animate: true,
+//                      animationDuration: Duration(milliseconds: 800),
+//                      defaultRenderer: new charts.ArcRendererConfig(
+//                          arcWidth: 30,startAngle: 60,
+//                          arcRendererDecorators: [new charts.ArcLabelDecorator()]
+//                      ),
+//                    ),
+//                  ),
 
                     Text(
                       "Age data",
@@ -572,7 +572,7 @@ class PieChart extends StatelessWidget {
                         animate: true,
                         animationDuration: Duration(milliseconds: 800),
                         defaultRenderer: new charts.ArcRendererConfig(
-                            arcWidth: 30,startAngle: 60,
+                            arcWidth: 40,startAngle: 60,
                             arcRendererDecorators: [new charts.ArcLabelDecorator()]
                         ),
                       ),

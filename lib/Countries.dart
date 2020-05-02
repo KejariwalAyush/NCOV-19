@@ -622,7 +622,7 @@ class PieChart extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 250,
+        height: 200,
         padding: EdgeInsets.all(10),
         child: Card(
           color: Colors.blueGrey[100],
@@ -653,7 +653,7 @@ class PieChart extends StatelessWidget {
                     animationDuration: Duration(milliseconds: 800),
                     defaultRenderer: new charts.ArcRendererConfig(
                         arcWidth: 200,
-                        startAngle: 49,
+                        startAngle: 84,
                         arcRendererDecorators: [
                           new charts.ArcLabelDecorator()
                         ]),
