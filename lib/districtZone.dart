@@ -260,8 +260,20 @@ class StatePage extends StatelessWidget {
                         ),
                       ),
                       Divider(height: 10,),
-                      LineChart2(allSpots,allSpots2,allSpots3,interval,firstDate,timeline),
-
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.blueGrey[300]),
+//                      height: 250,
+                        padding: EdgeInsets.all(10),
+                        child: Card(
+                          color: Colors.blueGrey[100],
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: LineChart2(allSpots,allSpots2,allSpots3,interval,firstDate,timeline),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
