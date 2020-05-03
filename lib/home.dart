@@ -53,7 +53,7 @@ class _FrontpgState extends State<Frontpg> {
             return <Widget>[
               SliverAppBar(
                 automaticallyImplyLeading: false,
-                expandedHeight: 200.0,
+                expandedHeight: 230.0,
                 floating: false,
                 pinned: true,
                 backgroundColor: Colors.redAccent,
@@ -67,7 +67,7 @@ class _FrontpgState extends State<Frontpg> {
                       child: Icon(
                         Icons.refresh,
                         color: Colors.white,
-                        size: 30,
+                        size: 25,
                       ),
                       onPressed: () {setState(() {
                         // ignore: unnecessary_statements
@@ -84,10 +84,10 @@ class _FrontpgState extends State<Frontpg> {
                         fontSize: 20.0,
                       )),
                   background: RotatedBox(
-                    quarterTurns: 5,
+                    quarterTurns: 0,
                     child: Image.asset(
-                      'assets/backround1.png',
-                      fit: BoxFit.cover,
+                      'assets/back.png',
+                      fit: BoxFit.fitWidth,
                     ),
                   ),
                 ),
