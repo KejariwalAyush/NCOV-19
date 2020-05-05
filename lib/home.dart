@@ -244,7 +244,7 @@ class _FrontpgState extends State<Frontpg> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         Text(
-                                          'Recovered',
+                                          'Recov.',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white60),
                                           textAlign: TextAlign.center,
@@ -409,7 +409,7 @@ class _FrontpgState extends State<Frontpg> {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: <Widget>[
                                         Text(
-                                          'Recovered',
+                                          'Recov.',
                                           style: TextStyle(
                                               fontSize: 20, color: Colors.white60),
                                           textAlign: TextAlign.center,

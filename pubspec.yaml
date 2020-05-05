@@ -31,7 +31,10 @@ dependencies:
   url_launcher:
   flutter_launcher_icons: ^0.7.0
   flutter_placeholder_textlines:
-#  firebase_database: 1.0.3
+  firebase_messaging: ^5.1.4
+  flutter_local_notifications:
+
+  #  firebase_database: 1.0.3
 #  path_provider: ^1.6.5
   flutter:
     sdk: flutter
