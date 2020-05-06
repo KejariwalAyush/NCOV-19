@@ -276,11 +276,11 @@ class _WorldDataState extends State<WorldData> {
                         wldCaseHist, wldRecovHist, wldDeathHist, tcasewld / 4,
                         firstCase, WorldData.timeline),
                     Divider(height: 10,),
-                    Center(child: Text('Select Country to see stats',
+                    Center(child: Text('Select Country\'s Name',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16),),),
                     Center(child: Text(
-                      'Countries list has been sorted acc. to its cases',
+                      'List sorted according to no. of cases',
                       style: TextStyle(fontSize: 14),),),
                     DropdownButton<String>(
                       value: dropdownValue,
