@@ -49,6 +49,10 @@ class _WorldDataState extends State<WorldData> {
 
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Scaffold(
         appBar: AppBar(
           title: Text("NCOV - 19",
@@ -92,7 +96,7 @@ class _WorldDataState extends State<WorldData> {
                           ]
                       ),
                     ),
-                    Divider(height: 20,),
+                    Divider(height: 10,),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -108,14 +112,14 @@ class _WorldDataState extends State<WorldData> {
                                 world['deaths'], world['todayDeaths']),
                           ],
                         ),
-                        Divider(height: 10,),
+//                        Divider(height: 10,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               DataCard2(
                                   'Recovered', world['recovered'], newrecovwld),
-                              Divider(height: 10,),
+//                              Divider(height: 10,),
                               DataCard2('Active', world['active'],
                                   int.parse(
                                       newcasecont[8].toString().replaceAll(
@@ -126,7 +130,7 @@ class _WorldDataState extends State<WorldData> {
                                       - newrecovwld),
                             ]
                         ),
-                        Divider(height: 10,),
+//                        Divider(height: 10,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,7 +140,7 @@ class _WorldDataState extends State<WorldData> {
                               DataCard('Tests', world['tests']),
                             ]
                         ),
-                        Divider(height: 10,),
+//                        Divider(height: 10,),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -150,7 +154,7 @@ class _WorldDataState extends State<WorldData> {
                         ),
                       ],
                     ),
-                    Divider(height: 10,),
+//                    Divider(height: 10,),
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -257,7 +261,7 @@ class _WorldDataState extends State<WorldData> {
                       ),
                     ),),
                     Divider(height: 5,),
-                    for(int i = 0; i < 6; i += 2)
+                    for(int i = 0; i < 6; orientation == 0 ? i += 2 : i += 3)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -271,7 +275,14 @@ class _WorldDataState extends State<WorldData> {
                               continent[i + 1]['deaths'],
                               continent[i + 1]['recovered'],
                               continent[i + 1]['active']),
+                          if(orientation != 0)
+                            ContinentCard(continent[i + 2]['continent'],
+                                continent[i + 2]['cases'],
+                                continent[i + 2]['deaths'],
+                                continent[i + 2]['recovered'],
+                                continent[i + 2]['active']),
                         ],),
+                    Divider(height: 5,),
                     LineChart1(
                         wldCaseHist, wldRecovHist, wldDeathHist, tcasewld / 4,
                         firstCase, WorldData.timeline),
@@ -321,11 +332,12 @@ class _WorldDataState extends State<WorldData> {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.vertical,
                         child: Column(children: <Widget>[
-                          Center(child: Text('Stats of Top 100 Countries',
+                          Center(child: Text('Stats of Top 50 Countries',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),)),
                           Center(child: Text(
-                            'Tap on Countries Name to know more!',
+                            'Tap on Countries Name to know more!\nOr search in above list.',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 14, color: Colors.blueGrey[700]),)),
                           DataTable(
@@ -340,7 +352,7 @@ class _WorldDataState extends State<WorldData> {
                               DataColumn(label: Text('Recovered'),),
                             ],
                             rows: [
-                              for(int i = 9; i <= 109; i++)
+                              for(int i = 9; i <= 59; i++)
                                 DataRow(
                                     cells: [
                                       DataCell(
@@ -537,83 +549,12 @@ class DataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 75.0,
-      width: 150,
-      decoration: new BoxDecoration(
-        color: new Color(0xFF333366),
-        shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(10.0),
-        boxShadow: <BoxShadow>[
-          new BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10.0,
-            offset: new Offset(0.0, 10.0),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-          Text('$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-        ],
-      ),
-    );
-  }
-}
-// ignore: must_be_immutable
-class DataCard2 extends StatelessWidget {
-  String txt,txt2;
-  var txtdata,txt2data;
-
-  DataCard2(this.txt,this.txtdata,this.txt2data);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 75.0,
-      width: 150,
-      decoration: new BoxDecoration(
-        color: new Color(0xFF333366),
-        shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(10.0),
-        boxShadow: <BoxShadow>[
-          new BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10.0,
-            offset: new Offset(0.0, 10.0),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-          Text('$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
-          Text('${txt2data.toString()!='0'?'+$txt2data':'N/A'}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
-//          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
-//            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
-        ],
-      ),
-    );
-  }
-}
-// ignore: must_be_immutable
-class ContinentCard extends StatelessWidget {
-  String continentName;
-  var cases,deaths,recovered,active;
-
-  ContinentCard(this.continentName,this.cases,this.deaths,this.recovered,this.active);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(children: <Widget>[
-      Container(
-        height: 125.0,
-        width: 150,
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(5),
+//        height: 75.0,
+//        width: 150,
         decoration: new BoxDecoration(
           color: new Color(0xFF333366),
           shape: BoxShape.rectangle,
@@ -630,21 +571,122 @@ class ContinentCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Text('$continentName',style: TextStyle(fontSize: 20,color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
-            Divider(height: 5,),
-            Text('Cases: $cases',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
-            Text('Recov.: $recovered',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
-            Text('Deaths: $deaths',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
-            Text('Active: $active',style: TextStyle(fontSize: 16,color: Colors.white60),textAlign: TextAlign.center,),
-            Divider(height: 2,),
-            //          Text('${txt2data!='0'?'+$txt2data':''}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
-            //          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
-            //            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+            Text('$txt', style: TextStyle(fontSize: 20, color: Colors.white60),
+              textAlign: TextAlign.center,),
+            Text(
+              '$txtdata', style: TextStyle(fontSize: 20, color: Colors.white),
+              textAlign: TextAlign.center,),
           ],
         ),
       ),
-      Divider(height: 10,),
-    ],);
+    );
+  }
+}
+// ignore: must_be_immutable
+class DataCard2 extends StatelessWidget {
+  String txt,txt2;
+  var txtdata,txt2data;
+
+  DataCard2(this.txt,this.txtdata,this.txt2data);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(5),
+//      height: 75.0,
+//      width: 150,
+        decoration: new BoxDecoration(
+          color: new Color(0xFF333366),
+          shape: BoxShape.rectangle,
+          borderRadius: new BorderRadius.circular(10.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.0,
+              offset: new Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text('$txt', style: TextStyle(fontSize: 20, color: Colors.white60),
+              textAlign: TextAlign.center,),
+            Text(
+              '$txtdata', style: TextStyle(fontSize: 20, color: Colors.white),
+              textAlign: TextAlign.center,),
+            Text('${txt2data.toString() != '0' ? '+$txt2data' : 'N/A'}',
+              style: TextStyle(fontSize: 16, color: Colors.redAccent),
+              textAlign: TextAlign.center,),
+//          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
+//            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+          ],
+        ),
+      ),
+    );
+  }
+}
+// ignore: must_be_immutable
+class ContinentCard extends StatelessWidget {
+  String continentName;
+  var cases,deaths,recovered,active;
+
+  ContinentCard(this.continentName,this.cases,this.deaths,this.recovered,this.active);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(10),
+          margin: EdgeInsets.all(5),
+//        height: 125.0,
+//        width: 150,
+          decoration: new BoxDecoration(
+            color: new Color(0xFF333366),
+            shape: BoxShape.rectangle,
+            borderRadius: new BorderRadius.circular(10.0),
+            boxShadow: <BoxShadow>[
+              new BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10.0,
+                offset: new Offset(0.0, 10.0),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Text('$continentName', style: TextStyle(fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              Divider(height: 5,),
+              Text('Cases: $cases',
+                style: TextStyle(fontSize: 16, color: Colors.white60),
+                textAlign: TextAlign.center,),
+              Text('Recov.: $recovered',
+                style: TextStyle(fontSize: 16, color: Colors.white60),
+                textAlign: TextAlign.center,),
+              Text('Deaths: $deaths',
+                style: TextStyle(fontSize: 16, color: Colors.white60),
+                textAlign: TextAlign.center,),
+              Text('Active: $active',
+                style: TextStyle(fontSize: 16, color: Colors.white60),
+                textAlign: TextAlign.center,),
+              Divider(height: 2,),
+              //          Text('${txt2data!='0'?'+$txt2data':''}',style: TextStyle(fontSize: 16,color: Colors.redAccent),textAlign: TextAlign.center,),
+              //          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
+              //            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+            ],
+          ),
+        ),
+//      Divider(height: 10,),
+      ],),
+    );
   }
 }
 // ignore: must_be_immutable
@@ -656,35 +698,50 @@ class DataCard3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 135.0,
-      width: 150,
-      decoration: new BoxDecoration(
-        color: new Color(0xFF333366),
-        shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(10.0),
-        boxShadow: <BoxShadow>[
-          new BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10.0,
-            offset: new Offset(0.0, 10.0),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Text('$txt',style: TextStyle(fontSize: 20,color: Colors.white60),textAlign: TextAlign.center,),
-          Text('$txtdata',style: TextStyle(fontSize: 18,color: Colors.white),textAlign: TextAlign.center,),
-          Text('${txt2data.toString()!='0'?'$txt2data':'N/A'}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
-          Text('Yesterday',style: TextStyle(fontSize: 14,color: Colors.white60),textAlign: TextAlign.center,),
-          Text('$txt3data',style: TextStyle(fontSize: 18,color: Colors.white),textAlign: TextAlign.center,),
-          Text('${txt4data.toString()!='0'?'+$txt4data':'N/A'}',style: TextStyle(fontSize: 12,color: Colors.redAccent),textAlign: TextAlign.center,),
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(5),
+//      height: 135.0,
+//      width: 150,
+        decoration: new BoxDecoration(
+          color: new Color(0xFF333366),
+          shape: BoxShape.rectangle,
+          borderRadius: new BorderRadius.circular(10.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.0,
+              offset: new Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Text('$txt', style: TextStyle(fontSize: 20, color: Colors.white60),
+              textAlign: TextAlign.center,),
+            Text(
+              '$txtdata', style: TextStyle(fontSize: 18, color: Colors.white),
+              textAlign: TextAlign.center,),
+            Text('${txt2data.toString() != '0' ? '$txt2data' : 'N/A'}',
+              style: TextStyle(fontSize: 12, color: Colors.redAccent),
+              textAlign: TextAlign.center,),
+            Text('Yesterday',
+              style: TextStyle(fontSize: 14, color: Colors.white60),
+              textAlign: TextAlign.center,),
+            Text(
+              '$txt3data', style: TextStyle(fontSize: 18, color: Colors.white),
+              textAlign: TextAlign.center,),
+            Text('${txt4data.toString() != '0' ? '+$txt4data' : 'N/A'}',
+              style: TextStyle(fontSize: 12, color: Colors.redAccent),
+              textAlign: TextAlign.center,),
 
 //          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
 //            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
-        ],
+          ],
+        ),
       ),
     );
   }

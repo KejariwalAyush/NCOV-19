@@ -1,18 +1,16 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/home.dart';
+import 'package:html/parser.dart';
+import 'package:http/http.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:splashscreen/splashscreen.dart';
-import 'dart:convert';
-
-import 'package:html/parser.dart';
-import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'data.dart';
@@ -93,7 +91,8 @@ DateTime now = new DateTime.now();
 var indiaData,newsData,worldData;
 
 class _SplashState extends State<Splash> {
- bool noInternet = false;
+  bool noInternet = false;
+
   @override
   void initState() {
     _getThingsOnStartup().then((value) async {
@@ -146,6 +145,7 @@ class _SplashState extends State<Splash> {
   Future _getThingsOnStartup() async {
     await Future.delayed(Duration(seconds: 0));
   }
+
   int sec = 15;
   var isLoading = false;
 
@@ -153,7 +153,8 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return noInternet?Center():SplashScreen(
-      seconds: 8,//isLoading?sec:1,
+      seconds: 11,
+      //isLoading?sec:1,
       navigateAfterSeconds:noInternet?Center():Frontpg(),
       title: new Text('NCOV-19\n A covid-19 tracker',textAlign: TextAlign.center,
         style: new TextStyle(
