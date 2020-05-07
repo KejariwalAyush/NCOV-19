@@ -97,6 +97,7 @@ class _WorldDataState extends State<WorldData> {
                       ),
                     ),
                     Divider(height: 10,),
+                    orientation == 0 ?
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -151,6 +152,45 @@ class _WorldDataState extends State<WorldData> {
                               DataCard('Deaths/Million',
                                   world['deathsPerOneMillion']),
                             ]
+                        ),
+                      ],
+                    )
+                        : Column(
+                      children: <Widget>[
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            DataCard4('Cases', tcasewld, '${newcasecont[8]}',
+                                world['cases'], world['todayCases']),
+//                            Divider(height: 10,),
+                            DataCard4('Deaths', deathwld, '${newdeathcont[8]}',
+                                world['deaths'], world['todayDeaths']),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Divider(height: 10,),
+                            DataCard2(
+                                'Recov.', world['recovered'], newrecovwld),
+//                              Divider(height: 10,),
+                            DataCard2('Active', world['active'],
+                                int.parse(
+                                    newcasecont[8].toString().replaceAll(
+                                        ',', '').replaceAll('+', ''))
+                                    - int.parse(
+                                    newdeathcont[8].toString().replaceAll(
+                                        ',', '').replaceAll('+', ''))
+                                    - newrecovwld),
+                            DataCard('Critical', world['critical']),
+                            DataCard('Tests', world['tests']),
+                            DataCard(
+                                'Cases/Million', world['casesPerOneMillion']),
+                            DataCard('Deaths/Million',
+                                world['deathsPerOneMillion']),
+                          ],
                         ),
                       ],
                     ),
@@ -738,7 +778,76 @@ class DataCard3 extends StatelessWidget {
     );
   }
 }
+// ignore: must_be_immutable
+class DataCard4 extends StatelessWidget {
+  String txt;
+  var txtdata, txt2data, txt3data, txt4data;
 
+  DataCard4(this.txt, this.txtdata, this.txt2data, this.txt3data,
+      this.txt4data);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(5),
+//      height: 135.0,
+//      width: 150,
+        decoration: new BoxDecoration(
+          color: new Color(0xFF333366),
+          shape: BoxShape.rectangle,
+          borderRadius: new BorderRadius.circular(10.0),
+          boxShadow: <BoxShadow>[
+            new BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.0,
+              offset: new Offset(0.0, 10.0),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text('Today $txt',
+                  style: TextStyle(fontSize: 20, color: Colors.white60),
+                  textAlign: TextAlign.center,),
+                Text(
+                  '$txtdata',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  textAlign: TextAlign.center,),
+                Text('${txt2data.toString() != '0' ? '$txt2data' : 'N/A'}',
+                  style: TextStyle(fontSize: 12, color: Colors.redAccent),
+                  textAlign: TextAlign.center,),
+//          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
+//            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+              ],
+            ),
+            Column(
+              children: <Widget>[
+                Text('Yesterday $txt',
+                  style: TextStyle(fontSize: 20, color: Colors.white60),
+                  textAlign: TextAlign.center,),
+                Text(
+                  '$txt3data',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  textAlign: TextAlign.center,),
+                Text('${txt4data.toString() != '0' ? '+$txt4data' : 'N/A'}',
+                  style: TextStyle(fontSize: 12, color: Colors.redAccent),
+                  textAlign: TextAlign.center,),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 class WorldMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
