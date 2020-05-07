@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_app/splash.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsData extends StatelessWidget {
   static const String fontName = 'Comfortaa';
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Scaffold(
       appBar: AppBar(
         title: Text("NCOV - 19",
@@ -44,7 +48,7 @@ class NewsData extends StatelessWidget {
                     ]
                 ),
               ),
-              Divider(height: 10,),
+              Divider(height: 5,),
               RichText(
                 text: TextSpan(
                     text: 'Long Press ',
@@ -58,82 +62,91 @@ class NewsData extends StatelessWidget {
                     ]
                 ),
               ),
-              Divider(height: 20,),
-//              newslist.length!=0?{
+              Divider(height: 5,),
               for (var news in newsAllData)
-              InkWell(
-                onLongPress: ()=>_launchURL(news['link']),
-                child:Column(
-                  children: <Widget>[
-                    Container(
-    //                  height: 75.0,
-                      width: double.maxFinite,
-                      padding: EdgeInsets.all(10),
-                      margin: EdgeInsets.all(5),
-                      decoration: new BoxDecoration(
-                        color: new Color(0xFF333366),
-                        shape: BoxShape.rectangle,
-                        borderRadius: new BorderRadius.circular(10.0),
-                        boxShadow: <BoxShadow>[
-                          new BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10.0,
-                            offset: new Offset(0.0, 10.0),
-                          ),
-                        ],
-                      ),
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Center(child: news['image']!=null?Image.network(news['image'],height: 170,):Icon(Icons.image,size: 100,),),
-                          RichText(
-                            text: TextSpan(
-                                text: '${news['date']}',
-                                style: TextStyle(fontFamily: fontName,
-                                    color: Colors.grey[400], fontSize: 15),
-                                children: <TextSpan>[
-                                  TextSpan(text: '\n${news['title']}',
-                                    style: TextStyle(
-                                        color: Colors.teal[200], fontSize: 20,fontWeight: FontWeight.bold),
-                                  ),
-                                  TextSpan(text: '\n${news['info']}',
-                                    style: TextStyle(
-                                        color: Colors.white70, fontSize: 16),
-                                  ),
-                                ]
+                InkWell(
+                  onLongPress: ()=>_launchURL(news['link']),
+                  child:Column(
+                    children: <Widget>[
+                      Container(
+                        //                  height: 75.0,
+                        width: double.maxFinite,
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.all(5),
+                        decoration: new BoxDecoration(
+                          color: new Color(0xFF333366),
+                          shape: BoxShape.rectangle,
+                          borderRadius: new BorderRadius.circular(10.0),
+                          boxShadow: <BoxShadow>[
+                            new BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 10.0,
+                              offset: new Offset(0.0, 10.0),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        child: orientation == 0 ?
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Center(child: news['image']!=null?Image.network(news['image'],height: 170,):Icon(Icons.image,size: 100,),),
+                            RichText(
+                              text: TextSpan(
+                                  text: '${news['date']}',
+                                  style: TextStyle(fontFamily: fontName,
+                                      color: Colors.grey[400], fontSize: 15),
+                                  children: <TextSpan>[
+                                    TextSpan(text: '\n${news['title']}',
+                                      style: TextStyle(
+                                          color: Colors.teal[200], fontSize: 20,fontWeight: FontWeight.bold),
+                                    ),
+                                    TextSpan(text: '\n${news['info']}',
+                                      style: TextStyle(
+                                          color: Colors.white70, fontSize: 16),
+                                    ),
+                                  ]
+                              ),
+                            ),
+                          ],
+                        )
+                            : Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(child: Center(
+                              child: news['image'] != null ? Image.network(
+                                news['image'], height: 170,) : Icon(
+                                Icons.image, size: 100,),)),
+                            Expanded(
+                              child: RichText(
+                                text: TextSpan(
+                                    text: '${news['date']}',
+                                    style: TextStyle(fontFamily: fontName,
+                                        color: Colors.grey[400], fontSize: 15),
+                                    children: <TextSpan>[
+                                      TextSpan(text: '\n${news['title']}',
+                                        style: TextStyle(
+                                            color: Colors.teal[200],
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      TextSpan(text: '\n${news['info']}',
+                                        style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 16),
+                                      ),
+                                    ]
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Divider(height: 2,),
-                ],
+                      Divider(height: 2,),
+                    ],
+                  ),
                 ),
-              ),//}:
-//              Material(
-//                borderRadius: BorderRadius.circular(10),
-//                elevation: 9,
-//                child: Container(
-//                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-//                  width: 300,
-//                  child: Row(
-//                    children: <Widget>[
-//                      Container(
-//                        margin: EdgeInsets.only(right: 16),
-//                        width: 70,
-//                        height: 70,
-//                        decoration: BoxDecoration(color: Colors.grey.withOpacity(.6), ),
-//                        child: Center(child: Icon(Icons.photo_size_select_actual, color: Colors.white, size: 38,),),
-//                      ),
-//                      Expanded(
-//                        child: PlaceholderLines(
-//                          count: 3,animate: true,
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                ),
-//              ),
               Center(
                 child: Text('NEWS Source : https://indianexpress.com/',textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 16),),

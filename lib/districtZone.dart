@@ -1,9 +1,8 @@
-
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/splash.dart';
 import 'package:flutter_app/worldstat.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'Countries.dart';
 
@@ -68,6 +67,10 @@ class StatePage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Scaffold(
       appBar: AppBar(
         title: Text("NCOV - 19",
@@ -117,33 +120,61 @@ class StatePage extends StatelessWidget {
                         ]
                     ),
                   ),
-                  Divider(height: 20,),
+                  Divider(height: 10,),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Row(
+                      orientation == 0 ?
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              DataCard2(
+                                  'Cases', cases, newstateData[stateIndex]),
+                              Divider(height: 10,),
+                              DataCard2(
+                                  'Deaths', deaths, newstateDeath[stateIndex]),
+                            ],
+                          ),
+                          Divider(height: 10,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              DataCard2('Recovered', recov,
+                                  newstateRecov[stateIndex]),
+                              Divider(height: 10,),
+                              DataCard2('Active', active,
+                                  '${newstateData[stateIndex] == '0' ? 'N/A'
+                                      : ' ${int.parse(
+                                      newstateData[stateIndex]) -
+                                      int.parse(newstateRecov[stateIndex]) -
+                                      int.parse(newstateDeath[stateIndex])}'}'),
+                            ],
+                          ),
+                          Divider(height: 10,),
+                        ],
+                      )
+                          : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          DataCard2('Cases',cases,newstateData[stateIndex]),
-                          Divider(height: 10,),
-                          DataCard2('Deaths',deaths,newstateDeath[stateIndex]),
+                          DataCard2('Cases', cases, newstateData[stateIndex]),
+                          DataCard2(
+                              'Deaths', deaths, newstateDeath[stateIndex]),
+
+                          DataCard2(
+                              'Recovered', recov, newstateRecov[stateIndex]),
+                          DataCard2('Active', active,
+                              '${newstateData[stateIndex] == '0' ? 'N/A'
+                                  : ' ${int.parse(newstateData[stateIndex]) -
+                                  int.parse(newstateRecov[stateIndex]) -
+                                  int.parse(newstateDeath[stateIndex])}'}'),
                         ],
                       ),
-                      Divider(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          DataCard2('Recovered',recov,newstateRecov[stateIndex]),
-                          Divider(height: 10,),
-                          DataCard2('Active',active,
-                              '${newstateData[stateIndex]=='0'?'N/A'
-                                  :' ${int.parse(newstateData[stateIndex])-int.parse(newstateRecov[stateIndex])-int.parse(newstateDeath[stateIndex])}'}'),
-                        ],
-                      ),
-                      Divider(height: 10,),
                       if(cases!=recov && cases!=active && cases!=deaths)
                         PieChart(),
                       Divider(height: 10,),
@@ -171,35 +202,35 @@ class StatePage extends StatelessWidget {
                               rows: [
                                 for(int j=0;j<distdata.length;j++)
                                   if(distdata[j]['statecode'].toString().compareTo(stateCode)==0)
-                                for(var i in distdata[j]['districtData'])
-                                  DataRow(
-                                    cells:[
-                                      DataCell(
-                                        RichText(
-                                          text: TextSpan(
-                                            text: '${i['district']}',
-                                            style: TextStyle(fontFamily: fontName,
-                                                color: Colors.deepPurple),
+                                    for(var i in distdata[j]['districtData'])
+                                      DataRow(
+                                        cells:[
+                                          DataCell(
+                                            RichText(
+                                              text: TextSpan(
+                                                text: '${i['district']}',
+                                                style: TextStyle(fontFamily: fontName,
+                                                    color: Colors.deepPurple),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                      DataCell(RichText(
-                                        text: TextSpan(
-                                            text: '${i['confirmed']}',
-                                            style: TextStyle(fontFamily: fontName,
-                                                color: Colors.black),
-                                            children: <TextSpan>[
-                                              TextSpan(text: '${i['delta']['confirmed']==0?'':' +${i['delta']['confirmed']}'}',
-                                                style: TextStyle(
-                                                    color: Colors.red, fontSize: 12),
-                                              )
-                                            ]
-                                        ),
-                                      ),),
+                                          DataCell(RichText(
+                                            text: TextSpan(
+                                                text: '${i['confirmed']}',
+                                                style: TextStyle(fontFamily: fontName,
+                                                    color: Colors.black),
+                                                children: <TextSpan>[
+                                                  TextSpan(text: '${i['delta']['confirmed']==0?'':' +${i['delta']['confirmed']}'}',
+                                                    style: TextStyle(
+                                                        color: Colors.red, fontSize: 12),
+                                                  )
+                                                ]
+                                            ),
+                                          ),),
 
-                                    ],
+                                        ],
 //                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
-                                  ),
+                                      ),
                               ],
                             ),
                           ),
@@ -231,29 +262,29 @@ class StatePage extends StatelessWidget {
                                 for(var j in zone['zones'])
                                   if(j['state'].toString().toLowerCase().compareTo(stateName.toLowerCase())==0)
 //                                    for(var i in distdata[j])
-                                      DataRow(
-                                        cells:[
-                                          DataCell(
-                                            RichText(
-                                              text: TextSpan(
-                                                text: '${j['district']}',
-                                                style: TextStyle(fontFamily: fontName,
-                                                    color: Colors.deepPurple),
-                                              ),
+                                    DataRow(
+                                      cells:[
+                                        DataCell(
+                                          RichText(
+                                            text: TextSpan(
+                                              text: '${j['district']}',
+                                              style: TextStyle(fontFamily: fontName,
+                                                  color: Colors.deepPurple),
                                             ),
                                           ),
-                                          DataCell(RichText(
-                                            text: TextSpan(
-                                                text: '${j['zone']}',
-                                                style: TextStyle(fontFamily: fontName,
-                                                    color: j['zone']=='Orange'?Colors.orange[600]
-                                                        :j['zone']=='Red'?Colors.red:Colors.lightGreen[300]),
-                                            ),
-                                          ),),
+                                        ),
+                                        DataCell(RichText(
+                                          text: TextSpan(
+                                            text: '${j['zone']}',
+                                            style: TextStyle(fontFamily: fontName,
+                                                color: j['zone']=='Orange'?Colors.orange[600]
+                                                    :j['zone']=='Red'?Colors.red:Colors.lightGreen[300]),
+                                          ),
+                                        ),),
 
-                                        ],
+                                      ],
 //                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
-                                      ),
+                                    ),
                               ],
                             ),
                           ),

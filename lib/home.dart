@@ -53,10 +53,15 @@ class _FrontpgState extends State<Frontpg> {
 
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Scaffold(
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
+              orientation == 0 ?
               SliverAppBar(
                 automaticallyImplyLeading: false,
                 expandedHeight: 230.0,
@@ -98,6 +103,42 @@ class _FrontpgState extends State<Frontpg> {
                       fit: BoxFit.fitWidth,
                     ),
                   ),
+                ),
+              )
+                  : SliverAppBar(
+                automaticallyImplyLeading: false,
+//                expandedHeight: 50.0,
+                floating: false,
+                pinned: true,
+                backgroundColor: Colors.redAccent,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(25),
+                        bottomRight: Radius.circular(25))),
+                elevation: 30,
+                actions: <Widget>[
+                  FlatButton(
+                      child: Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                        size: 25,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          // ignore: unnecessary_statements
+                          RefreshIndicatorMode.refresh;
+                          _fetch();
+                        });
+                      }),
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Text("NCOV - 19",
+                      style: TextStyle(
+                        fontFamily: Frontpg.fontName,
+                        color: Colors.white,
+                        fontSize: 20.0,
+                      )),
                 ),
               ),
             ];
@@ -170,405 +211,824 @@ class _FrontpgState extends State<Frontpg> {
                           style: TextStyle(fontSize: 14, color: Colors.black54),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => India()));
-                          print('Tapped on India');
-                        },
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.only(top: 10),
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                          width: double.maxFinite,
+                      orientation == 0 ?
+                      Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      India()));
+                              print('Tapped on India');
+                            },
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              padding: EdgeInsets.only(top: 10),
+                              margin: EdgeInsets.only(
+                                  top: 10, left: 10, right: 10),
+                              width: double.maxFinite,
 //                          height: 175,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueGrey[100]),
-                          child: Column(
-                            children: <Widget>[
-                              RichText(
-                                text: TextSpan(
-                                    text: 'INDIA',
-                                    style: TextStyle(
-                                        fontFamily: Frontpg.fontName,
-                                        color: Colors.blue,
-                                        fontSize: 28),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: ' Stats',
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey[100]),
+                              child: Column(
+                                children: <Widget>[
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'INDIA',
                                         style: TextStyle(
-                                            color: Colors.black38,
-                                            fontSize: 20),
-                                      )
-                                    ]),
-                              ),
+                                            fontFamily: Frontpg.fontName,
+                                            color: Colors.blue,
+                                            fontSize: 28),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ' Stats',
+                                            style: TextStyle(
+                                                color: Colors.black38,
+                                                fontSize: 20),
+                                          )
+                                        ]),
+                                  ),
 //                              Divider(
 //                                height: 10,
 //                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceEvenly,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Container(
 //                                    height: 105.0,
 //                                    width: 105,
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.all(5),
-                                      decoration: new BoxDecoration(
-                                        color: new Color(0xFF333366),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: new Offset(0.0, 10.0),
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.all(5),
+                                          decoration: new BoxDecoration(
+                                            color: new Color(0xFF333366),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                            new BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: new Offset(0.0, 10.0),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(
-                                            'Cases',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white60),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            '$tcaseind',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                'Cases',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white60),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                '$tcaseind',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
 //                                        if(newtcaseind!=0)
-                                          Text(
-                                            '${newtcaseind == 0
-                                                ? 'N/A'
-                                                : '+$newtcaseind'}',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.red),
-                                            textAlign: TextAlign.center,
+                                              Text(
+                                                '${newtcaseind == 0
+                                                    ? 'N/A'
+                                                    : '+$newtcaseind'}',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.red),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.all(5),
+//                                    height: 105.0,
+//                                    width: 105,
+                                          decoration: new BoxDecoration(
+                                            color: new Color(0xFF333366),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                            new BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: new Offset(0.0, 10.0),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                'Recov.',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white60),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                '$recovind',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
+//                                        if(newtcaseind!=0)
+                                              Text(
+                                                '${newrecovind == 0
+                                                    ? 'N/A'
+                                                    : '+$newrecovind'}',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.red),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.all(5),
+//                                    height: 105.0,
+//                                    width: 105,
+                                          decoration: new BoxDecoration(
+                                            color: new Color(0xFF333366),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                            new BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: new Offset(0.0, 10.0),
+                                              ),
+                                            ],
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                'Deaths',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white60),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                '$deathind',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
+//                                        if(newtcaseind!=0)
+                                              Text(
+                                                '${newdeathind == 0
+                                                    ? 'N/A'
+                                                    : '+$newdeathind'}',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.red),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.all(5),
-//                                    height: 105.0,
-//                                    width: 105,
-                                      decoration: new BoxDecoration(
-                                        color: new Color(0xFF333366),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: new Offset(0.0, 10.0),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(
-                                            'Recov.',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white60),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            '$recovind',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-//                                        if(newtcaseind!=0)
-                                          Text(
-                                            '${newrecovind == 0
-                                                ? 'N/A'
-                                                : '+$newrecovind'}',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.red),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.all(5),
-//                                    height: 105.0,
-//                                    width: 105,
-                                      decoration: new BoxDecoration(
-                                        color: new Color(0xFF333366),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: new Offset(0.0, 10.0),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(
-                                            'Deaths',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white60),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            '$deathind',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
-//                                        if(newtcaseind!=0)
-                                          Text(
-                                            '${newdeathind == 0
-                                                ? 'N/A'
-                                                : '+$newdeathind'}',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.red),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                  Divider(
+                                    height: 7,
                                   ),
                                 ],
                               ),
-                              Divider(
-                                height: 7,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(
-                                  builder: (context) => WorldData()));
-                          print('Tapped on World');
-                        },
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.only(top: 10),
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                          width: double.maxFinite,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WorldData()));
+                              print('Tapped on World');
+                            },
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              padding: EdgeInsets.only(top: 10),
+                              margin: EdgeInsets.only(
+                                  top: 10, left: 10, right: 10),
+                              width: double.maxFinite,
 //                          height: 175,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueGrey[100]),
-                          child: Column(
-                            children: <Widget>[
-                              RichText(
-                                text: TextSpan(
-                                    text: 'World',
-                                    style: TextStyle(
-                                        fontFamily: Frontpg.fontName,
-                                        color: Colors.blue,
-                                        fontSize: 28),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: ' Stats',
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey[100]),
+                              child: Column(
+                                children: <Widget>[
+                                  RichText(
+                                    text: TextSpan(
+                                        text: 'World',
                                         style: TextStyle(
-                                            color: Colors.black38,
-                                            fontSize: 20),
-                                      )
-                                    ]),
-                              ),
+                                            fontFamily: Frontpg.fontName,
+                                            color: Colors.blue,
+                                            fontSize: 28),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ' Stats',
+                                            style: TextStyle(
+                                                color: Colors.black38,
+                                                fontSize: 20),
+                                          )
+                                        ]),
+                                  ),
 //                              Divider(
 //                                height: 10,
 //                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment
-                                    .spaceEvenly,
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.all(5),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
+                                    mainAxisAlignment: MainAxisAlignment
+                                        .spaceEvenly,
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.all(5),
 //                                    height: 105.0,
 //                                    width: 105,
-                                      decoration: new BoxDecoration(
-                                        color: new Color(0xFF333366),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: new Offset(0.0, 10.0),
+                                          decoration: new BoxDecoration(
+                                            color: new Color(0xFF333366),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                            new BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: new Offset(0.0, 10.0),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(
-                                            'Cases',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white60),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            '$tcasewld',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                'Cases',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white60),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                '$tcasewld',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
 //                                        if(newcasecont[8]!=0)
 //                                        Text('${newcasecont[8]==0?'N/A':'${newcasecont[8]}'}',
 //                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
-                                        ],
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.all(5),
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.all(5),
 //                                    height: 105.0,
 //                                    width: 105,
-                                      decoration: new BoxDecoration(
-                                        color: new Color(0xFF333366),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: new Offset(0.0, 10.0),
+                                          decoration: new BoxDecoration(
+                                            color: new Color(0xFF333366),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                            new BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: new Offset(0.0, 10.0),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(
-                                            'Recov.',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white60),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            '$recovwld',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                'Recov.',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white60),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                '$recovwld',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
 //                                        if(newcasecont[8]!=0)
 //                                        Text('${newrecovwld==0?'N/A':'$newrecovwld'}',
 //                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 //                                        Text('${newdeathcont[8]}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
-                                        ],
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      margin: EdgeInsets.all(5),
+                                      Expanded(
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          margin: EdgeInsets.all(5),
 //                                    height: 105.0,
 //                                    width: 105,
-                                      decoration: new BoxDecoration(
-                                        color: new Color(0xFF333366),
-                                        shape: BoxShape.rectangle,
-                                        borderRadius:
-                                        new BorderRadius.circular(8.0),
-                                        boxShadow: <BoxShadow>[
-                                          new BoxShadow(
-                                            color: Colors.black12,
-                                            blurRadius: 10.0,
-                                            offset: new Offset(0.0, 10.0),
+                                          decoration: new BoxDecoration(
+                                            color: new Color(0xFF333366),
+                                            shape: BoxShape.rectangle,
+                                            borderRadius:
+                                            new BorderRadius.circular(8.0),
+                                            boxShadow: <BoxShadow>[
+                                              new BoxShadow(
+                                                color: Colors.black12,
+                                                blurRadius: 10.0,
+                                                offset: new Offset(0.0, 10.0),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Text(
-                                            'Deaths',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white60),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          Text(
-                                            '$deathwld',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white),
-                                            textAlign: TextAlign.center,
-                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Text(
+                                                'Deaths',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white60),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                              Text(
+                                                '$deathwld',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
 //                                        if(newcasecont[8]!=0)
 //                                        Text('${newdeathcont[8]==0?'N/A':'${newdeathcont[8]}'}',
 //                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
 //                                        Text('${newdeathcont[8]==0?'':'${newdeathcont[8]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
-                                        ],
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
+                                  ),
+                                  Divider(
+                                    height: 7,
                                   ),
                                 ],
                               ),
-                              Divider(
-                                height: 7,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
+                      )
+                          : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (context) => India()));
+                                print('Tapped on India');
+                              },
+                              child: Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.only(top: 10),
+                                margin: EdgeInsets.only(
+                                    top: 10, left: 5, right: 5),
+                                width: double.maxFinite,
+                                height: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blueGrey[100]),
+                                child: Column(
+                                  children: <Widget>[
+                                    RichText(
+                                      text: TextSpan(
+                                          text: 'INDIA',
+                                          style: TextStyle(
+                                              fontFamily: Frontpg.fontName,
+                                              color: Colors.blue,
+                                              fontSize: 28),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: ' Stats',
+                                              style: TextStyle(
+                                                  color: Colors.black38,
+                                                  fontSize: 20),
+                                            )
+                                          ]),
+                                    ),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .center,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceEvenly,
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Container(
+                                            height: 105.0,
+//                                            width: 105,
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
+                                            decoration: new BoxDecoration(
+                                              color: new Color(0xFF333366),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                              boxShadow: <BoxShadow>[
+                                                new BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 10.0,
+                                                  offset: new Offset(0.0, 10.0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  'Cases',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white60),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  '$tcaseind',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+//                                        if(newtcaseind!=0)
+                                                Text(
+                                                  '${newtcaseind == 0
+                                                      ? 'N/A'
+                                                      : '+$newtcaseind'}',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.red),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
+                                            height: 105.0,
+//                                            width: 105,
+                                            decoration: new BoxDecoration(
+                                              color: new Color(0xFF333366),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                              boxShadow: <BoxShadow>[
+                                                new BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 10.0,
+                                                  offset: new Offset(0.0, 10.0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  'Recov.',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white60),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  '$recovind',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+//                                        if(newtcaseind!=0)
+                                                Text(
+                                                  '${newrecovind == 0
+                                                      ? 'N/A'
+                                                      : '+$newrecovind'}',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.red),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
+                                            height: 105.0,
+//                                            width: 105,
+                                            decoration: new BoxDecoration(
+                                              color: new Color(0xFF333366),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                              boxShadow: <BoxShadow>[
+                                                new BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 10.0,
+                                                  offset: new Offset(0.0, 10.0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  'Deaths',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white60),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  '$deathind',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+//                                        if(newtcaseind!=0)
+                                                Text(
+                                                  '${newdeathind == 0
+                                                      ? 'N/A'
+                                                      : '+$newdeathind'}',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.red),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      height: 7,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WorldData()));
+                                print('Tapped on World');
+                              },
+                              child: Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.only(top: 10),
+                                margin: EdgeInsets.only(
+                                    top: 10, left: 5, right: 5),
+                                width: double.maxFinite,
+                                height: 170,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blueGrey[100]),
+                                child: Column(
+                                  children: <Widget>[
+                                    RichText(
+                                      text: TextSpan(
+                                          text: 'World',
+                                          style: TextStyle(
+                                              fontFamily: Frontpg.fontName,
+                                              color: Colors.blue,
+                                              fontSize: 28),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: ' Stats',
+                                              style: TextStyle(
+                                                  color: Colors.black38,
+                                                  fontSize: 20),
+                                            )
+                                          ]),
+                                    ),
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .center,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceEvenly,
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
+                                            height: 105.0,
+//                                            width: 105,
+                                            decoration: new BoxDecoration(
+                                              color: new Color(0xFF333366),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                              boxShadow: <BoxShadow>[
+                                                new BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 10.0,
+                                                  offset: new Offset(0.0, 10.0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  'Cases',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white60),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  '$tcasewld',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+//                                        if(newcasecont[8]!=0)
+//                                        Text('${newcasecont[8]==0?'N/A':'${newcasecont[8]}'}',
+//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
+                                            height: 105.0,
+//                                            width: 105,
+                                            decoration: new BoxDecoration(
+                                              color: new Color(0xFF333366),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                              boxShadow: <BoxShadow>[
+                                                new BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 10.0,
+                                                  offset: new Offset(0.0, 10.0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  'Recov.',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white60),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  '$recovwld',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+//                                        if(newcasecont[8]!=0)
+//                                        Text('${newrecovwld==0?'N/A':'$newrecovwld'}',
+//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                        Text('${newdeathcont[8]}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            margin: EdgeInsets.all(5),
+                                            height: 105.0,
+//                                            width: 105,
+                                            decoration: new BoxDecoration(
+                                              color: new Color(0xFF333366),
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                              new BorderRadius.circular(8.0),
+                                              boxShadow: <BoxShadow>[
+                                                new BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 10.0,
+                                                  offset: new Offset(0.0, 10.0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                              children: <Widget>[
+                                                Text(
+                                                  'Deaths',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white60),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                Text(
+                                                  '$deathwld',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      color: Colors.white),
+                                                  textAlign: TextAlign.center,
+                                                ),
+//                                        if(newcasecont[8]!=0)
+//                                        Text('${newdeathcont[8]==0?'N/A':'${newdeathcont[8]}'}',
+//                                          style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+//                                        Text('${newdeathcont[8]==0?'':'${newdeathcont[8]}'}',style: TextStyle(fontSize: 15,color: Colors.red),textAlign: TextAlign.center,),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      height: 7,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       InkWell(
                         onTap: () {
@@ -577,21 +1037,96 @@ class _FrontpgState extends State<Frontpg> {
                                   builder: (context) => NewsData()));
                           print('Tapped on News');
                         },
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              alignment: Alignment.topCenter,
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.only(
-                                  top: 10, left: 10, right: 10),
-                              width: double.maxFinite,
+                        child: Container(
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(
+                              top: 10, left: 10, right: 10),
+                          width: double.maxFinite,
 //                  height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Colors.blueGrey[100]),
-                              child: Column(
-                                children: <Widget>[
-                                  RichText(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.blueGrey[100]),
+                          child: orientation == 0 ?
+                          Column(
+                            children: <Widget>[
+                              RichText(
+                                text: TextSpan(
+                                    text: 'NEWS',
+                                    style: TextStyle(
+                                        fontFamily: Frontpg.fontName,
+                                        color: Colors.blue,
+                                        fontSize: 28),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: ' Headlines',
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 20),
+                                      ),
+                                      TextSpan(
+                                        text: '\nTap to know more!',
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 14),
+                                      ),
+                                    ]),
+                                textAlign: TextAlign.center,
+                              ),
+                              Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.only(top: 10),
+                                margin: EdgeInsets.only(
+                                    top: 10, left: 10, right: 10),
+                                width: double.maxFinite,
+//                          height: 175,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blueGrey[100]),
+                                child: Column(
+                                  children: <Widget>[
+                                    for (int i = 0; i < 5; i++)
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          RichText(
+                                            text: TextSpan(
+                                                text: '${i + 1}. ',
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                    Frontpg.fontName,
+                                                    color: Colors.blue,
+                                                    fontSize: 16),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text:
+                                                    '${newsAllData[i]['title']}.',
+                                                    style: TextStyle(
+                                                      color: Colors.black54,
+                                                      fontSize: 16,
+                                                    ),
+                                                  )
+                                                ]),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                          Divider(
+                                            height: 5,
+                                          ),
+                                        ],
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                              : Row(
+                            children: <Widget>[
+                              Expanded(flex: 1,
+                                child: RotatedBox(
+                                  child: RichText(
                                     text: TextSpan(
                                         text: 'NEWS',
                                         style: TextStyle(
@@ -614,138 +1149,276 @@ class _FrontpgState extends State<Frontpg> {
                                         ]),
                                     textAlign: TextAlign.center,
                                   ),
-                                  Container(
-                                    alignment: Alignment.topCenter,
-                                    padding: EdgeInsets.only(top: 10),
-                                    margin: EdgeInsets.only(
-                                        top: 10, left: 10, right: 10),
-                                    width: double.maxFinite,
-//                          height: 175,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.blueGrey[100]),
-                                    child: Column(
-                                      children: <Widget>[
-                                        for (int i = 0; i < 5; i++)
-                                          Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: <Widget>[
-                                          RichText(
-                                            text: TextSpan(
-                                                text: '${i + 1}. ',
-                                                style: TextStyle(
-                                                    fontFamily:
-                                                    Frontpg.fontName,
-                                                    color: Colors.blue,
-                                                    fontSize: 16),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                    text:
-                                                    '${newsAllData[i]['title']}.',
-                                                    style: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 16,
-                                                    ),
-                                                  )
-                                                ]),
-                                            textAlign: TextAlign.justify,
-                                          ),
-                                              Divider(
-                                                height: 5,
-                                          ),
-                                            ],
-                                          ),
-                                  ],
-                                    ),
-                                  ),
-                                ],
+                                  quarterTurns: 135,
+                                ),
                               ),
-                            )
-                          ],
+                              Expanded(flex: 7,
+                                child: Container(
+                                  alignment: Alignment.topCenter,
+//                                  padding: EdgeInsets.only(top: 10),
+                                  margin: EdgeInsets.all(5),
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.blueGrey[100]),
+                                  child: Column(
+                                    children: <Widget>[
+                                      for (int i = 0; i < 5; i++)
+                                        Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            RichText(
+                                              text: TextSpan(
+                                                  text: '${i + 1}. ',
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                      Frontpg.fontName,
+                                                      color: Colors.blue,
+                                                      fontSize: 16),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text:
+                                                      '${newsAllData[i]['title']}.',
+                                                      style: TextStyle(
+                                                        color: Colors.black54,
+                                                        fontSize: 16,
+                                                      ),
+                                                    )
+                                                  ]),
+                                              textAlign: TextAlign.justify,
+                                            ),
+                                            Divider(
+                                              height: 5,
+                                            ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Expanded(flex: 1,
+                                child: RotatedBox(
+                                  child: RichText(
+                                    text: TextSpan(
+                                        text: 'NEWS',
+                                        style: TextStyle(
+                                            fontFamily: Frontpg.fontName,
+                                            color: Colors.blue,
+                                            fontSize: 28),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: ' Headlines',
+                                            style: TextStyle(
+                                                color: Colors.black38,
+                                                fontSize: 20),
+                                          ),
+                                          TextSpan(
+                                            text: '\nTap to know more!',
+                                            style: TextStyle(
+                                                color: Colors.black38,
+                                                fontSize: 14),
+                                          ),
+                                        ]),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  quarterTurns: 45,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(
-                                  builder: (context) => helpPage()));
-                          print('Tapped on HelpLine');
-                        },
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                          width: double.maxFinite,
+                      orientation == 0 ?
+                      Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                      builder: (context) => helpPage()));
+                              print('Tapped on HelpLine');
+                            },
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(
+                                  top: 10, left: 10, right: 10),
+                              width: double.maxFinite,
 //                  height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueGrey[100]),
-                          child: RichText(
-                            text: TextSpan(
-                                text: 'HELPLINE',
-                                style: TextStyle(
-                                    fontFamily: Frontpg.fontName,
-                                    color: Colors.blue,
-                                    fontSize: 28),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: ' Numbers',
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey[100]),
+                              child: RichText(
+                                text: TextSpan(
+                                    text: 'HELPLINE',
                                     style: TextStyle(
-                                        color: Colors.black38, fontSize: 20),
-                                  )
-                                ]),
+                                        fontFamily: Frontpg.fontName,
+                                        color: Colors.blue,
+                                        fontSize: 28),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: ' Numbers',
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 20),
+                                      )
+                                    ]),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(
-                                  builder: (context) => Symptoms()));
-                          print('Tapped on Symptoms');
-                        },
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                          width: double.maxFinite,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Symptoms()));
+                              print('Tapped on Symptoms');
+                            },
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(
+                                  top: 10, left: 10, right: 10),
+                              width: double.maxFinite,
 //                  height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueGrey[100]),
-                          child: Text(
-                            'Symptoms',
-                            style: TextStyle(fontSize: 28, color: Colors.blue),
-                            textAlign: TextAlign.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey[100]),
+                              child: Text(
+                                'Symptoms',
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.blue),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Preventions()));
-                          print('Tapped on Precautions');
-                        },
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-                          width: double.maxFinite,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Preventions()));
+                              print('Tapped on Precautions');
+                            },
+                            child: Container(
+                              alignment: Alignment.topCenter,
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(
+                                  top: 10, left: 10, right: 10),
+                              width: double.maxFinite,
 //                  height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueGrey[100]),
-                          child: Text(
-                            'Precautions',
-                            style: TextStyle(fontSize: 28, color: Colors.blue),
-                            textAlign: TextAlign.center,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey[100]),
+                              child: Text(
+                                'Precautions',
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.blue),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
+                      )
+                          : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(flex: 2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (context) => helpPage()));
+                                print('Tapped on HelpLine');
+                              },
+                              child: Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(
+                                    top: 5, left: 10, right: 5, bottom: 5),
+                                width: double.maxFinite,
+//                  height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blueGrey[100]),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'HELPLINE',
+                                      style: TextStyle(
+                                          fontFamily: Frontpg.fontName,
+                                          color: Colors.blue,
+                                          fontSize: 25),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: ' Numbers',
+                                          style: TextStyle(
+                                              color: Colors.black38,
+                                              fontSize: 18),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Symptoms()));
+                                print('Tapped on Symptoms');
+                              },
+                              child: Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(
+                                    top: 5, left: 5, right: 5, bottom: 5),
+                                width: double.maxFinite,
+//                  height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blueGrey[100]),
+                                child: Text(
+                                  'Symptoms',
+                                  style: TextStyle(
+                                      fontSize: 25, color: Colors.blue),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(flex: 1,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Preventions()));
+                                print('Tapped on Precautions');
+                              },
+                              child: Container(
+                                alignment: Alignment.topCenter,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.only(
+                                    top: 5, left: 5, right: 10, bottom: 5),
+                                width: double.maxFinite,
+//                  height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.blueGrey[100]),
+                                child: Text(
+                                  'Precautions',
+                                  style: TextStyle(
+                                      fontSize: 25, color: Colors.blue),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Divider(),
                       Center(

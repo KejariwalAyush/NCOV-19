@@ -450,14 +450,6 @@ class _WorldDataState extends State<WorldData> {
                         ],),
                       ),
                     ),
-//                    Divider(),
-//                    Center(child: Text('Pinch-IN/OUT to zoom-in/out'),),
-//                    PhotoView(
-//                      enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
-//                      imageProvider: NetworkImage(
-//                        'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Trakectproes-Covid-confirmed-cases-since-100th-case.svg/1280px-Trakectproes-Covid-confirmed-cases-since-100th-case.svg.png',),
-//                      backgroundDecoration: BoxDecoration(color: Colors.white70),
-//                    ),
                   ],
                 ),
               )

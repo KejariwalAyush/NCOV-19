@@ -127,8 +127,9 @@ class _IndiaState extends State<India> {
                     ),
 
                     Divider(
-                      height: 20,
+                      height: 10,
                     ),
+                    orientation == 0 ?
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -144,9 +145,9 @@ class _IndiaState extends State<India> {
                             DataCard2('Deaths', deathind, newdeathind),
                           ],
                         ),
-                        Divider(
-                          height: 10,
-                        ),
+//                        Divider(
+//                          height: 10,
+//                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -164,13 +165,25 @@ class _IndiaState extends State<India> {
                           height: 10,
                         ),
                       ],
+                    )
+                        : Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        DataCard2('Cases', tcaseind, newtcaseind),
+                        DataCard2('Deaths', deathind, newdeathind),
+                        DataCard2('Recovered', recovind, newrecovind),
+                        DataCard2('Active', actcaseind,
+                            '${newtcaseind == 0 ? 'N/A' : ' ${newtcaseind -
+                                newdeathind - newrecovind}'}'),
+                      ],
                     ),
                     Divider(
-                      height: 10,
+                      height: 5,
                     ),
                     PieChart(),
                     Divider(
-                      height: 10,
+                      height: 5,
                     ),
                     Center(
                         child: RichText(
@@ -408,12 +421,6 @@ class _IndiaState extends State<India> {
                                 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
                                 fit: BoxFit.fitWidth,
                               ),
-//                          PhotoView(
-//                            enableRotation: false,basePosition: Alignment.center,tightMode: true,//minScale: 10,
-//                            imageProvider: NetworkImage(
-//                              'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',),
-//                              backgroundDecoration: BoxDecoration(color: Colors.blueGrey[100]),
-//                          ),
                             ),
                           ),
                         ],

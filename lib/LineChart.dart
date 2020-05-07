@@ -235,55 +235,54 @@ class _LineChart1State extends State<LineChart1> {
                     .size
                     .width,
 //                height: 200,
-                child: Expanded(
-                  child: LineChart(
-                    LineChartData(
+                child: LineChart(
+                  LineChartData(
 //                    showingTooltipIndicators: showIndexes.map((index) {
 //                      return ShowingTooltipIndicators(index, [
 //                        LineBarSpot(
 //                            tooltipsOnBar, lineBarsData.indexOf(tooltipsOnBar), tooltipsOnBar.spots[index]),
 //                      ]);
 //                    }).toList(),
-                      lineTouchData: LineTouchData(
-                        enabled: true,
-                        getTouchedSpotIndicator:
-                            (LineChartBarData barData, List<int> spotIndexes) {
-                          return spotIndexes.map((index) {
-                            return TouchedSpotIndicatorData(
-                              FlLine(
-                                color: Colors.pink,
-                              ),
-                              FlDotData(
-                                show: true,
-                                dotSize: 2,
-                                strokeWidth: 2,
+                    lineTouchData: LineTouchData(
+                      enabled: true,
+                      getTouchedSpotIndicator:
+                          (LineChartBarData barData, List<int> spotIndexes) {
+                        return spotIndexes.map((index) {
+                          return TouchedSpotIndicatorData(
+                            FlLine(
+                              color: Colors.pink,
+                            ),
+                            FlDotData(
+                              show: true,
+                              dotSize: 2,
+                              strokeWidth: 2,
 //                    getStrokeColor: (spot, percent, barData) => Colors.black,
-                                getDotColor: (spot, percent, barData) {
-                                  return lerpGradient(barData.colors,
-                                      barData.colorStops, percent / 100);
-                                },
-                              ),
-                            );
-                          }).toList();
-                        },
-                        touchTooltipData: LineTouchTooltipData(
-                          tooltipBgColor: Colors.redAccent,
-                          tooltipRoundedRadius: 10,
-                          getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
-                            return lineBarsSpot.map((lineBarSpot) {
-                              return LineTooltipItem(
-                                lineBarSpot.y.toString().split('.')[0] +
-                                    ': ' +
-                                    '${widget.firstCase
-                                        .add(Duration(days: int.parse(
-                                        lineBarSpot.x.toString().split(
-                                            '.')[0])))
-                                        .month}/' +
-                                    '${widget.firstCase
-                                        .add(Duration(days: int.parse(
-                                        lineBarSpot.x.toString().split(
-                                            '.')[0])))
-                                        .day}',
+                              getDotColor: (spot, percent, barData) {
+                                return lerpGradient(barData.colors,
+                                    barData.colorStops, percent / 100);
+                              },
+                            ),
+                          );
+                        }).toList();
+                      },
+                      touchTooltipData: LineTouchTooltipData(
+                        tooltipBgColor: Colors.redAccent,
+                        tooltipRoundedRadius: 10,
+                        getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+                          return lineBarsSpot.map((lineBarSpot) {
+                            return LineTooltipItem(
+                              lineBarSpot.y.toString().split('.')[0] +
+                                  ': ' +
+                                  '${widget.firstCase
+                                      .add(Duration(days: int.parse(
+                                      lineBarSpot.x.toString().split(
+                                          '.')[0])))
+                                      .month}/' +
+                                  '${widget.firstCase
+                                      .add(Duration(days: int.parse(
+                                      lineBarSpot.x.toString().split(
+                                          '.')[0])))
+                                      .day}',
 //                                  + '  :  ' +
 //                                  dates[int.parse(lineBarSpot.x
 //                                          .toString()
@@ -296,51 +295,50 @@ class _LineChart1State extends State<LineChart1> {
 //                                          .split('.')[0])]
 //                                      .toString()
 //                                      .substring(0, 1),
-                                //lineBarSpot.x.toString().substring(1,3)+'/'+lineBarSpot.x.toString().substring(0,1),
-                                const TextStyle(
-                                    color: Colors.white, fontSize: 10),
-                              );
-                            }).toList();
-                          },
-                        ),
+                              //lineBarSpot.x.toString().substring(1,3)+'/'+lineBarSpot.x.toString().substring(0,1),
+                              const TextStyle(
+                                  color: Colors.white, fontSize: 10),
+                            );
+                          }).toList();
+                        },
                       ),
-                      lineBarsData: lineBarsData,
-                      minY: 0,
-                      //clipToBorder: true,
-                      titlesData: FlTitlesData(
-                        leftTitles: SideTitles(
-                            showTitles: true,
-                            reservedSize: 30,
-                            interval: widget.intervals,
-                            rotateAngle: 20,
-                            textStyle: TextStyle(
-                                fontSize: 10,
-                                color: Colors.blueGrey,
-                                letterSpacing: -1)),
-                        bottomTitles: SideTitles(
-                            showTitles: false,
-                            interval: dates.length / 10,
-                            margin: 5,
-                            rotateAngle: 90,
-                            textStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blueGrey,
-                              fontFamily: 'Digital',
+                    ),
+                    lineBarsData: lineBarsData,
+                    minY: 0,
+                    //clipToBorder: true,
+                    titlesData: FlTitlesData(
+                      leftTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 30,
+                          interval: widget.intervals,
+                          rotateAngle: 20,
+                          textStyle: TextStyle(
                               fontSize: 10,
-                            )),
-                      ),
-                      axisTitleData: FlAxisTitleData(
-                        //            rightTitle: AxisTitle(showTitle: true, titleText: 'count'),
-                        //            leftTitle: AxisTitle(showTitle: true, titleText: 'count'),
-                        topTitle: AxisTitle(
-                            showTitle: false,
-                            titleText: '30 day data',
-                            textAlign: TextAlign.center),
-                      ),
-                      gridData: FlGridData(show: false),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
+                              color: Colors.blueGrey,
+                              letterSpacing: -1)),
+                      bottomTitles: SideTitles(
+                          showTitles: false,
+                          interval: dates.length / 10,
+                          margin: 5,
+                          rotateAngle: 90,
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blueGrey,
+                            fontFamily: 'Digital',
+                            fontSize: 10,
+                          )),
+                    ),
+                    axisTitleData: FlAxisTitleData(
+                      //            rightTitle: AxisTitle(showTitle: true, titleText: 'count'),
+                      //            leftTitle: AxisTitle(showTitle: true, titleText: 'count'),
+                      topTitle: AxisTitle(
+                          showTitle: false,
+                          titleText: '30 day data',
+                          textAlign: TextAlign.center),
+                    ),
+                    gridData: FlGridData(show: false),
+                    borderData: FlBorderData(
+                      show: false,
                     ),
                   ),
                 ),

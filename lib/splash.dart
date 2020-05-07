@@ -151,7 +151,6 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return noInternet?Center():SplashScreen(
       seconds: 11,
       //isLoading?sec:1,
@@ -169,7 +168,6 @@ class _SplashState extends State<Splash> {
       backgroundColor: Colors.redAccent,
       styleTextUnderTheLoader: new TextStyle(),
       photoSize: 180.0,
-//        onClick: ()=>print("Flutter Egypt"),
       loaderColor: Colors.white,
       loadingText: Text('LOADING...\nUntil then Sanitize Your Hands!\n\nVersion: $version',textAlign: TextAlign.center,
         style: TextStyle(fontFamily: 'Comic Sans MS',color: Colors.white70,fontSize: 16),),
