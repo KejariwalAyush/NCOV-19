@@ -334,6 +334,9 @@ class DataSource{
       recovwld = int.parse(worlddata[2]['title'].toString().replaceAll(',', ''));
       actcasewld = tcasewld-deathwld-recovwld;
       newrecovwld = recovwld-world['recovered'];
+//      newtcasewld=newcasecont[8];
+//      newdeathwld=newdeathcont[8];
+
       List linkcont = document.querySelectorAll(
           'tr');
       List<Map<String, dynamic>> linkMap2 = [];
@@ -367,6 +370,8 @@ class DataSource{
         newdeathcont.add(i['newdeath']);
         recovercont.add(i['recovered']);
       }
+      newtcasewld = newcasecont[8];
+      newdeathwld = newdeathcont[8];
 //       print(contries[3]);
 //       print(contname);
 //      setState(() {

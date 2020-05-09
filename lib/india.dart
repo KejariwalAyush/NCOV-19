@@ -361,65 +361,158 @@ class _IndiaState extends State<India> {
                     Divider(
                       height: 10,
                     ),
-                    LineChart1(allSpots, allSpots2, allSpots3, tcaseind / 4,
-                        firstCase, timeline),
-                    Divider(
-                      height: 10,
-                    ),
-                    Container(
+                    orientation == 0 ?
+                    Column(
+                      children: <Widget>[
+                        LineChart1(allSpots, allSpots2, allSpots3, tcaseind / 4,
+                            firstCase, timeline),
+                        Divider(
+                          height: 10,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.blueGrey[300]),
+                          width: double.maxFinite,
+//                  height: 650,
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: <Widget>[
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => IndiaMap()));
+                                  print('Tapped on India heat map');
+                                },
+                                child: RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                      text: 'INDIA heat',
+                                      style: TextStyle(
+                                          fontFamily: India.fontName,
+                                          color: Colors.redAccent,
+                                          fontSize: 20),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: ' Map',
+                                          style: TextStyle(
+                                              color: Colors.black38,
+                                              fontSize: 14),
+                                        ),
+                                        TextSpan(
+                                          text: '\nTAP HERE! to explore more maps',
+                                          style: TextStyle(
+                                              fontSize: 16, color: Colors.blue),
+                                        ),
+                                      ]),
+                                ),
+                              ),
+                              Divider(
+                                height: 10,
+                              ),
+                              Text(
+                                'Cases in India',
+                                style:
+                                TextStyle(fontSize: 16, color: Colors.black87),
+                              ),
+                              Card(
+                                color: Colors.blueGrey[100],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.network(
+                                    'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                        : Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.blueGrey[300]),
-                      width: double.maxFinite,
-//                  height: 650,
-                      padding: EdgeInsets.all(10),
-                      child: Column(
+//                            width: double.maxFinite,
+                      padding: EdgeInsets.all(5), margin: EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => IndiaMap()));
-                              print('Tapped on India heat map');
-                            },
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                  text: 'INDIA heat',
-                                  style: TextStyle(
-                                      fontFamily: India.fontName,
-                                      color: Colors.redAccent,
-                                      fontSize: 20),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: ' Map',
-                                      style: TextStyle(
-                                          color: Colors.black38, fontSize: 14),
+                          Expanded( //flex: 1,
+                            child: LineChart1(
+                                allSpots, allSpots2, allSpots3, tcaseind / 4,
+                                firstCase, timeline),
+                          ),
+                          Expanded( //flex: 1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.blueGrey[300]),
+//                            width: double.maxFinite,
+                              padding: EdgeInsets.all(10), margin: EdgeInsets
+                                .all(5),
+                              child: Column(
+                                children: <Widget>[
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  IndiaMap()));
+                                      print('Tapped on India heat map');
+                                    },
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                          text: 'INDIA heat',
+                                          style: TextStyle(
+                                              fontFamily: India.fontName,
+                                              color: Colors.redAccent,
+                                              fontSize: 20),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: ' Map',
+                                              style: TextStyle(
+                                                  color: Colors.black38,
+                                                  fontSize: 14),
+                                            ),
+                                            TextSpan(
+                                              text: '\nTAP HERE! to explore more maps',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.blue),
+                                            ),
+                                          ]),
                                     ),
-                                    TextSpan(
-                                      text: '\nTAP HERE! to explore more maps',
-                                      style: TextStyle(
-                                          fontSize: 16, color: Colors.blue),
+                                  ),
+                                  Divider(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'Cases in India',
+                                    style:
+                                    TextStyle(
+                                        fontSize: 16, color: Colors.black87),
+                                  ),
+                                  Container(width: double.maxFinite,
+                                    //padding: EdgeInsets.all(10),
+                                    child: Card(
+                                      color: Colors.blueGrey[100],
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.network(
+                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
                                     ),
-                                  ]),
-                            ),
-                          ),
-                          Divider(
-                            height: 10,
-                          ),
-                          Text(
-                            'Cases in India',
-                            style:
-                            TextStyle(fontSize: 16, color: Colors.black87),
-                          ),
-                          Card(
-                            color: Colors.blueGrey[100],
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.network(
-                                'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/COVID-19_Outbreak_Cases_in_India.svg/220px-COVID-19_Outbreak_Cases_in_India.svg.png',
-                                fit: BoxFit.fitWidth,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -556,18 +649,23 @@ class PieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Center(
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.blueGrey[300]),
-        height: 550,
+        height: orientation == 0 ? 550 : 250,
         padding: EdgeInsets.all(10),
         child: Card(
           color: Colors.blueGrey[100],
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
+            child: orientation == 0 ?
+            Column(
               children: <Widget>[
                 Text(
                   "Total data represented in PIE Chart",
@@ -578,10 +676,6 @@ class PieChart extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.deepOrange),
                 ),
-//                  SizedBox(
-//                    height: 20,
-//                  ),
-//                  Divider(height: 10,),
                 Divider(
                   height: 10,
                 ),
@@ -626,25 +720,6 @@ class PieChart extends StatelessWidget {
                 Divider(
                   height: 10,
                 ),
-//                  Text(
-//                    "Gender data",
-//                    textAlign: TextAlign.center,
-//                    style: TextStyle(fontStyle: FontStyle.italic,fontSize: 16,
-//                        fontWeight: FontWeight.bold ,color: Colors.deepOrange
-//                    ),
-//                  ),
-//                  Expanded(
-//                    child: new charts.PieChart(
-//                      _getGenderData(),
-//                      animate: true,
-//                      animationDuration: Duration(milliseconds: 800),
-//                      defaultRenderer: new charts.ArcRendererConfig(
-//                          arcWidth: 30,startAngle: 60,
-//                          arcRendererDecorators: [new charts.ArcLabelDecorator()]
-//                      ),
-//                    ),
-//                  ),
-
                 Text(
                   "Age data",
                   textAlign: TextAlign.center,
@@ -669,6 +744,100 @@ class PieChart extends StatelessWidget {
                 ),
 
                 //                  Divider(height: 10,),
+              ],
+            )
+                : Row(
+              children: <Widget>[
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Total data represented in PIE Chart",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrange),
+                      ),
+                      Expanded(
+                        child: new charts.PieChart(
+                          _getSeriesData(),
+                          animate: true,
+                          animationDuration: Duration(milliseconds: 800),
+                          defaultRenderer: new charts.ArcRendererConfig(
+                              arcWidth: 200,
+                              startAngle: 84,
+                              arcRendererDecorators: [
+                                new charts.ArcLabelDecorator()
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+//                Divider(
+//                  height: 10,
+//                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "State-wise data",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrange),
+                      ),
+                      Expanded(
+                        child: new charts.PieChart(
+                          _getStateData(),
+                          animate: true,
+                          animationDuration: Duration(milliseconds: 800),
+                          defaultRenderer: new charts.ArcRendererConfig(
+                              arcWidth: 100,
+                              startAngle: 60,
+                              arcRendererDecorators: [
+                                new charts.ArcLabelDecorator()
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+//                Divider(
+//                  height: 10,
+//                ),
+                Expanded(
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Age data",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrange),
+                      ),
+                      Expanded(
+                        child: new charts.PieChart(
+                          _getAgeData(),
+                          animate: true,
+                          animationDuration: Duration(milliseconds: 800),
+                          defaultRenderer: new charts.ArcRendererConfig(
+                              arcWidth: 40,
+                              startAngle: 60,
+                              arcRendererDecorators: [
+                                new charts.ArcLabelDecorator()
+                              ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

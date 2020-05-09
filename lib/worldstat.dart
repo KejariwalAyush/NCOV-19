@@ -184,12 +184,18 @@ class _WorldDataState extends State<WorldData> {
                                     newdeathcont[8].toString().replaceAll(
                                         ',', '').replaceAll('+', ''))
                                     - newrecovwld),
-                            DataCard('Critical', world['critical']),
-                            DataCard('Tests', world['tests']),
                             DataCard(
                                 'Cases/Million', world['casesPerOneMillion']),
                             DataCard('Deaths/Million',
                                 world['deathsPerOneMillion']),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            DataCard('Critical', world['critical']),
+                            DataCard('Tests', world['tests']),
                           ],
                         ),
                       ],
@@ -200,7 +206,6 @@ class _WorldDataState extends State<WorldData> {
                           borderRadius: BorderRadius.circular(15),
                           color: Colors.blueGrey[300]),
                       width: double.maxFinite,
-//                  height: 650,
                       padding: EdgeInsets.all(10),
                       child: Column(
                         children: <Widget>[
@@ -273,20 +278,81 @@ class _WorldDataState extends State<WorldData> {
                       ),
                     ),
                     Divider(height: 10,),
-                    PieChart(),
+                    orientation == 0 ?
+                    Column(
+                      children: <Widget>[
+                        PieChart(),
+                        Divider(height: 10,),
+                        LineChart1(
+                            wldCaseHist, wldRecovHist, wldDeathHist,
+                            tcasewld / 4,
+                            firstCase, WorldData.timeline),
+                      ],
+                    )
+                        : Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.blueGrey[300]),
+                      width: double.maxFinite,
+                      padding: EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(flex: 1,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    width: double.infinity,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .center,
+                                      mainAxisAlignment: MainAxisAlignment
+                                          .spaceEvenly,
+                                      children: <Widget>[
+                                        Divider(),
+                                        Center(child: Text(
+                                          'Cases Heat Map Country-wise',
+                                          style: TextStyle(fontSize: 20),),),
+                                        Card(color: Colors.blueGrey[100],
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: PhotoView(
+                                              minScale: PhotoViewComputedScale
+                                                  .contained,
+                                              maxScale: PhotoViewComputedScale
+                                                  .contained,
+                                              initialScale: PhotoViewComputedScale
+                                                  .contained,
+                                              enableRotation: false,
+                                              basePosition: Alignment.center,
+                                              tightMode: true,
+                                              //minScale: 10,
+                                              imageProvider: NetworkImage(
+                                                'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/COVID-19_Outbreak_World_Map.svg/1920px-COVID-19_Outbreak_World_Map.svg.png'
+                                                ,),
+                                              backgroundDecoration: BoxDecoration(
+                                                  color: Colors.blueGrey[100]),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  PieChart(),
+                                ],
+                              )),
+//                        Divider(height: 10,),
+                          Expanded(flex: 1,
+                            child: LineChart1(
+                                wldCaseHist, wldRecovHist, wldDeathHist,
+                                tcasewld / 4,
+                                firstCase, WorldData.timeline),
+                          ),
+                        ],
+                      ),
+                    ),
                     Divider(height: 10,),
-//                    Container(
-//                      child:GridView.count(
-//                        shrinkWrap: true,
-//                        crossAxisCount: 2,
-//                        children: <Widget>[
-////                        for(var i in continent[0])
-//                          ContinentCard(continent[0]['continent'],
-//                              continent[0]['cases'], continent[0]['deaths'],
-//                              continent[0]['recovered'], continent[0]['active']),
-//                      ],
-//                    ),),
-
                     Center(child: RichText(
                       text: TextSpan(
                           text: 'CONTINENT-wise',
@@ -322,11 +388,7 @@ class _WorldDataState extends State<WorldData> {
                                 continent[i + 2]['recovered'],
                                 continent[i + 2]['active']),
                         ],),
-                    Divider(height: 5,),
-                    LineChart1(
-                        wldCaseHist, wldRecovHist, wldDeathHist, tcasewld / 4,
-                        firstCase, WorldData.timeline),
-                    Divider(height: 10,),
+                    Divider(height: 15,),
                     Center(child: Text('Select Country\'s Name',
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 16),),),
@@ -623,6 +685,10 @@ class DataCard2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Expanded(
       child: Container(
         padding: EdgeInsets.all(10),
@@ -647,14 +713,24 @@ class DataCard2 extends StatelessWidget {
           children: <Widget>[
             Text('$txt', style: TextStyle(fontSize: 20, color: Colors.white60),
               textAlign: TextAlign.center,),
-            Text(
-              '$txtdata', style: TextStyle(fontSize: 20, color: Colors.white),
-              textAlign: TextAlign.center,),
-            Text('${txt2data.toString() != '0' ? '+$txt2data' : 'N/A'}',
-              style: TextStyle(fontSize: 16, color: Colors.redAccent),
-              textAlign: TextAlign.center,),
-//          RichText(text:TextSpan(text:'$txtdata',style: TextStyle(fontSize: 20,color: Colors.white),
-//            children: <TextSpan>[TextSpan(text:'${txt2data==0?'':' +$txt2data'}',style: TextStyle(fontSize: 15,color: Colors.redAccent),
+//            Text(
+//              '$txtdata', style: TextStyle(fontSize: 20, color: Colors.white),
+//              textAlign: TextAlign.center,),
+//            Text('${txt2data.toString() != '0' ? '+$txt2data' : 'N/A'}',
+//              style: TextStyle(fontSize: 16, color: Colors.redAccent),
+//              textAlign: TextAlign.center,),
+            RichText(text: TextSpan(text: '$txtdata',
+              style: TextStyle(fontSize: 20, color: Colors.white),
+              children: <TextSpan>[
+                TextSpan(
+                  text: '${orientation == 0 ? '\n' : ''}${txt2data.toString() !=
+                      '0' ? '+$txt2data' : 'N/A'}',
+                  style: TextStyle(fontSize: orientation == 0 ? 16 : 12,
+                      color: Colors.redAccent),),
+              ],
+            ),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

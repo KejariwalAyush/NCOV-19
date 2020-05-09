@@ -26,6 +26,9 @@ class _FrontpgState extends State<Frontpg> {
 
   var isLoading = false;
 
+  var dropdownValue1 = 'USA';
+  var dropdownValue2 = 'India';
+
   Future<void> _fetch() async {
     setState(() {
       DataSource().fetchAll();
@@ -1025,6 +1028,153 @@ class _FrontpgState extends State<Frontpg> {
                                     ),
                                   ],
                                 ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      orientation == 0 ?
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          DropdownButton<String>(
+                            value: dropdownValue1,
+                            hint: Text('Select Country'),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue1 = newValue;
+                                print('Tapped on $dropdownValue1');
+                              });
+                            },
+                            items: <String>[
+                              for(var i in countryData)
+                                '${i['country']}',
+                            ]
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.deepPurple),),
+                              );
+                            })
+                                .toList(),
+                          ),
+                          DropdownButton<String>(
+                            value: dropdownValue2,
+                            hint: Text('Select Country'),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                dropdownValue2 = newValue;
+                                print('Tapped on $dropdownValue2');
+                              });
+                            },
+                            items: <String>[
+                              for(var i in countryData)
+                                '${i['country']}',
+                            ]
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.deepPurple),),
+                              );
+                            })
+                                .toList(),
+                          ),
+                          RaisedButton(
+                            onPressed: null,
+                            elevation: 4,
+                            color: Colors.redAccent,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.redAccent),
+                              child: Text(
+                                'Compare', textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),),
+                            ),
+                          ),
+                        ],
+                      )
+                          : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: DropdownButton<String>(
+                              value: dropdownValue1,
+                              hint: Text('Select Country'),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue1 = newValue;
+                                  print('Tapped on $dropdownValue1');
+                                });
+                              },
+                              items: <String>[
+                                for(var i in countryData)
+                                  '${i['country']}',
+                              ]
+                                  .map<DropdownMenuItem<String>>((
+                                  String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value, style: TextStyle(
+                                      color: Colors.deepPurple),),
+                                );
+                              })
+                                  .toList(),
+                            ),
+                          ),
+                          Expanded(
+                            child: DropdownButton<String>(
+                              value: dropdownValue2,
+                              hint: Text('Select Country'),
+                              onChanged: (String newValue) {
+                                setState(() {
+                                  dropdownValue2 = newValue;
+                                  print('Tapped on $dropdownValue2');
+                                });
+                              },
+                              items: <String>[
+                                for(var i in countryData)
+                                  '${i['country']}',
+                              ]
+                                  .map<DropdownMenuItem<String>>((
+                                  String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value, style: TextStyle(
+                                      color: Colors.deepPurple),),
+                                );
+                              })
+                                  .toList(),
+                            ),
+                          ),
+                          Expanded(
+                            child: RaisedButton(
+                              onPressed: null,
+                              color: Colors.redAccent,
+                              elevation: 4,
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.redAccent),
+                                child: Text(
+                                  'Compare', textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 16,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),),
                               ),
                             ),
                           ),
