@@ -27,8 +27,8 @@ class _FrontpgState extends State<Frontpg> {
 
   var isLoading = false;
 
-  var dropdownValue1 = 'USA';
-  var dropdownValue2 = 'India';
+  var dropdownValue1 = 'India';
+  var dropdownValue2 = 'USA';
 
   Future<void> _fetch() async {
     setState(() {

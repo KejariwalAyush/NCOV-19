@@ -421,7 +421,7 @@ class _CompareState extends State<Compare> {
           FlSpot(double.parse((cnt3++).toString()),
               double.parse(data['timeline']['deaths'][i].toString())),
       ];
-      intervals2 = countryData[no1]['cases'] / 4;
+      intervals2 = countryData[no2]['cases'] / 4;
       timeline2=cnt1;
       setState(() {
         isLoading = false;

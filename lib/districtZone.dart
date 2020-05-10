@@ -197,7 +197,12 @@ class StatePage extends StatelessWidget {
                               horizontalMargin: 10,
                               columns: [
                                 DataColumn(label: Text('Districts'),),
-                                DataColumn(label: Text('Cases'),numeric: true,),
+                                DataColumn(
+                                  label: Text('Cases  '), numeric: true,),
+                                DataColumn(
+                                  label: Text('Deaths  '), numeric: true,),
+                                DataColumn(
+                                  label: Text('Recov.  '), numeric: true,),
                               ],
                               rows: [
                                 for(int j=0;j<distdata.length;j++)
@@ -214,7 +219,8 @@ class StatePage extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          DataCell(RichText(
+                                          DataCell(
+                                            RichText(
                                             text: TextSpan(
                                                 text: '${i['confirmed']}',
                                                 style: TextStyle(fontFamily: fontName,
@@ -227,7 +233,46 @@ class StatePage extends StatelessWidget {
                                                 ]
                                             ),
                                           ),),
-
+                                          DataCell(
+                                            RichText(
+                                              text: TextSpan(
+                                                  text: '${i['deceased']}',
+                                                  style: TextStyle(
+                                                      fontFamily: fontName,
+                                                      color: Colors.black),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: '${i['delta']['deceased'] ==
+                                                          0
+                                                          ? ''
+                                                          : ' +${i['delta']['deceased']}'}',
+                                                      style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 12),
+                                                    )
+                                                  ]
+                                              ),
+                                            ),),
+                                          DataCell(
+                                            RichText(
+                                              text: TextSpan(
+                                                  text: '${i['recovered']}',
+                                                  style: TextStyle(
+                                                      fontFamily: fontName,
+                                                      color: Colors.black),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: '${i['delta']['recovered'] ==
+                                                          0
+                                                          ? ''
+                                                          : ' +${i['delta']['recovered']}'}',
+                                                      style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 12),
+                                                    )
+                                                  ]
+                                              ),
+                                            ),),
                                         ],
 //                              onSelectChanged: DataTable(rows: <DataRow>[], columns: <DataColumn>[],),
                                       ),

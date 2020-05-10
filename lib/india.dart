@@ -226,12 +226,13 @@ class _IndiaState extends State<India> {
                                 label: Text('States'),
                               ),
                               DataColumn(
-                                label: Text('Cases'),
+                                label: Text('Cases  '),
                                 numeric: true,
                               ),
-                              DataColumn(label: Text('Deaths'), numeric: true),
                               DataColumn(
-                                label: Text('Recovered'),
+                                  label: Text('Deaths  '), numeric: true),
+                              DataColumn(
+                                label: Text('Recov.  '),
                                 numeric: true,
                               ),
                             ],
