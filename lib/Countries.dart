@@ -230,7 +230,7 @@ class _CountriesDataState extends State<CountriesData> {
       return null;
   }
 }
-
+var timelength1;
 // ignore: must_be_immutable
 class LineChart2 extends StatefulWidget {
   var intervals;
@@ -238,7 +238,9 @@ class LineChart2 extends StatefulWidget {
   DateTime firstCase;
   List<FlSpot> allSpots, allSpots2, allSpots3;
   LineChart2(this.allSpots, this.allSpots2, this.allSpots3, this.intervals,
-      this.firstCase,this.timeline);
+      this.firstCase,this.timeline){
+    timelength1 = timeline;
+  }
 
   @override
   _LineChart2State createState() => _LineChart2State();
@@ -249,22 +251,16 @@ class _LineChart2State extends State<LineChart2> {
   bool _isSwitched1 = false;
   bool _isSwitched2 = true;
   bool _isSwitched3 = false;
-//  var timeline;
 
+  double _starValue = timelength1.toDouble()-30;
+  double _endValue = timelength1.toDouble();
   @override
   Widget build(BuildContext context) {
     final lineBarsData = [
       LineChartBarData(
 //          showingIndicators: showIndexes,
         spots: [
-          if (_isSwitched1)
-            for (int i = 0; i < widget.timeline; i++) widget.allSpots[i]
-          else if(_isSwitched2)
-            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots[i]
-          else if(_isSwitched3)
-            for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots[i]
-          else
-              for (int i = 0; i < widget.timeline; i++) widget.allSpots[i]
+              for (int i = _starValue.toInt(); i < _endValue.toInt(); i++) widget.allSpots[i]
         ],
         isCurved: true,
         barWidth: 2,
@@ -285,14 +281,7 @@ class _LineChart2State extends State<LineChart2> {
       LineChartBarData(
 //        showingIndicators: showIndexes,
         spots: [
-          if (_isSwitched1)
-            for (int i = 0; i < widget.timeline; i++) widget.allSpots2[i]
-          else if(_isSwitched2)
-            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots2[i]
-          else if(_isSwitched3)
-              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots2[i]
-            else
-              for (int i = 0; i < widget.timeline; i++) widget.allSpots2[i]
+              for (int i = _starValue.toInt(); i < _endValue.toInt(); i++) widget.allSpots2[i]
         ],
         isCurved: true,
         barWidth: 2,
@@ -313,14 +302,7 @@ class _LineChart2State extends State<LineChart2> {
       LineChartBarData(
 //        showingIndicators: showIndexes,
         spots: [
-          if (_isSwitched1)
-            for (int i = 0; i < widget.timeline; i++) widget.allSpots3[i]
-          else if(_isSwitched2)
-            for (int i = widget.timeline-30; i < widget.timeline; i++) widget.allSpots3[i]
-          else if(_isSwitched3)
-              for (int i = widget.timeline-15; i < widget.timeline; i++) widget.allSpots3[i]
-            else
-              for (int i = 0; i < widget.timeline; i++) widget.allSpots3[i]
+          for (int i = _starValue.toInt(); i < _endValue.toInt(); i++) widget.allSpots3[i]
         ],
         isCurved: true,
         barWidth: 2,
@@ -361,7 +343,7 @@ class _LineChart2State extends State<LineChart2> {
               textAlign: TextAlign.center,
 //                style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            Divider(height: 10,),
+            SizedBox(height: 5,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -369,140 +351,152 @@ class _LineChart2State extends State<LineChart2> {
                 Column(children: <Widget>[
                   Text('Beginning'),
                   Switch(
-                    onChanged: (val) => setState(() => {if(_isSwitched1!=true){_isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val}}),
+                    onChanged: (val) => setState(() => {
+                      if(_isSwitched1!=true){
+                        _isSwitched1 = val,_isSwitched2= !val,_isSwitched3 = !val,
+                        _starValue = 0.0,
+                        _endValue = widget.timeline.toDouble(),
+                      }}),
                     value: _isSwitched1,activeColor: Colors.redAccent,
                   ),
                 ],),
                 Column(children: <Widget>[
                   Text('30 Days'),
                   Switch(
-                    onChanged: (val) => setState(() => {if(_isSwitched2!=true){_isSwitched1 = !val,_isSwitched2= val,_isSwitched3 = !val}}),
+                    onChanged: (val) => setState(() => {
+                      if(_isSwitched2!=true){
+                        _isSwitched1 = !val, _isSwitched2 = val,
+                        _isSwitched3 = !val,
+                        _starValue = widget.timeline.toDouble()-30,
+                        _endValue = widget.timeline.toDouble(),
+                      }
+                    }),
                     value: _isSwitched2,activeColor: Colors.redAccent,
                   ),
                 ],),
                 Column(children: <Widget>[
                   Text('15 Days'),
                   Switch(
-                    onChanged: (val) => setState(() => {if(_isSwitched3!=true){_isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val}}),
+                    onChanged: (val) => setState(() => {
+                      if(_isSwitched3!=true){
+                        _isSwitched1 = !val,_isSwitched2= !val,_isSwitched3 = val,
+                        _starValue = widget.timeline.toDouble()-15,
+                        _endValue = widget.timeline.toDouble(),
+                      }}),
                     value: _isSwitched3,activeColor: Colors.redAccent,
                   ),
                 ],),
               ],
+            ),
+            RangeSlider(values: RangeValues(_starValue, _endValue),
+              min: 0.0,
+              max: widget.timeline.toDouble(),
+              activeColor: Colors.redAccent,
+              onChanged: (values){
+                setState(() {
+                  _starValue = values.start.roundToDouble();
+                  _endValue = values.end.roundToDouble();
+                  _isSwitched1=false;_isSwitched2=false;_isSwitched3=false;
+                });
+              },
             ),
 
 //              Text(
 //                "Last 30 days",
 //                textAlign: TextAlign.center,
 //              ),
-            SizedBox(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
 //                height: 100,
-              child: LineChart(
-                LineChartData(
-//                    showingTooltipIndicators: showIndexes.map((index) {
-//                      return ShowingTooltipIndicators(index, [
-//                        LineBarSpot(
-//                            tooltipsOnBar, lineBarsData.indexOf(tooltipsOnBar), tooltipsOnBar.spots[index]),
-//                      ]);
-//                    }).toList(),
-                  lineTouchData: LineTouchData(
-                    enabled: true,
-                    getTouchedSpotIndicator:
-                        (LineChartBarData barData, List<int> spotIndexes) {
-                      return spotIndexes.map((index) {
-                        return TouchedSpotIndicatorData(
-                          FlLine(
-                            color: Colors.pink,
-                          ),
-                          FlDotData(
-                            show: true,
-                            dotSize: 1,
-                            strokeWidth: 1,
+                child: LineChart(
+                  LineChartData(
+                    lineTouchData: LineTouchData(
+                      enabled: true,
+                      getTouchedSpotIndicator:
+                          (LineChartBarData barData, List<int> spotIndexes) {
+                        return spotIndexes.map((index) {
+                          return TouchedSpotIndicatorData(
+                            FlLine(
+                              color: Colors.pink,
+                            ),
+                            FlDotData(
+                              show: true,
+                              dotSize: 1,
+                              strokeWidth: 1,
 //                    getStrokeColor: (spot, percent, barData) => Colors.black,
-                            getDotColor: (spot, percent, barData) {
-                              return lerpGradient(barData.colors,
-                                  barData.colorStops, percent / 100);
-                            },
-                          ),
-                        );
-                      }).toList();
-                    },
-                    touchTooltipData: LineTouchTooltipData(
-                      tooltipBgColor: Colors.redAccent,
-                      tooltipRoundedRadius: 10,
-                      getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
-                        return lineBarsSpot.map((lineBarSpot) {
-                          return LineTooltipItem(
-                            lineBarSpot.y.toString().split('.')[0] +
-                                ': ' +
-                                '${widget.firstCase
-                                    .add(new Duration(days: int.parse(
-                                    lineBarSpot.x.toString().split('.')[0])))
-                                    .month}/' +
-                                '${widget.firstCase
-                                    .add(new Duration(days: int.parse(
-                                    lineBarSpot.x.toString().split('.')[0])))
-                                    .day}',
-                            //+':'+lineBarSpot.x.toString().split('.')[0],
-//                                  + '  :  ' +
-//                                  dates[int.parse(lineBarSpot.x
-//                                          .toString()
-//                                          .split('.')[0])]
-//                                      .toString()
-//                                      .substring(1, 3) +
-//                                  '/' +
-//                                  dates[int.parse(lineBarSpot.x
-//                                          .toString()
-//                                          .split('.')[0])]
-//                                      .toString()
-//                                      .substring(0, 1),
-                            //lineBarSpot.x.toString().substring(1,3)+'/'+lineBarSpot.x.toString().substring(0,1),
-                            const TextStyle(
-                                color: Colors.white, fontSize: 10),
+                              getDotColor: (spot, percent, barData) {
+                                return lerpGradient(barData.colors,
+                                    barData.colorStops, percent / 100);
+                              },
+                            ),
                           );
                         }).toList();
                       },
+                      touchTooltipData: LineTouchTooltipData(
+                        tooltipBgColor: Colors.redAccent,
+                        tooltipRoundedRadius: 10,
+                        getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
+                          return lineBarsSpot.map((lineBarSpot) {
+                            return LineTooltipItem(
+                              lineBarSpot.y.toString().split('.')[0] +
+                                  ': ' +
+                                  '${widget.firstCase
+                                      .add(new Duration(days: int.parse(
+                                      lineBarSpot.x.toString().split('.')[0])))
+                                      .month}/' +
+                                  '${widget.firstCase
+                                      .add(new Duration(days: int.parse(
+                                      lineBarSpot.x.toString().split('.')[0])))
+                                      .day}',
+                              const TextStyle(
+                                  color: Colors.white, fontSize: 10),
+                            );
+                          }).toList();
+                        },
+                      ),
                     ),
-                  ),
-                  lineBarsData: lineBarsData,
-                  minY: 0,
-                  //clipToBorder: true,
-                  titlesData: FlTitlesData(
-                    leftTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 30,
-                        interval: widget.intervals,
-                        rotateAngle: 20,
-                        textStyle: TextStyle(
-                            fontSize: 10,
+                    lineBarsData: lineBarsData,
+                    minY: 0,
+                    //clipToBorder: true,
+                    titlesData: FlTitlesData(
+                      leftTitles: SideTitles(
+                          showTitles: true,
+                          reservedSize: 30,
+                          interval: widget.intervals,
+                          rotateAngle: 20,
+                          textStyle: TextStyle(
+                              fontSize: 10,
+                              color: Colors.blueGrey,
+                              letterSpacing: -1)),
+                      bottomTitles: SideTitles(
+                          showTitles: true,
+                          interval: (_endValue-1)/2,
+                          margin: 5,
+                          rotateAngle: 45,
+                          textStyle: TextStyle(
+//                            fontWeight: FontWeight.bold,
                             color: Colors.blueGrey,
-                            letterSpacing: -1)),
-                    bottomTitles: SideTitles(
-                        showTitles: false,
-                        interval: dates.length / 10,
-                        margin: 5,
-                        rotateAngle: 90,
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey,
-                          fontFamily: 'Digital',
-                          fontSize: 10,
-                        )),
-                  ),
-                  axisTitleData: FlAxisTitleData(
-                    //            rightTitle: AxisTitle(showTitle: true, titleText: 'count'),
-                    //            leftTitle: AxisTitle(showTitle: true, titleText: 'count'),
-                    topTitle: AxisTitle(
-                        showTitle: false,
-                        titleText: '30 day data',
-                        textAlign: TextAlign.center),
-                  ),
-                  gridData: FlGridData(show: false),
-                  borderData: FlBorderData(
-                    show: false,
+                            fontFamily: 'Digital',
+                            fontSize: 10,letterSpacing: -1,
+                          )),
+                    ),
+                    axisTitleData: FlAxisTitleData(
+                      rightTitle: AxisTitle(showTitle: true, titleText: 'Case count'),
+//                        leftTitle: AxisTitle(showTitle: true, titleText: 'No.of Days'),
+                      topTitle: AxisTitle(
+                          showTitle: true,
+                          titleText: 'No. of days',
+                          textAlign: TextAlign.center),
+                    ),
+                    gridData: FlGridData(show: false),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
                   ),
                 ),
               ),
