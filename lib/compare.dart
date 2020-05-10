@@ -13,7 +13,8 @@ String newContName1,newContName2;
 var data1,data2;
 var timeline,timeline2;
 var intervals,intervals2;
-bool isLoading = false;
+bool isLoading = false,
+    isLoading2 = false;
 int no1,no2;
 List<FlSpot> allSpots, allSpots2, allSpots3,allSpots4, allSpots5, allSpots6;
 
@@ -228,7 +229,7 @@ class _CompareState extends State<Compare> {
                 ),
               ),
               Divider(height: 5,),
-              isLoading ? CircularProgressIndicator(
+              isLoading && isLoading2 ? CircularProgressIndicator(
                 backgroundColor: Colors.redAccent,)
                   : orientation == 0 ?
               Column(
@@ -388,7 +389,7 @@ class _CompareState extends State<Compare> {
   DateTime firstCase2;
   fetch2(String countryName) async {
     setState(() {
-      isLoading = true;
+      isLoading2 = true;
     });
     final Response resp =
     await get("https://disease.sh/v2/historical/$countryName?lastdays=all");
@@ -424,7 +425,7 @@ class _CompareState extends State<Compare> {
       intervals2 = countryData[no2]['cases'] / 4;
       timeline2=cnt1;
       setState(() {
-        isLoading = false;
+        isLoading2 = false;
       });
       //    print(allSpots3);
       return data;

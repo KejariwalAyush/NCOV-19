@@ -11,13 +11,13 @@ description: A new Flutter application.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.5.0+1
+version: 2.6.0+1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  overlay_support:
+  overlay_support: ^1.0.3
   rflutter_alert: ^1.0.3
   http: ^0.12.0
   html:

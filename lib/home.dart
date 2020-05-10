@@ -1044,9 +1044,21 @@ class _FrontpgState extends State<Frontpg> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              Text('Compare Stats of Countries',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Compare',
+                                    style: TextStyle(
+                                        fontFamily: Frontpg.fontName,
+                                        color: Colors.blue,
+                                        fontSize: 28),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: ' Stats',
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 20),
+                                      )
+                                    ]),
                               ),
                               DropdownButton<String>(
                                 value: dropdownValue1,
@@ -1121,9 +1133,21 @@ class _FrontpgState extends State<Frontpg> {
                             color: Colors.blueGrey[100]),
                         child: Column(
                           children: <Widget>[
-                            Text('Compare Stats of Countries',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
+                            RichText(
+                              text: TextSpan(
+                                  text: 'Compare',
+                                  style: TextStyle(
+                                      fontFamily: Frontpg.fontName,
+                                      color: Colors.blue,
+                                      fontSize: 28),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: ' Stats',
+                                      style: TextStyle(
+                                          color: Colors.black38,
+                                          fontSize: 20),
+                                    )
+                                  ]),
                             ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

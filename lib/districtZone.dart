@@ -226,7 +226,11 @@ class StatePage extends StatelessWidget {
                                                 style: TextStyle(fontFamily: fontName,
                                                     color: Colors.black),
                                                 children: <TextSpan>[
-                                                  TextSpan(text: '${i['delta']['confirmed']==0?'':' +${i['delta']['confirmed']}'}',
+                                                  TextSpan(
+                                                    text: '\n${i['delta']['confirmed'] ==
+                                                        0
+                                                        ? ''
+                                                        : ' +${i['delta']['confirmed']}'}',
                                                     style: TextStyle(
                                                         color: Colors.red, fontSize: 12),
                                                   )
@@ -245,7 +249,7 @@ class StatePage extends StatelessWidget {
                                                       text: '${i['delta']['deceased'] ==
                                                           0
                                                           ? ''
-                                                          : ' +${i['delta']['deceased']}'}',
+                                                          : ' \n+${i['delta']['deceased']}'}',
                                                       style: TextStyle(
                                                           color: Colors.red,
                                                           fontSize: 12),
@@ -265,7 +269,7 @@ class StatePage extends StatelessWidget {
                                                       text: '${i['delta']['recovered'] ==
                                                           0
                                                           ? ''
-                                                          : ' +${i['delta']['recovered']}'}',
+                                                          : ' \n+${i['delta']['recovered']}'}',
                                                       style: TextStyle(
                                                           color: Colors.red,
                                                           fontSize: 12),
