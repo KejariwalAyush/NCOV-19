@@ -162,7 +162,7 @@ class _SplashState extends State<Splash> {
           color: Colors.white70,
         ),
       ),
-      image: new Image.asset('assets/gify.gif',//backround1.png',
+      image: new Image.asset('assets/backg.png',
         width: double.maxFinite,fit: BoxFit.fitWidth,
       ),
       backgroundColor: Colors.redAccent,

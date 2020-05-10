@@ -100,7 +100,7 @@ class _FrontpgState extends State<Frontpg> {
                         background: RotatedBox(
                           quarterTurns: 0,
                           child: Image.asset(
-                            'assets/back.png',
+                            'assets/backg.png',
                             fit: BoxFit.fitWidth,
                           ),
                         ),

@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Countries.dart';
 import 'package:http/http.dart';
 
 import 'splash.dart';
@@ -62,6 +63,10 @@ class _CompareState extends State<Compare> {
   }
   @override
   Widget build(BuildContext context) {
+    var orientation = MediaQuery
+        .of(context)
+        .orientation
+        .index;
     return Scaffold(
       appBar: AppBar(
         title: Text("NCOV - 19",
@@ -218,10 +223,115 @@ class _CompareState extends State<Compare> {
                           ),
                         ],
                       ),
-
                     ),
                   ],
                 ),
+              ),
+              Divider(height: 5,),
+              isLoading ? CircularProgressIndicator(
+                backgroundColor: Colors.redAccent,)
+                  : orientation == 0 ?
+              Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.blueGrey[300]),
+                    padding: EdgeInsets.all(10),
+                    child: Card(
+                      color: Colors.blueGrey[100],
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text('$newContName1', textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),),
+                            LineChart2(
+                                allSpots, allSpots2, allSpots3, intervals,
+                                firstCase, timeline),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(height: 5,),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.blueGrey[300]),
+                    padding: EdgeInsets.all(10),
+                    child: Card(
+                      color: Colors.blueGrey[100],
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text('$newContName2', textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 20),),
+                            LineChart2(
+                                allSpots4, allSpots5, allSpots6, intervals2,
+                                firstCase2, timeline2),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+                  : Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.blueGrey[300]),
+                      padding: EdgeInsets.all(10),
+                      child: Card(
+                        color: Colors.blueGrey[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text('$newContName1', textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 20),),
+                              LineChart2(
+                                  allSpots, allSpots2, allSpots3, intervals,
+                                  firstCase, timeline),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+//                  Divider(height: 5,),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.blueGrey[300]),
+                      padding: EdgeInsets.all(10),
+                      child: Card(
+                        color: Colors.blueGrey[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            children: <Widget>[
+                              Text('$newContName2', textAlign: TextAlign.center,
+                                style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: 20),),
+                              LineChart2(
+                                  allSpots4, allSpots5, allSpots6, intervals2,
+                                  firstCase2, timeline2),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
